@@ -26,7 +26,7 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:solidui/solidui.dart';
+import 'package:solidui/solidui.dart' hide WindowSize;
 
 import 'package:notepod/common/rest_api/file_helper.dart';
 import 'package:notepod/constants/app.dart';

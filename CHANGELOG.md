@@ -31,6 +31,7 @@ a Pull Request. Thanks.
 
 ## 0.1 Initial release
 
++ Make delete inactive if external selected and fix icon [0.0.7 20260319 jesscmoore]
 + Provide sort by owner and permission on wider screens [0.0.6 20260316 jesscmoore]
 + Update logo [0.0.5 20260316 jesscmoore]
 + Set theme colour [0.0.4 20260316 jesscmoore]

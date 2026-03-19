@@ -88,7 +88,7 @@ class AppHomePageState extends State<AppHomePage> {
           // All Accessible Notes
           SolidAppBarAction(
             icon: Icons.newspaper,
-            tooltip: 'Go to $combinedNewsTitle',
+            tooltip: combinedNewsToolTip,
             onPressed: () {
               scaffoldController.navigateToSubpage(
                 ListNotesScreen(
@@ -101,7 +101,7 @@ class AppHomePageState extends State<AppHomePage> {
           SolidAppBarAction(
             // More gender neutral icon
             icon: Icons.person_3,
-            tooltip: 'Go to $myNewsTitle',
+            tooltip: myNewsToolTip,
             onPressed: () {
               scaffoldController.navigateToSubpage(
                 ListMyNotesScreen(
@@ -113,7 +113,7 @@ class AppHomePageState extends State<AppHomePage> {
           // New Note
           SolidAppBarAction(
             icon: Icons.post_add_rounded,
-            tooltip: 'Write $newNewsPostTitle',
+            tooltip: newNewsToolTip,
             onPressed: () {
               scaffoldController.navigateToSubpage(
                 NewNote(
@@ -130,7 +130,7 @@ class AppHomePageState extends State<AppHomePage> {
           title: combinedNewsTitle,
           icon: Icons.newspaper,
           child: ListNotesScreen(scaffoldController: scaffoldController),
-          tooltip: 'Go to $combinedNewsTitle',
+          tooltip: combinedNewsToolTip,
         ),
         // My Notes
         SolidMenuItem(
@@ -138,7 +138,7 @@ class AppHomePageState extends State<AppHomePage> {
           // More gender neutral icon
           icon: Icons.person_3,
           child: ListMyNotesScreen(scaffoldController: scaffoldController),
-          tooltip: 'Go to $myNewsTitle',
+          tooltip: myNewsToolTip,
         ),
         // New Note
         SolidMenuItem(
@@ -148,7 +148,7 @@ class AppHomePageState extends State<AppHomePage> {
           child: NewNote(
             scaffoldController: scaffoldController,
           ),
-          tooltip: 'Write $newNewsPostTitle',
+          tooltip: newNewsToolTip,
         ),
       ],
       statusBar: SolidStatusBarConfig(

@@ -60,8 +60,6 @@ const nonReadableNoteMsg =
 
 //const noNotesMsg = 'You do not have any notes yet!';
 
-const noSharedNotesMsg = 'You do not have any notes shared with you yet!';
-
 // SizedBox standardHeight() {
 //   return const SizedBox(
 //     height: standardSpace / 2,
@@ -94,6 +92,9 @@ const String myNewsExplanation = 'created by me';
 const String sharedNewsExplanation = 'created by other people';
 const String combinedNewsTitle = 'News';
 const String combinedNewsExplanation = 'accessible to me';
+const String newNewsToolTip = 'Create a new news post';
+const String myNewsToolTip = 'Go to news owned by me';
+const String combinedNewsToolTip = 'Go to news accessible to me';
 
 /// Note list messages
 class NoteListMsg {

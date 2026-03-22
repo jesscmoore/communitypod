@@ -27,10 +27,6 @@ library;
 
 import 'package:communitypod/constants/paths.dart';
 
-/// Returns `true` if [url] points to an image stored on the user's Pod
-/// (i.e. under the base path).
-bool isPodImageUrl(String url) => extractPodImagePath(url) != null;
-
 /// Extracts the `remoteFilePath` (relative to app base path) from a full
 /// Pod image URL, or returns `null` if [url] is not a Pod image URL.
 ///

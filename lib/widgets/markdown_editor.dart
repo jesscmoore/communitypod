@@ -31,7 +31,7 @@ import 'package:markdown_toolbar/markdown_toolbar.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 
 import 'package:communitypod/widgets/insert_image_dialog.dart';
-import 'package:communitypod/widgets/pod_image_builder.dart';
+import 'package:communitypod/widgets/read_image.dart';
 
 Container markdownEditor(
   BuildContext context,
@@ -92,7 +92,7 @@ Container markdownEditor(
           child: MarkdownBlock(
             data: markdownData,
             config: MarkdownConfig(
-              configs: [ImgConfig(builder: podAwareImgBuilder())],
+              configs: [ImgConfig(builder: readImage())],
             ),
           ),
         ),

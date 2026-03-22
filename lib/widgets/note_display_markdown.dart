@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:markdown_widget/markdown_widget.dart';
 
-import 'package:communitypod/widgets/pod_image_builder.dart';
+import 'package:communitypod/widgets/read_image.dart';
 
 // Displays note content with MarkdownBlock()
 // Expanded noteDisplayMarkdown(
@@ -43,7 +43,7 @@ Container noteDisplayMarkdown(
     child: MarkdownBlock(
       data: data,
       config: MarkdownConfig(
-        configs: [ImgConfig(builder: podAwareImgBuilder())],
+        configs: [ImgConfig(builder: readImage())],
       ),
     ),
   );

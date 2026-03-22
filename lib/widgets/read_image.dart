@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
-/// Authors: Anushka Vidanage, Graham Williams, Jess Moore
+/// Authors: Jess Moore
 
 library;
 
@@ -39,7 +39,7 @@ import 'package:communitypod/utils/pod_image_uploader.dart';
 /// Pod images (URLs under `notepod/data/`) are fetched and decrypted via
 /// [readLargeFileAsBytes] and rendered with [Image.memory]. All other URLs
 /// are rendered with [Image.network].
-ImgBuilder podAwareImgBuilder() {
+ImgBuilder readImage() {
   return (String url, Map<String, String> attributes) {
     final remotePath = extractPodImagePath(url);
     if (remotePath == null) {

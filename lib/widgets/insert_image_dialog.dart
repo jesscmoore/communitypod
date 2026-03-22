@@ -98,8 +98,9 @@ class _InsertImageDialogState extends State<InsertImageDialog>
     final text = controller.text;
     final sel = controller.selection;
     final insertPos = sel.isValid ? sel.baseOffset : text.length;
-    final end =
-        sel.isValid ? sel.extentOffset.clamp(insertPos, text.length) : insertPos;
+    final end = sel.isValid
+        ? sel.extentOffset.clamp(insertPos, text.length)
+        : insertPos;
 
     controller.value = TextEditingValue(
       text: text.replaceRange(insertPos, end, snippet),
@@ -138,12 +139,10 @@ class _InsertImageDialogState extends State<InsertImageDialog>
     try {
       final client = HttpClient();
       client.connectionTimeout = const Duration(seconds: 5);
-      final request = await client
-          .headUrl(uri)
-          .timeout(const Duration(seconds: 5));
-      final response = await request
-          .close()
-          .timeout(const Duration(seconds: 5));
+      final request =
+          await client.headUrl(uri).timeout(const Duration(seconds: 5));
+      final response =
+          await request.close().timeout(const Duration(seconds: 5));
       await response.drain<void>();
       client.close();
 
@@ -350,9 +349,7 @@ class _InsertImageDialogState extends State<InsertImageDialog>
   @override
   Widget build(BuildContext context) {
     final isDeviceTab = _tabController.index == 1;
-    final canInsert = isDeviceTab
-        ? _uploadedPodUrl != null
-        : !_isValidatingUrl;
+    final canInsert = isDeviceTab ? _uploadedPodUrl != null : !_isValidatingUrl;
 
     return AlertDialog(
       title: const Text('Insert Image'),

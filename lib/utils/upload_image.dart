@@ -30,7 +30,7 @@ import 'package:solidpod/solidpod.dart';
 /// Uploads the file at [localFilePath] to the Pod as an encrypted image.
 ///
 /// The image is stored at `images/img-{timestamp}.[fileExtension]` relative
-/// to the app data directory (`notepod/data/`). Returns the full Pod resource
+/// to the app data directory (basePath). Returns the full Pod resource
 /// URL for embedding in markdown as `![alt](url)`.
 Future<String> uploadImage({
   required String localFilePath,
@@ -45,7 +45,7 @@ Future<String> uploadImage({
     encrypted: true,
   );
 
-  // filenameToResourceUrl prepends notepod/data/ automatically, producing
-  // a full URL like https://user.pod/notepod/data/images/img-xxx.jpg
+  // filenameToResourceUrl prepends basePath automatically, producing
+  // a full URL like https://user.pod/communitypod/data/images/img-xxx.jpg
   return filenameToResourceUrl(fileName: remotePath);
 }

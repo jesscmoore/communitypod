@@ -36,7 +36,7 @@ import 'package:communitypod/utils/image_helper.dart';
 
 /// Returns an [ImgBuilder] for use with [ImgConfig] in a [MarkdownBlock].
 ///
-/// Pod images (URLs under `notepod/data/`) are fetched and decrypted via
+/// Pod images (URLs under basePath) are fetched and decrypted via
 /// [readLargeFileAsBytes] and rendered with [Image.memory]. All other URLs
 /// are rendered with [Image.network].
 ImgBuilder readImage() {

@@ -25,17 +25,19 @@
 
 library;
 
+import 'package:communitypod/constants/paths.dart';
+
 /// Returns `true` if [url] points to an image stored on the user's Pod
-/// (i.e. under the `notepod/data/` path).
+/// (i.e. under the base path).
 bool isPodImageUrl(String url) => extractPodImagePath(url) != null;
 
-/// Extracts the `remoteFilePath` (relative to `notepod/data/`) from a full
+/// Extracts the `remoteFilePath` (relative to app base path) from a full
 /// Pod image URL, or returns `null` if [url] is not a Pod image URL.
 ///
 /// Example:
-/// `"https://alice.pod/notepod/data/images/img-x.jpg"` → `"images/img-x.jpg"`
+/// `"https://alice.pod/communitypod/data/images/img-x.jpg"` → `"images/img-x.jpg"`
 String? extractPodImagePath(String url) {
-  const marker = '/notepod/data/';
+  const marker = '/$basePath/';
   final idx = url.indexOf(marker);
   if (idx == -1) return null;
   return url.substring(idx + marker.length);

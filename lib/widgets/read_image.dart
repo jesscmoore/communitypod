@@ -32,7 +32,7 @@ import 'package:flutter/material.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 import 'package:solidpod/solidpod.dart';
 
-import 'package:communitypod/utils/pod_image_uploader.dart';
+import 'package:communitypod/utils/image_helper.dart';
 
 /// Returns an [ImgBuilder] for use with [ImgConfig] in a [MarkdownBlock].
 ///

@@ -31,7 +31,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:universal_io/io.dart';
 
-import 'package:communitypod/utils/pod_image_uploader.dart';
+import 'package:communitypod/utils/upload_image.dart';
 
 /// A dialog that allows inserting an image into the markdown note either by
 /// entering a URL (URL tab) or by picking a file from the device and uploading
@@ -237,7 +237,7 @@ class _InsertImageDialogState extends State<InsertImageDialog>
     });
     try {
       final ext = _selectedFileName!.split('.').last.toLowerCase();
-      final url = await uploadImageToPod(
+      final url = await uploadImage(
         localFilePath: _selectedFilePath!,
         fileExtension: ext,
       );

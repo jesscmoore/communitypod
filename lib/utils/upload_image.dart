@@ -1,6 +1,6 @@
-/// Utilities for uploading images to and identifying images on a Solid Pod.
+/// Upload image to a Solid Pod.
 ///
-// Time-stamp: <Saturday 2026-03-21 00:00:00 +1100 Graham Williams>
+// Time-stamp: <Saturday 2026-03-22 21:48:20 +1100 Graham Williams>
 ///
 /// Copyright (C) 2025, Software Innovation Institute, ANU
 ///
@@ -32,7 +32,7 @@ import 'package:solidpod/solidpod.dart';
 /// The image is stored at `images/img-{timestamp}.[fileExtension]` relative
 /// to the app data directory (`notepod/data/`). Returns the full Pod resource
 /// URL for embedding in markdown as `![alt](url)`.
-Future<String> uploadImageToPod({
+Future<String> uploadImage({
   required String localFilePath,
   required String fileExtension,
 }) async {
@@ -48,20 +48,4 @@ Future<String> uploadImageToPod({
   // filenameToResourceUrl prepends notepod/data/ automatically, producing
   // a full URL like https://user.pod/notepod/data/images/img-xxx.jpg
   return filenameToResourceUrl(fileName: remotePath);
-}
-
-/// Returns `true` if [url] points to an image stored on the user's Pod
-/// (i.e. under the `notepod/data/` path).
-bool isPodImageUrl(String url) => extractPodImagePath(url) != null;
-
-/// Extracts the `remoteFilePath` (relative to `notepod/data/`) from a full
-/// Pod image URL, or returns `null` if [url] is not a Pod image URL.
-///
-/// Example:
-/// `"https://alice.pod/notepod/data/images/img-x.jpg"` → `"images/img-x.jpg"`
-String? extractPodImagePath(String url) {
-  const marker = '/notepod/data/';
-  final idx = url.indexOf(marker);
-  if (idx == -1) return null;
-  return url.substring(idx + marker.length);
 }

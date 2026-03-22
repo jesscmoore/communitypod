@@ -30,12 +30,16 @@ import 'package:flutter/material.dart';
 import 'package:markdown_toolbar/markdown_toolbar.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 
+import 'package:communitypod/widgets/insert_image_dialog.dart';
+import 'package:communitypod/widgets/read_image.dart';
+
 Container markdownEditor(
   BuildContext context,
   TextEditingController textController,
   FocusNode focusContent,
-  String markdownData,
-) {
+  String markdownData, {
+  bool isExternal = false,
+}) {
   return Container(
     padding: const EdgeInsets.all(10),
     child: Row(
@@ -64,11 +68,33 @@ Container markdownEditor(
                 controller: textController, // Add the _controller
                 focusNode: focusContent, // Add the _focusContent
               ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: ElevatedButton.icon(
+                  icon: const Icon(Icons.image_outlined),
+                  label: const Text('Insert Image'),
+                  onPressed: () {
+                    showDialog<void>(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (_) => InsertImageDialog(
+                        noteController: textController,
+                        isExternal: isExternal,
+                      ),
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
         Expanded(
-          child: MarkdownBlock(data: markdownData),
+          child: MarkdownBlock(
+            data: markdownData,
+            config: MarkdownConfig(
+              configs: [ImgConfig(builder: readImage())],
+            ),
+          ),
         ),
       ],
     ),

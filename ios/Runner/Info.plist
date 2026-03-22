@@ -55,5 +55,7 @@
             <key>NSAllowsArbitraryLoads</key>
             <true/>
         </dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Required to select images for news posts.</string>
 </dict>
 </plist>

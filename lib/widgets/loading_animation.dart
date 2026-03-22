@@ -51,7 +51,7 @@ Future<dynamic> showAnimationDialog(
                 // Colours work in light and dark themes
                 LoadingIndicator(
                   indicatorType: Indicator.ballScaleRipple,
-                  colors: defaultNotepodColors,
+                  colors: defaultColors,
                   strokeWidth: 4.0,
                   pathBackgroundColor: showPathBackground
                       ? const Color.fromARGB(59, 0, 0, 0)

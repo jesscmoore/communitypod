@@ -29,6 +29,8 @@ import 'package:flutter/material.dart';
 
 import 'package:markdown_widget/markdown_widget.dart';
 
+import 'package:communitypod/widgets/read_image.dart';
+
 // Displays note content with MarkdownBlock()
 // Expanded noteDisplayMarkdown(
 Container noteDisplayMarkdown(
@@ -38,7 +40,12 @@ Container noteDisplayMarkdown(
     alignment: Alignment.topLeft,
     padding: const EdgeInsets.all(10),
     // child: SingleChildScrollView(child: MarkdownBlock(data: data))),
-    child: MarkdownBlock(data: data),
+    child: MarkdownBlock(
+      data: data,
+      config: MarkdownConfig(
+        configs: [ImgConfig(builder: readImage())],
+      ),
+    ),
   );
   // 20250717 jm Alt method retained for reference
   // MarkdownParse(

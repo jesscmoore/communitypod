@@ -217,6 +217,7 @@ class NoteEditScrollView extends StatelessWidget {
                     _textController!,
                     _focusContent,
                     data,
+                    isExternal: isExternal,
                   ),
                   // Add space
                   const SizedBox(

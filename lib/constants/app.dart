@@ -85,15 +85,17 @@ const adviceStyle = TextStyle(
 );
 
 // Titles for nav widgets to pages
+// New news
 const String newNewsPostTitle = 'New Post';
+const String newNewsToolTip = 'Create a new news post';
+// My news
 const String myNewsTitle = 'My Posts';
-const String sharedNewsTitle = 'Shared News';
 const String myNewsExplanation = 'created by me';
-const String sharedNewsExplanation = 'created by other people';
+const String myNewsToolTip = 'Go to news owned by me';
+
+// All news
 const String combinedNewsTitle = 'News';
 const String combinedNewsExplanation = 'accessible to me';
-const String newNewsToolTip = 'Create a new news post';
-const String myNewsToolTip = 'Go to news owned by me';
 const String combinedNewsToolTip = 'Go to news accessible to me';
 
 /// Note list messages

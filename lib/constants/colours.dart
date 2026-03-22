@@ -38,7 +38,6 @@ const darkBlue = Color.fromARGB(255, 7, 87, 153);
 const midBlue = Color.fromARGB(255, 20, 115, 193);
 // const brickRed = Color(0xFFD89E7A);
 const lightGreen = Color.fromARGB(255, 120, 219, 137);
-const darkGreen = Color.fromARGB(255, 64, 163, 81);
 const lightBlue = Color(0xFF61B2CE);
 // const exLightBlue = Color(0xFFD8ECF3);
 const darkCopper = Color(0xFFBE4E0E);
@@ -55,7 +54,7 @@ const lightRed = Color.fromARGB(255, 255, 88, 77);
 
 //const confirmGreen = Colors.blue;
 
-List<Color> defaultNotepodColors = const [
+List<Color> defaultColors = const [
   darkBlue,
   darkBlue,
   darkCopper,

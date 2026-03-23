@@ -44,7 +44,7 @@
 ### Finalising
 <!--- Once PR discussion is complete and reviewers have approved. -->
 
-- [ ] Merge dev into the this branch
+- [ ] Merge news into the this branch
 - [ ] Resolve any conflicts
 - [ ] Add a one line summary into the CHANGELOG.md
 - [ ] Push to the git repository and review

@@ -31,6 +31,7 @@ a Pull Request. Thanks.
 
 ## 0.1 Initial release
 
++ Update logo icon after colour fixes [0.0.9 20260323 jesscmoore]
 + Add upload image to pod and show network/pod images [0.0.8 20260322 jesscmoore]
 + Make delete inactive if external selected and fix icon [0.0.7 20260319 jesscmoore]
 + Provide sort by owner and permission on wider screens [0.0.6 20260316 jesscmoore]

@@ -38,14 +38,15 @@ const String longTitle = 'CommunityPod\nPrivate and Shareable News';
 const String appOwner = '''© 2026 Software Innovation Institute''';
 
 const String aboutText =
-    '''The communitypod app is an example of a Solid Pods app written in Flutter to read, write, and share encrypted news stories stored on your personal online data store (Pod) hosted on a Solid Server. (Logo designed by Kreativkolors / Freepik.)''';
+    '''The communitypod app is an example of a Solid Pods app written in Flutter to read, write, and share encrypted news stories stored on your personal online data store (Pod) hosted on a Solid Server.''';
 
 const String appDir = 'notepod';
 
+// const AssetImage backgroundImg =
+//     AssetImage('assets/images/notepod-background.jpg');
 const AssetImage backgroundImg =
-    AssetImage('assets/images/notepod-background.jpg');
-const AssetImage logoImg =
-    AssetImage('assets/images/communitypod_890_890_transparent.png');
+    AssetImage('assets/images/Hands-AdobeStock_435501233.jpeg');
+const AssetImage logoImg = AssetImage('assets/images/app_icon.png');
 
 //const kDefaultPadding = 20.0;
 //const double buttonBorderRadius = 5;

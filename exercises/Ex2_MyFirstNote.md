@@ -1,8 +1,8 @@
-# Exercise 2: My First Note
+# Exercise 2: My First News Post
 
 **Table of Contents**
 
-- [Exercise 2: My First Note](#exercise-2-my-first-note)
+- [Exercise 2: My First News Post](#exercise-2-my-first-note)
   - [Login](#login)
   - [Make a note](#make-a-note)
 
@@ -49,29 +49,29 @@ Be patient, *you may need to wait several seconds for login* process to complete
 
 By default, the communitypod app opens on the create new note page, or you can get to this page by selecting `Home` in the menu.
 
-In `Note Title` field, enter a title for your note.
+In `News Title` field, enter a title for your note.
 
-Below the Note Title field, enter the text of your note using markdown.
+Below the News Title field, enter the text of your note using markdown.
 
-![New Note](../assets/images/new_note_empty.png)
+![New News](../assets/images/new_note_empty.png)
 
 
 As you write you will see the rendered html is shown on the right hand side.
 
 
-![Note in Progress](../assets/images/new_note_draft.png)
+![News in Progress](../assets/images/new_note_draft.png)
 
 Click `Save` button to save your note. (Note: the app is not auto saving in the background, although that can be implemented in flutter).
 
 After saving, you wil see an empty new note page.
 
-Open the menu and click `My Notes` to view your saved notes.
+Open the menu and click `My News` to view your saved notes.
 
 ![Menu](../assets/images/communitypod_menu.png)
 
 Congratulations, you have successfully saved your first note in a POD!
 
-![My Notes list](../assets/images/my_notes_list.png)
+![My News list](../assets/images/my_notes_list.png)
 
 You can open your note, by clicking on your note in the list.
 

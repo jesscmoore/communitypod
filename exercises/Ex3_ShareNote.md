@@ -1,10 +1,10 @@
-# Exercise 3: Share a Note
+# Exercise 3: Share a News Post
 
 **Table of Contents**
 
-- [Exercise 3: Share a Note](#exercise-3-share-a-note)
-  - [View Sharing Permissions of a Note](#view-sharing-permissions-of-a-note)
-  - [Share a Note](#share-a-note)
+- [Exercise 3: Share a News Post](#exercise-3-share-a-note)
+  - [View Sharing Permissions of a News Post](#view-sharing-permissions-of-a-note)
+  - [Share a News Post](#share-a-note)
     - [Grant read access](#grant-read-access)
   - [Grant read and write access](#grant-read-and-write-access)
 
@@ -15,12 +15,12 @@ In Solid, sharing a note to another person is the act of editing the access cont
 The access permissions of a note file describe which other people (identified by their webID) have access to your note file.
 
 
-## View Sharing Permissions of a Note<a name="permissions"></a>
+## View Sharing Permissions of a News Post<a name="permissions"></a>
 
 
-In the menu, select `My Notes` to open the list of your notes, and click on the note you wish to share.
+In the menu, select `My News` to open the list of your notes, and click on the note you wish to share.
 
-![My Notes List](../assets/images/my_notes_list.png)
+![My News List](../assets/images/my_notes_list.png)
 
 From within the note, click the `Share` button.
 
@@ -40,7 +40,7 @@ A newly created note which you have not yet shared will have the file access per
 ![Click share](../assets/images/communitypod_sharing_view.png)
 
 
-## Share a Note<a name="share"></a>
+## Share a News Post<a name="share"></a>
 
 First we will test granting read access to a note.
 
@@ -77,11 +77,11 @@ You have now granted the recipient access to your note file!
 
 **The next actions are done by the recipient of your note**
 
-Now ask the recipient to login to their communitypod app, and select `Shared Notes` from the menu.
+Now ask the recipient to login to their communitypod app, and select `Shared News` from the menu.
 
 They should see your note in their shared notes list.
 
-![Recipient POD - Shared Notes List showing r note](../assets/images/recipient_shared_notes_read.png)
+![Recipient POD - Shared News List showing r note](../assets/images/recipient_shared_notes_read.png)
 
 They have been granted `Read` permission, hence they can open and read the note
 
@@ -105,11 +105,11 @@ Submit by pressing `Grant Permission` to **confirm** that you are granting the r
 
 **The next actions are done by the recipient of your note**
 
-Now ask the recipient to login to their communitypod app, and select the `Shared Notes` list from the menu.
+Now ask the recipient to login to their communitypod app, and select the `Shared News` list from the menu.
 
 From their shared notes list, ask them to open the note.
 
-![Recipient POD - Shared Notes List showing rw note](../assets/images/recipient_shared_notes_rw.png)
+![Recipient POD - Shared News List showing rw note](../assets/images/recipient_shared_notes_rw.png)
 
 They have beenn granted `Read` and `Write` permission. This means they can read and write to the note, hence they have an `Edit` button in the note view.
 
@@ -124,9 +124,9 @@ Ask them to click `Edit` and add some text to your note - here they have added t
 
 **These actions are by you**
 
-Now, open your My Notes list, you will see the last modification time has been updated. Click the note to open it.
+Now, open your My News list, you will see the last modification time has been updated. Click the note to open it.
 
-![My Notes List](../assets/images/my_notes_list_edited_by_recipient.png)
+![My News List](../assets/images/my_notes_list_edited_by_recipient.png)
 
 Here you can see the additional text added by the recipient.
 

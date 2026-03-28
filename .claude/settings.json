@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(magick /Users/u9904893/Documents/communitypod/assets/images/starryPeople-recoloured.png -alpha off +dither -colors 20 -unique-colors txt:-)"
+      "Bash(magick /Users/u9904893/Documents/communitypod/assets/images/starryPeople-recoloured.png -alpha off +dither -colors 20 -unique-colors txt:-)",
+      "Bash(dart format:*)"
     ]
   }
 }

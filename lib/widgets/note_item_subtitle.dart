@@ -56,11 +56,11 @@ class NoteItemSubtitle extends StatelessWidget {
       (!_note.isExternalRes)
           ? 'Owner: ${getId(_note.noteOwner)} \n'
               'Created: ${getDateTimeStr(_note.content!.createdDateTime)}, Modified: ${getDateTimeStr(_note.content!.modifiedDateTime)}\n\n'
-              '${_note.content!.noteContent}'
+              '${_note.content!.contentWithoutImages}'
           : (_note.permissionList.contains('read'))
               ? 'Owner: ${getId(_note.noteOwner)} \n'
                   'Created: ${getDateTimeStr(_note.content!.createdDateTime)}, Modified: ${getDateTimeStr(_note.content!.modifiedDateTime)} \n\n'
-                  '${_note.content!.noteContent}'
+                  '${_note.content!.contentWithoutImages}'
               : 'Filename: ${_note.noteFileName} \n'
                   'Owner: ${getId(_note.noteOwner)} \n'
                   'Permissions: ${_note.permissionList}',

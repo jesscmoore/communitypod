@@ -33,6 +33,7 @@ import 'package:communitypod/models/selected_note.dart';
 import 'package:communitypod/notes/list_notes_screen.dart';
 import 'package:communitypod/notes/non_readable_note.dart';
 import 'package:communitypod/notes/view_note.dart';
+import 'package:communitypod/widgets/note_highlight_image.dart';
 import 'package:communitypod/widgets/note_item_subtitle.dart';
 import 'package:communitypod/widgets/note_item_trailing_buttons.dart';
 import 'package:communitypod/widgets/note_list_del_button.dart';
@@ -110,10 +111,6 @@ class _ListNotesState extends State<ListNotes> {
 
   /// Scaffold controller
   late final SolidScaffoldController _scaffoldController;
-
-  /// Aspect ratio (width / height) for gridview
-  /// cards to display note items
-  late double cardAspectRatio = 2.0;
 
   /// Boolean describing whether window is narrow
   late bool isNarrow;
@@ -385,9 +382,6 @@ class _ListNotesState extends State<ListNotes> {
         isVeryWide = DisplayHelpers.isVeryWideScreen(
           context,
         );
-        // Derive whether window is very wide
-        // Calculate the aspect radio for grid cards
-        cardAspectRatio = NoteItemSize().calculateCardAspectRatio(constraints);
         return SizedBox(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -560,100 +554,108 @@ class _ListNotesState extends State<ListNotes> {
                 child: Scrollbar(
                   thumbVisibility: true,
                   controller: _scrollController,
-                  child: GridView.builder(
+                  child: ListView.builder(
                     controller: _scrollController,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      // Aspect ratio calculated from LayoutBuilder box constraints
-                      crossAxisCount: 1,
-                      childAspectRatio: cardAspectRatio,
-                    ),
                     padding: const EdgeInsets.all(10),
                     itemCount: _foundNotes.length,
                     itemBuilder: (context, index) => Card(
-                      child: Center(
-                        child: Container(
-                          // Show color decoration when selected
-                          decoration: _foundNotes[index].isSelected
-                              ? BoxDecoration(
-                                  color: theme.colorScheme.onInverseSurface,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(5),
-                                  ),
-                                )
-                              : const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                ),
-                          child: ListTile(
-                            // Select and count selected notes, including whether
-                            // an externally owned note is selected
-                            leading: SizedBox(
-                              width: NoteIconSize.width,
-                              child: Center(
-                                child: Ink(
-                                  decoration: buttonShapeList,
-                                  child: IconButton(
-                                    icon: _foundNotes[index].isSelected
-                                        ? const Icon(Icons.done)
-                                        : const Icon(Icons.edit_document),
-                                    onPressed: () {
-                                      updateSelectionMode(
-                                        _isSelectionMode,
-                                        index,
-                                      );
-                                      updateSelected(index);
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ),
-                            // Note info
-                            title: (_foundNotes[index]
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          NoteHighlightImage(
+                            imageUrl: _foundNotes[index]
                                     .permissionList
-                                    .contains('read'))
-                                ? Text(
-                                    _foundNotes[index].content!.noteTitle,
-                                    maxLines:
-                                        (!isNarrow) ? 1 : 3, // Limit lines
-                                    overflow: TextOverflow.ellipsis,
-                                  )
-                                : const Text(''),
-                            // Note item subtitle
-                            subtitle: NoteItemSubtitle(
-                              note: _foundNotes[index],
-                              isNarrow: isNarrow,
-                            ),
-                            // Define width to avoid consuming full width
-                            trailing: SizedBox(
-                              height: 60,
-                              width: 120,
-                              child: NoteItemTrailingButtons(
-                                note: _foundNotes[index],
-                                scaffoldController: _scaffoldController,
+                                    .contains('read')
+                                ? _foundNotes[index].content?.highlightImageUrl
+                                : null,
+                          ),
+                          Center(
+                            child: Container(
+                              // Show color decoration when selected
+                              decoration: _foundNotes[index].isSelected
+                                  ? BoxDecoration(
+                                      color: theme.colorScheme.onInverseSurface,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(5),
+                                      ),
+                                    )
+                                  : const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5)),
+                                    ),
+                              child: ListTile(
+                                // Select and count selected notes, including whether
+                                // an externally owned note is selected
+                                leading: SizedBox(
+                                  width: NoteIconSize.width,
+                                  child: Center(
+                                    child: Ink(
+                                      decoration: buttonShapeList,
+                                      child: IconButton(
+                                        icon: _foundNotes[index].isSelected
+                                            ? const Icon(Icons.done)
+                                            : const Icon(Icons.edit_document),
+                                        onPressed: () {
+                                          updateSelectionMode(
+                                            _isSelectionMode,
+                                            index,
+                                          );
+                                          updateSelected(index);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                // Note info
+                                title: (_foundNotes[index]
+                                        .permissionList
+                                        .contains('read'))
+                                    ? Text(
+                                        _foundNotes[index].content!.noteTitle,
+                                        maxLines:
+                                            (!isNarrow) ? 1 : 3, // Limit lines
+                                        overflow: TextOverflow.ellipsis,
+                                      )
+                                    : const Text(''),
+                                // Note item subtitle
+                                subtitle: NoteItemSubtitle(
+                                  note: _foundNotes[index],
+                                  isNarrow: isNarrow,
+                                ),
+                                // Define width to avoid consuming full width
+                                trailing: SizedBox(
+                                  height: 60,
+                                  width: 120,
+                                  child: NoteItemTrailingButtons(
+                                    note: _foundNotes[index],
+                                    scaffoldController: _scaffoldController,
+                                  ),
+                                ),
+
+                                onTap: () {
+                                  // Open note if read in permissions
+                                  String access =
+                                      _foundNotes[index].permissionList;
+                                  if (access.contains('read')) {
+                                    _scaffoldController.navigateToSubpage(
+                                      ViewNote(
+                                        note: _foundNotes[index],
+                                        scaffoldController: _scaffoldController,
+                                      ),
+                                    );
+                                  } else {
+                                    _scaffoldController.navigateToSubpage(
+                                      NonReadableNote(
+                                        note: _foundNotes[index],
+                                        scaffoldController: _scaffoldController,
+                                      ),
+                                    );
+                                  }
+                                },
                               ),
                             ),
-
-                            onTap: () {
-                              // Open note if read in permissions
-                              String access = _foundNotes[index].permissionList;
-                              if (access.contains('read')) {
-                                _scaffoldController.navigateToSubpage(
-                                  ViewNote(
-                                    note: _foundNotes[index],
-                                    scaffoldController: _scaffoldController,
-                                  ),
-                                );
-                              } else {
-                                _scaffoldController.navigateToSubpage(
-                                  NonReadableNote(
-                                    note: _foundNotes[index],
-                                    scaffoldController: _scaffoldController,
-                                  ),
-                                );
-                              }
-                            },
                           ),
-                        ),
+                        ],
                       ),
                     ),
                   ),

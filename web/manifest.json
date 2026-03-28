@@ -1,6 +1,6 @@
 {
-    "name": "notepod",
-    "short_name": "notepod",
+    "name": "communitypod",
+    "short_name": "communitypod",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#ffffff",

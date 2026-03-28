@@ -32,7 +32,7 @@ import 'package:communitypod/models/note_content.dart';
 import 'package:communitypod/utils/encryption.dart';
 import 'package:communitypod/utils/turtle/parsing_utils.dart';
 
-/// Handle Notepod to/from Turtle serialization operations.
+/// Handle communitypod to/from Turtle serialization operations.
 
 class TurtleSerializer {
   /// Parses a note from Turtle content.

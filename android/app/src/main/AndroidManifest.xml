@@ -10,7 +10,7 @@
          https://pub.dev/packages/vault_storage/versions/2.2.0#platform-setup
     -->
     <application
-        android:label="notepod"
+        android:label="communitypod"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
 	android:allowBackup="false"

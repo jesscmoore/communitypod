@@ -6,23 +6,23 @@ Guide: Each version update is noted here with a short user-oriented
 description of the update. The `[version timestamp user]` string is
 utilised by the flutter version_widget package.
 
-<!-- Run the app online: [**web**](https://notepod.solidcommunity.au). -->
+<!-- Run the app online: [**web**](https://communitypod.solidcommunity.au). -->
 
 The latest version of the app can be downloaded and installed from the
 [Solid Community AU](https://solidcommunity.au):
 
 <!-- + **Android**
-[apk](https://solidcommunity.au/installers/notepod.apk);
+[apk](https://solidcommunity.au/installers/communitypod.apk);
 + **GNU/Linux**
-[snap](https://solidcommunity.au/installers/notepod_amd64.snap) or
-[deb](https://solidcommunity.au/installers/notepod_amd64.deb) or
-[zip](https://solidcommunity.au/installers/notepod-linux.zip);
+[snap](https://solidcommunity.au/installers/communitypod_amd64.snap) or
+[deb](https://solidcommunity.au/installers/communitypod_amd64.deb) or
+[zip](https://solidcommunity.au/installers/communitypod-linux.zip);
 + **macOS**
-[dmg](https://solidcommunity.au/installers/notepod-macos-unsigned.dmg) or
-[zip](https://solidcommunity.au/installers/notepod-macos-unsigned.zip);
+[dmg](https://solidcommunity.au/installers/communitypod-macos-unsigned.dmg) or
+[zip](https://solidcommunity.au/installers/communitypod-macos-unsigned.zip);
 + **Windows**
-[zip](https://solidcommunity.au/installers/notepod-windows.zip) or
-[inno](https://solidcommunity.au/installers/notepod-windows-inno.exe). -->
+[zip](https://solidcommunity.au/installers/communitypod-windows.zip) or
+[inno](https://solidcommunity.au/installers/communitypod-windows-inno.exe). -->
 
 Contributions are welcome. Visit
 [github](https://github.com/jesscmoore/communitypod) to submit an issue or,

@@ -1,6 +1,6 @@
 # CommunityPod Change Log
 
-Noted here are the high level changes for the NotePod app.
+Noted here are the high level changes for the communitypod app.
 
 Guide: Each version update is noted here with a short user-oriented
 description of the update. The `[version timestamp user]` string is

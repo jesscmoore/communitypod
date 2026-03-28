@@ -234,6 +234,8 @@ ios/Runner.xcodeproj/
 ios/Runner.xcworkspace/
 ios/Runner/
 ios/RunnerTests/
+# Don't ignore plist, as not yet generated from project.yaml
+!ios/Runner/Info.plist
 
 # Backups of ios/macos project config yml and Podfile
 ios/Podfile-*

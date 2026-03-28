@@ -26,16 +26,17 @@ import 'package:flutter/material.dart';
 
 import 'package:solidui/solidui.dart';
 
-import 'package:notepod/constants/app.dart';
-import 'package:notepod/constants/ui.dart';
-import 'package:notepod/models/note.dart';
-import 'package:notepod/models/selected_note.dart';
-import 'package:notepod/notes/list_notes_screen.dart';
-import 'package:notepod/notes/non_readable_note.dart';
-import 'package:notepod/notes/view_note.dart';
-import 'package:notepod/widgets/note_item_subtitle.dart';
-import 'package:notepod/widgets/note_item_trailing_buttons.dart';
-import 'package:notepod/widgets/note_list_del_button.dart';
+import 'package:communitypod/constants/app.dart';
+import 'package:communitypod/constants/ui.dart';
+import 'package:communitypod/models/note.dart';
+import 'package:communitypod/models/selected_note.dart';
+import 'package:communitypod/notes/list_notes_screen.dart';
+import 'package:communitypod/notes/non_readable_note.dart';
+import 'package:communitypod/notes/view_note.dart';
+import 'package:communitypod/widgets/note_highlight_image.dart';
+import 'package:communitypod/widgets/note_item_subtitle.dart';
+import 'package:communitypod/widgets/note_item_trailing_buttons.dart';
+import 'package:communitypod/widgets/note_list_del_button.dart';
 
 /// A [stateful] widget to list notes accessible to the
 /// user.
@@ -81,11 +82,11 @@ class _ListNotesState extends State<ListNotes> {
   /// Initial sort by note filename order.
   bool _sortFilenameAscending = true;
 
-  // /// Initial sort by note owner order.
-  // bool _sortOwnerAscending = true;
+  /// Initial sort by note owner order.
+  bool _sortOwnerAscending = true;
 
-  // /// Initial sort by note owner order.
-  // bool _sortPermissionAscending = true;
+  /// Initial sort by note owner order.
+  bool _sortPermissionAscending = true;
 
   /// Note selection mode
   /// true: when one or more notes have been selected, false by default
@@ -111,12 +112,14 @@ class _ListNotesState extends State<ListNotes> {
   /// Scaffold controller
   late final SolidScaffoldController _scaffoldController;
 
-  /// Aspect ratio (width / height) for gridview
-  /// cards to display note items
-  late double cardAspectRatio = 2.0;
-
   /// Boolean describing whether window is narrow
   late bool isNarrow;
+
+  /// Boolean describing whether window is wide
+  late bool isWide;
+
+  /// Boolean describing whether window is very wide
+  late bool isVeryWide;
 
   @override
   void initState() {
@@ -203,43 +206,41 @@ class _ListNotesState extends State<ListNotes> {
     });
   }
 
-  // TODO: allow owner sorting if isWide after isWide added to Solidui
-  // /// Sort alphanumerically on note owner
-  // void _sortByOwner(bool ascending) {
-  //   setState(() {
-  //     _sortOwnerAscending = ascending;
+  /// Sort alphanumerically on note owner
+  void _sortByOwner(bool ascending) {
+    setState(() {
+      _sortOwnerAscending = ascending;
 
-  //     _foundNotes.sort(
-  //       (a, b) => _sortOwnerAscending
-  //           ? a.noteOwner.toLowerCase().compareTo(b.noteOwner.toLowerCase())
-  //           : b.noteOwner.toLowerCase().compareTo(a.noteOwner.toLowerCase()),
-  //     );
+      _foundNotes.sort(
+        (a, b) => _sortOwnerAscending
+            ? a.noteOwner.toLowerCase().compareTo(b.noteOwner.toLowerCase())
+            : b.noteOwner.toLowerCase().compareTo(a.noteOwner.toLowerCase()),
+      );
 
-  //     // Update current sort method
-  //     currSortMethod = 'sortByOwner';
-  //   });
-  // }
+      // Update current sort method
+      currSortMethod = 'sortByOwner';
+    });
+  }
 
-  // TODO: allow permission sorting if isWide after isWide added to Solidui
-  // /// Sort alphanumerically on note permissions
-  // void _sortByPermission(bool ascending) {
-  //   setState(() {
-  //     _sortPermissionAscending = ascending;
+  /// Sort alphanumerically on note permissions
+  void _sortByPermission(bool ascending) {
+    setState(() {
+      _sortPermissionAscending = ascending;
 
-  //     _foundNotes.sort(
-  //       (a, b) => _sortPermissionAscending
-  //           ? a.permissionList
-  //               .toLowerCase()
-  //               .compareTo(b.permissionList.toLowerCase())
-  //           : b.permissionList
-  //               .toLowerCase()
-  //               .compareTo(a.permissionList.toLowerCase()),
-  //     );
+      _foundNotes.sort(
+        (a, b) => _sortPermissionAscending
+            ? a.permissionList
+                .toLowerCase()
+                .compareTo(b.permissionList.toLowerCase())
+            : b.permissionList
+                .toLowerCase()
+                .compareTo(a.permissionList.toLowerCase()),
+      );
 
-  //     // Update current sort method
-  //     currSortMethod = 'sortByPermission';
-  //   });
-  // }
+      // Update current sort method
+      currSortMethod = 'sortByPermission';
+    });
+  }
 
   /// Search notes
   void _searchNotes(String enteredKeyword) {
@@ -287,10 +288,10 @@ class _ListNotesState extends State<ListNotes> {
         _sortByModDate(_sortModDateAscending);
       case 'sortByFilename':
         _sortByFilename(_sortFilenameAscending);
-      // case 'sortByOwner':
-      //   _sortByOwner(_sortOwnerAscending);
-      // case 'sortByPermission':
-      //   _sortByPermission(_sortPermissionAscending);
+      case 'sortByOwner':
+        _sortByOwner(_sortOwnerAscending);
+      case 'sortByPermission':
+        _sortByPermission(_sortPermissionAscending);
     }
   }
 
@@ -373,8 +374,14 @@ class _ListNotesState extends State<ListNotes> {
       builder: (context, constraints) {
         // Derive whether window is narrow
         isNarrow = WindowSize().isNarrowWindow(constraints);
-        // Calculate the aspect radio for grid cards
-        cardAspectRatio = NoteItemSize().calculateCardAspectRatio(constraints);
+        // Derive whether window wide
+        isWide = DisplayHelpers.isWideScreen(
+          context,
+        );
+        // Derive whether window very wide
+        isVeryWide = DisplayHelpers.isVeryWideScreen(
+          context,
+        );
         return SizedBox(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -392,9 +399,9 @@ class _ListNotesState extends State<ListNotes> {
                     TextField(
                       onChanged: (value) => _searchNotes(value),
                       decoration: const InputDecoration(
-                        labelText: 'Search notes',
+                        labelText: 'Search news',
                         hintText:
-                            'Enter text to match title, content, or properties of note files',
+                            'Enter text to match title, content, or properties of news post files',
                         prefixIcon: Icon(Icons.search),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(25.0)),
@@ -409,20 +416,22 @@ class _ListNotesState extends State<ListNotes> {
                         // Match color scheme of sorting TextButtons
                         selectedCount > 0
                             ? Text(
-                                'Selected: $selectedCount notes',
+                                selectedCount > 1
+                                    ? 'Selected: $selectedCount news posts'
+                                    : 'Selected: $selectedCount news post',
                                 style: TextStyle(
                                   color: theme.colorScheme.primary,
                                 ),
                               )
                             : _foundNotes.length > 1 || _foundNotes.isEmpty
                                 ? Text(
-                                    'Found ${_foundNotes.length} notes',
+                                    'Found ${_foundNotes.length} news posts',
                                     style: TextStyle(
                                       color: theme.colorScheme.primary,
                                     ),
                                   )
                                 : Text(
-                                    'Found ${_foundNotes.length} note',
+                                    'Found ${_foundNotes.length} news post',
                                     style: TextStyle(
                                       color: theme.colorScheme.primary,
                                     ),
@@ -498,40 +507,42 @@ class _ListNotesState extends State<ListNotes> {
                                 iconAlignment: IconAlignment.end,
                               ),
                             ],
-                            // // Owner Sort Label and Button
-                            // TextButton.icon(
-                            //   onPressed: () {
-                            //     _sortByOwner(!_sortOwnerAscending);
-                            //   },
-                            //   icon: Icon(
-                            //     _sortOwnerAscending
-                            //         ? Icons.arrow_drop_down
-                            //         : Icons.arrow_drop_up,
-                            //   ),
-                            //   label: const Text(
-                            //     'Owner',
-                            //   ),
-                            //   iconAlignment: IconAlignment.end,
-                            // ),
+                            if (isWide || isVeryWide) ...[
+                              // Owner Sort Label and Button
+                              TextButton.icon(
+                                onPressed: () {
+                                  _sortByOwner(!_sortOwnerAscending);
+                                },
+                                icon: Icon(
+                                  _sortOwnerAscending
+                                      ? Icons.arrow_drop_down
+                                      : Icons.arrow_drop_up,
+                                ),
+                                label: const Text(
+                                  'Owner',
+                                ),
+                                iconAlignment: IconAlignment.end,
+                              ),
+                            ],
                             // Only display permissions sort
                             // when window is not narrow
-                            // if (!isNarrow) ...[
-                            //   // Permission Sort Label and Button
-                            //   TextButton.icon(
-                            //     onPressed: () {
-                            //       _sortByPermission(!_sortPermissionAscending);
-                            //     },
-                            //     icon: Icon(
-                            //       _sortPermissionAscending
-                            //           ? Icons.arrow_drop_down
-                            //           : Icons.arrow_drop_up,
-                            //     ),
-                            //     label: const Text(
-                            //       'Permission',
-                            //     ),
-                            //     iconAlignment: IconAlignment.end,
-                            //   ),
-                            // ],
+                            if (isVeryWide) ...[
+                              // Permission Sort Label and Button
+                              TextButton.icon(
+                                onPressed: () {
+                                  _sortByPermission(!_sortPermissionAscending);
+                                },
+                                icon: Icon(
+                                  _sortPermissionAscending
+                                      ? Icons.arrow_drop_down
+                                      : Icons.arrow_drop_up,
+                                ),
+                                label: const Text(
+                                  'Permission',
+                                ),
+                                iconAlignment: IconAlignment.end,
+                              ),
+                            ],
                           ],
                         ),
                       ],
@@ -543,100 +554,108 @@ class _ListNotesState extends State<ListNotes> {
                 child: Scrollbar(
                   thumbVisibility: true,
                   controller: _scrollController,
-                  child: GridView.builder(
+                  child: ListView.builder(
                     controller: _scrollController,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      // Aspect ratio calculated from LayoutBuilder box constraints
-                      crossAxisCount: 1,
-                      childAspectRatio: cardAspectRatio,
-                    ),
                     padding: const EdgeInsets.all(10),
                     itemCount: _foundNotes.length,
                     itemBuilder: (context, index) => Card(
-                      child: Center(
-                        child: Container(
-                          // Show color decoration when selected
-                          decoration: _foundNotes[index].isSelected
-                              ? BoxDecoration(
-                                  color: theme.colorScheme.onInverseSurface,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(5),
-                                  ),
-                                )
-                              : const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                ),
-                          child: ListTile(
-                            // Select and count selected notes, including whether
-                            // an externally owned note is selected
-                            leading: SizedBox(
-                              width: NoteIconSize.width,
-                              child: Center(
-                                child: Ink(
-                                  decoration: buttonShapeList,
-                                  child: IconButton(
-                                    icon: _foundNotes[index].isSelected
-                                        ? const Icon(Icons.done)
-                                        : const Icon(Icons.edit_document),
-                                    onPressed: () {
-                                      updateSelectionMode(
-                                        _isSelectionMode,
-                                        index,
-                                      );
-                                      updateSelected(index);
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ),
-                            // Note info
-                            title: (_foundNotes[index]
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          NoteHighlightImage(
+                            imageUrl: _foundNotes[index]
                                     .permissionList
-                                    .contains('read'))
-                                ? Text(
-                                    _foundNotes[index].content!.noteTitle,
-                                    maxLines:
-                                        (!isNarrow) ? 1 : 3, // Limit lines
-                                    overflow: TextOverflow.ellipsis,
-                                  )
-                                : const Text(''),
-                            // Note item subtitle
-                            subtitle: NoteItemSubtitle(
-                              note: _foundNotes[index],
-                              isNarrow: isNarrow,
-                            ),
-                            // Define width to avoid consuming full width
-                            trailing: SizedBox(
-                              height: 60,
-                              width: 120,
-                              child: NoteItemTrailingButtons(
-                                note: _foundNotes[index],
-                                scaffoldController: _scaffoldController,
+                                    .contains('read')
+                                ? _foundNotes[index].content?.highlightImageUrl
+                                : null,
+                          ),
+                          Center(
+                            child: Container(
+                              // Show color decoration when selected
+                              decoration: _foundNotes[index].isSelected
+                                  ? BoxDecoration(
+                                      color: theme.colorScheme.onInverseSurface,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(5),
+                                      ),
+                                    )
+                                  : const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5)),
+                                    ),
+                              child: ListTile(
+                                // Select and count selected notes, including whether
+                                // an externally owned note is selected
+                                leading: SizedBox(
+                                  width: NoteIconSize.width,
+                                  child: Center(
+                                    child: Ink(
+                                      decoration: buttonShapeList,
+                                      child: IconButton(
+                                        icon: _foundNotes[index].isSelected
+                                            ? const Icon(Icons.done)
+                                            : const Icon(Icons.edit_document),
+                                        onPressed: () {
+                                          updateSelectionMode(
+                                            _isSelectionMode,
+                                            index,
+                                          );
+                                          updateSelected(index);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                // Note info
+                                title: (_foundNotes[index]
+                                        .permissionList
+                                        .contains('read'))
+                                    ? Text(
+                                        _foundNotes[index].content!.noteTitle,
+                                        maxLines:
+                                            (!isNarrow) ? 1 : 3, // Limit lines
+                                        overflow: TextOverflow.ellipsis,
+                                      )
+                                    : const Text(''),
+                                // Note item subtitle
+                                subtitle: NoteItemSubtitle(
+                                  note: _foundNotes[index],
+                                  isNarrow: isNarrow,
+                                ),
+                                // Define width to avoid consuming full width
+                                trailing: SizedBox(
+                                  height: 60,
+                                  width: 120,
+                                  child: NoteItemTrailingButtons(
+                                    note: _foundNotes[index],
+                                    scaffoldController: _scaffoldController,
+                                  ),
+                                ),
+
+                                onTap: () {
+                                  // Open note if read in permissions
+                                  String access =
+                                      _foundNotes[index].permissionList;
+                                  if (access.contains('read')) {
+                                    _scaffoldController.navigateToSubpage(
+                                      ViewNote(
+                                        note: _foundNotes[index],
+                                        scaffoldController: _scaffoldController,
+                                      ),
+                                    );
+                                  } else {
+                                    _scaffoldController.navigateToSubpage(
+                                      NonReadableNote(
+                                        note: _foundNotes[index],
+                                        scaffoldController: _scaffoldController,
+                                      ),
+                                    );
+                                  }
+                                },
                               ),
                             ),
-
-                            onTap: () {
-                              // Open note if read in permissions
-                              String access = _foundNotes[index].permissionList;
-                              if (access.contains('read')) {
-                                _scaffoldController.navigateToSubpage(
-                                  ViewNote(
-                                    note: _foundNotes[index],
-                                    scaffoldController: _scaffoldController,
-                                  ),
-                                );
-                              } else {
-                                _scaffoldController.navigateToSubpage(
-                                  NonReadableNote(
-                                    note: _foundNotes[index],
-                                    scaffoldController: _scaffoldController,
-                                  ),
-                                );
-                              }
-                            },
                           ),
-                        ),
+                        ],
                       ),
                     ),
                   ),

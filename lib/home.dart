@@ -1,4 +1,4 @@
-/// NotePod - The application's home page.
+/// CommunityPod - The application's home page.
 ///
 // Time-stamp: <Friday 2025-08-15 09:14:37 +1000 Graham Williams>
 ///
@@ -29,10 +29,10 @@ import 'package:flutter/material.dart';
 import 'package:solidpod/solidpod.dart';
 import 'package:solidui/solidui.dart';
 
-import 'package:notepod/constants/app.dart';
-import 'package:notepod/notes/list_my_notes_screen.dart';
-import 'package:notepod/notes/list_notes_screen.dart';
-import 'package:notepod/notes/new_note.dart';
+import 'package:communitypod/constants/app.dart';
+import 'package:communitypod/notes/list_my_notes_screen.dart';
+import 'package:communitypod/notes/list_notes_screen.dart';
+import 'package:communitypod/notes/new_note.dart';
 
 class AppHomePage extends StatefulWidget {
   /// Initialise widget variables.
@@ -85,22 +85,10 @@ class AppHomePageState extends State<AppHomePage> {
           // tooltip: 'Custom version tooltip',
         ),
         actions: [
-          // New Note
-          SolidAppBarAction(
-            icon: Icons.add_circle,
-            tooltip: newNoteToolTip,
-            onPressed: () {
-              scaffoldController.navigateToSubpage(
-                NewNote(
-                  scaffoldController: scaffoldController,
-                ),
-              );
-            },
-          ),
           // All Accessible Notes
           SolidAppBarAction(
-            icon: Icons.view_list,
-            tooltip: combinedNotesToolTip,
+            icon: Icons.newspaper,
+            tooltip: combinedNewsToolTip,
             onPressed: () {
               scaffoldController.navigateToSubpage(
                 ListNotesScreen(
@@ -113,10 +101,22 @@ class AppHomePageState extends State<AppHomePage> {
           SolidAppBarAction(
             // More gender neutral icon
             icon: Icons.person_3,
-            tooltip: myNotesToolTip,
+            tooltip: myNewsToolTip,
             onPressed: () {
               scaffoldController.navigateToSubpage(
                 ListMyNotesScreen(
+                  scaffoldController: scaffoldController,
+                ),
+              );
+            },
+          ),
+          // New Note
+          SolidAppBarAction(
+            icon: Icons.post_add_rounded,
+            tooltip: newNewsToolTip,
+            onPressed: () {
+              scaffoldController.navigateToSubpage(
+                NewNote(
                   scaffoldController: scaffoldController,
                 ),
               );
@@ -127,27 +127,28 @@ class AppHomePageState extends State<AppHomePage> {
       menu: [
         // All Accessible Notes
         SolidMenuItem(
-          title: combinedNotesTitle,
-          icon: Icons.view_list,
+          title: combinedNewsTitle,
+          icon: Icons.newspaper,
           child: ListNotesScreen(scaffoldController: scaffoldController),
-          tooltip: combinedNotesToolTip,
+          tooltip: combinedNewsToolTip,
         ),
         // My Notes
         SolidMenuItem(
-          title: myNotesTitle,
+          title: myNewsTitle,
           // More gender neutral icon
           icon: Icons.person_3,
           child: ListMyNotesScreen(scaffoldController: scaffoldController),
-          tooltip: myNotesToolTip,
+          tooltip: myNewsToolTip,
         ),
         // New Note
         SolidMenuItem(
-          title: newNoteTitle,
-          icon: Icons.add_circle,
+          title: newNewsPostTitle,
+          // Or Icons.add_circle
+          icon: Icons.post_add_rounded,
           child: NewNote(
             scaffoldController: scaffoldController,
           ),
-          tooltip: newNoteToolTip,
+          tooltip: newNewsToolTip,
         ),
       ],
       statusBar: SolidStatusBarConfig(

@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:new_loading_indicator/new_loading_indicator.dart';
 
-import 'package:notepod/constants/colours.dart';
+import 'package:communitypod/constants/colours.dart';
 
 Future<dynamic> showAnimationDialog(
   BuildContext context,
@@ -51,7 +51,7 @@ Future<dynamic> showAnimationDialog(
                 // Colours work in light and dark themes
                 LoadingIndicator(
                   indicatorType: Indicator.ballScaleRipple,
-                  colors: defaultNotepodColors,
+                  colors: defaultColors,
                   strokeWidth: 4.0,
                   pathBackgroundColor: showPathBackground
                       ? const Color.fromARGB(59, 0, 0, 0)

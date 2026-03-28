@@ -27,7 +27,7 @@ library;
 
 import 'package:solidpod/solidpod.dart';
 
-import 'package:notepod/constants/turtle_structures.dart';
+import 'package:communitypod/constants/turtle_structures.dart';
 
 /// Base data model for the nested note within a note object
 
@@ -86,4 +86,21 @@ class NoteContent {
       authUsers: authUsers ?? this.authUsers,
     );
   }
+
+  /// Returns the URL of the first markdown image in [noteContent], or null
+  /// if the note contains no images.
+
+  String? get highlightImageUrl {
+    final match = RegExp(r'!\[.*?\]\((.*?)\)').firstMatch(noteContent);
+    return match?.group(1);
+  }
+
+  /// Returns [noteContent] with all markdown image tags removed,
+  /// surrounding whitespace trimmed, and empty lines removed.
+
+  String get contentWithoutImages => noteContent
+      .split('\n')
+      .map((line) => line.replaceAll(RegExp(r'!\[.*?\]\(.*?\)'), '').trim())
+      .where((line) => line.isNotEmpty)
+      .join('\n');
 }

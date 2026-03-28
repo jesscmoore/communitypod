@@ -81,6 +81,6 @@ NewNoteEditor.png
 
 ![image](screenshots/macOS/NewNoteEditor.png)
 
-SharedNotesList.png
+SharedNewsList.png
 
-![image](screenshots/macOS/SharedNotesList.png)
+![image](screenshots/macOS/SharedNewsList.png)

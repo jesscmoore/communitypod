@@ -35,9 +35,9 @@ import 'package:communitypod/utils/turtle/parsing_utils.dart';
 /// Handle communitypod to/from Turtle serialization operations.
 
 class TurtleSerializer {
-  /// Parses a note from Turtle content.
+  /// Parses a news object from Turtle content.
 
-  static NewsContent? noteFromTurtle(String ttlContent) {
+  static NewsContent? newsFromTurtle(String ttlContent) {
     try {
       // safeParseTtl parses TTL to map
 
@@ -49,7 +49,7 @@ class TurtleSerializer {
       String? modifiedDateTime;
       String? newsContent;
 
-      // Find note resource and extract information.
+      // Find news resource and extract information.
 
       for (final subject in triples.keys) {
         final predicates = triples[subject]!;
@@ -69,7 +69,7 @@ class TurtleSerializer {
         }
       }
 
-      // Create the note object
+      // Create the news object
 
       return NewsContent(
         newsTitle: newsTitle!,

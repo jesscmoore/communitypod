@@ -49,7 +49,7 @@ import 'package:communitypod/widgets/loading_animation.dart' as loading;
 class NewsFileHelper with PodOperationsMixin {
   NewsFileHelper();
 
-  /// Scans the note pod directory for note files.
+  /// Scans the app directory in pod for news files.
   ///
   /// Arguments: none.
   /// Returns: list of pod owner's files.
@@ -100,15 +100,15 @@ class NewsFileHelper with PodOperationsMixin {
     }
   }
 
-  /// Parses external note file details from latest log map
-  /// entry for note file.
+  /// Parses external file details from latest log map
+  /// entry for news file.
   ///
   /// Arguments:
   /// - [logRecordOfFile] - Log record of the external
-  /// note file shared to user.
+  /// news file shared to user.
   /// - [fileUrl] - URL of external file shared to user.
   ///
-  /// Returns: parsed map of details of external note file.
+  /// Returns: parsed map of details of external news file.
 
   static News? extFileDetailsFromLog({
     required Map logRecordOfFile,
@@ -124,7 +124,7 @@ class NewsFileHelper with PodOperationsMixin {
       String? permissionType;
       String? permissionList;
 
-      // Extract external note details information
+      // Extract external news file details information
 
       newsFileName = fileUrl.split('/').last;
       // debugPrint('newsFileName: $newsFileName');
@@ -174,12 +174,12 @@ class NewsFileHelper with PodOperationsMixin {
     }
   }
 
-  /// Safely deletes a note file
+  /// Safely deletes a news file
   ///
   /// Arguments:
   /// - [context] - The build context.
-  /// - [filename] - The note filename. For external notes this should be the note Url.
-  /// - [isExternal] - Boolean describing whether the note is an external note. (Default: false).
+  /// - [filename] - The news filename. For external news this should be the Url.
+  /// - [isExternal] - Boolean describing whether the file is an external file. (Default: false).
 
   Future<void> deleteNews({
     required BuildContext context,
@@ -194,7 +194,7 @@ class NewsFileHelper with PodOperationsMixin {
         await deleteExternalFile(filename);
       } catch (e) {
         // Error deleting external file
-        debugPrint('Error deleting to external note: $e');
+        debugPrint('Error deleting to external file: $e');
         rethrow;
       }
     } else {
@@ -205,29 +205,29 @@ class NewsFileHelper with PodOperationsMixin {
         final fileUrl = await getFileUrl('$basePath/$filename');
         await deleteFile(fileUrl: fileUrl);
       } catch (e) {
-        debugPrint('Error deleting user\'s note: $e');
+        debugPrint('Error deleting user\'s file: $e');
         rethrow;
       }
     }
   }
 
-  /// Function that starts a waiting indicator, calls steps to save note,
+  /// Function that starts a waiting indicator, calls steps to save file,
   /// and then navigates to the appropriate return page.
   ///
   /// Examples:
-  /// - `await saveNews(context: context, textController: textController, formKey: formKey, prevOwnNews: note, isExisting: true)` - to save note
+  /// - `await saveNews(context: context, textController: textController, formKey: formKey, prevOwnNews: news, isExisting: true)` - to save news file
   /// owned by the user.
-  /// - `await saveNews(context: context, textController: textController, formKey: formKey, prevExternalNews: note, isExisting: true, isExternal: true)`
-  /// - to save an externally owned note.
+  /// - `await saveNews(context: context, textController: textController, formKey: formKey, prevExternalNews: news, isExisting: true, isExternal: true)`
+  /// - to save an externally owned news file.
   ///
   /// - [context] - The build context.
-  /// - [textController] - Text controller of the note text content editor.
-  /// - [formKey] - Key of the form to edit note metadata.
+  /// - [textController] - Text controller of the news text content editor.
+  /// - [formKey] - Key of the form to edit news metadata.
   ///   [scaffoldController] - Controller for the Solid scaffold.
-  /// - [prevNews] - Optional existing note data object. Required if isExisting is true.
-  /// - [isExternal] - Optional boolean denoting whether note is externally
+  /// - [prevNews] - Optional existing news data object. Required if isExisting is true.
+  /// - [isExternal] - Optional boolean denoting whether news is externally
   /// owned. (Default: false).
-  /// - [isExisting] - Optional boolean denoting whether note already
+  /// - [isExisting] - Optional boolean denoting whether news already
   /// exists. (Default: false).
 
   Future<void> saveNews({
@@ -240,11 +240,11 @@ class NewsFileHelper with PodOperationsMixin {
     bool isExisting = false,
   }) async {
     if (formKey.currentState?.saveAndValidate() ?? false) {
-      // Compares to prevNewsData if previous note data provided
+      // Compares to prevNewsData if previous news data provided
       // Adds sharing metadata if shared==true
 
       Map formData = formKey.currentState?.value as Map;
-      String noteText = textController.text;
+      String newsText = textController.text;
       final String prevNewsTitle;
       final String prevNewsContent;
       final News updatedNews;
@@ -259,12 +259,12 @@ class NewsFileHelper with PodOperationsMixin {
           DateFormat('yyyyMMddTHHmmss').format(DateTime.now()).toString();
 
       if (isExisting) {
-        // Retrieve existing note title and content for comparison
+        // Retrieve existing title and content for comparison
         prevNewsTitle = prevNews!.content!.newsTitle;
         prevNewsContent = prevNews.content!.newsContent;
         // Compare updated title and content to existing
         // title and content
-        if (newsTitle == prevNewsTitle && noteText == prevNewsContent) {
+        if (newsTitle == prevNewsTitle && newsText == prevNewsContent) {
           showErrDialog(context, ErrMsg.noChanges);
         } else {
           // Loading animation
@@ -274,12 +274,12 @@ class NewsFileHelper with PodOperationsMixin {
             false,
           );
 
-          // Update content of note
+          // Update content
           try {
             updatedContent = prevNews.content!.copyWith(
               modifiedDateTime: modifiedDateTimeStr,
               newsTitle: newsTitle,
-              newsContent: noteText,
+              newsContent: newsText,
             );
             updatedNews = prevNews.copyWith(content: updatedContent);
           } on Exception catch (e) {
@@ -290,7 +290,7 @@ class NewsFileHelper with PodOperationsMixin {
           }
 
           if (isExternal) {
-            // Save external note
+            // Save external
             try {
               if (!context.mounted) return;
 
@@ -299,8 +299,8 @@ class NewsFileHelper with PodOperationsMixin {
               debugPrint('newsFileName: ${prevNews.newsFileName}');
               debugPrint('newsOwner: ${prevNews.newsOwner}');
 
-              // External note
-              // Encrypt note, create TTL, update file in POD
+              // External
+              // Encrypt, create TTL, update file in POD
               await saveNewsToPod(
                 context: context,
                 // Use existing file url
@@ -322,8 +322,8 @@ class NewsFileHelper with PodOperationsMixin {
             try {
               if (!context.mounted) return;
 
-              // Edited my note
-              // Encrypt note, create TTL, update file in POD
+              // Edited my file
+              // Encrypt, create TTL, update file in POD
               await saveNewsToPod(
                 context: context,
                 // Use existing filename
@@ -342,10 +342,10 @@ class NewsFileHelper with PodOperationsMixin {
           }
         }
       } else {
-        // Newly created note (not editing previous note)
+        // Newly created (not editing previous file)
 
-        // Check note content is not empty
-        if (noteText.trim() != '') {
+        // Check content is not empty
+        if (newsText.trim() != '') {
           try {
             // Loading animation
             loading.showAnimationDialog(
@@ -354,15 +354,15 @@ class NewsFileHelper with PodOperationsMixin {
               false,
             );
 
-            // Create new note data structure
+            // Create new news content data structure
             final newContent = NewsContent(
               createdDateTime: modifiedDateTimeStr,
               modifiedDateTime: modifiedDateTimeStr,
               newsTitle: newsTitle,
-              newsContent: noteText,
+              newsContent: newsText,
             );
 
-            // Encrypt note, create TTL and write to file in POD
+            // Encrypt, create TTL and write to file in POD
             if (!context.mounted) return;
 
             await saveNewsToPod(
@@ -379,7 +379,7 @@ class NewsFileHelper with PodOperationsMixin {
             debugPrint('Exception (saving new my note):\n $e');
           }
         } else {
-          // No note content message
+          // No content message
           showErrDialog(context, ErrMsg.noContent);
         }
       }
@@ -391,27 +391,27 @@ class NewsFileHelper with PodOperationsMixin {
     }
   }
 
-  /// Write note to Pod and navigate to return page or display error dialog
+  /// Write news to file in Pod and navigate to return page or display error dialog
   /// if write to Pod failed to return a successful SolidCallFunctionStatus.
   ///
   /// Examples:
   /// - `await saveNewsToPod(context: context, data: updatedContent, newsFileName: newsFileName, childPage: ListMyNewsScreen(), scaffoldController: scaffoldController)` - to
-  /// save a note owned by the user.
+  /// save a news file owned by the user.
   /// - `await saveNewsToPod(context: context, data: updatedContent,
   /// childPage: ListMyNewsScreen(), newsUrl: newsUrl, newsOwner: newsOwner,
-  /// isExternal: true, scaffoldController: scaffoldController)` - to save an externally owned note.
+  /// isExternal: true, scaffoldController: scaffoldController)` - to save an externally owned news file.
   ///
   /// - [context] - The build context.
-  /// - [data] - The note content data to be encrypted and written to Pod.
-  /// - [childPage] - The destination widget to navigate to after note is saved.
+  /// - [data] - The news content data to be encrypted and written to file in Pod.
+  /// - [childPage] - The destination widget to navigate to after news file is saved.
   ///   [scaffoldController] - Controller for the Solid scaffold.
-  /// - [newsFileName] - Optional filename. Required for saving user's own notes.
-  /// - [newsUrl] - Optional note file url. Required for saving notes
+  /// - [newsFileName] - Optional filename. Required for saving user's own news file.
+  /// - [newsUrl] - Optional news file url. Required for saving news files
   /// that are externally owned.
-  /// - [newsOwner] - Optional note owner webId. Required for saving notes
+  /// - [newsOwner] - Optional news owner webId. Required for saving news
   /// that are externally owned.
-  /// - [overwrite] - Optional boolean defining whether updating an existing owner's note.
-  /// - [isExternal] - Optional boolean defining whether writing an external note.
+  /// - [overwrite] - Optional boolean defining whether updating an existing owner's news file.
+  /// - [isExternal] - Optional boolean defining whether writing an external news file.
 
   Future<void> saveNewsToPod({
     required BuildContext context,
@@ -425,8 +425,8 @@ class NewsFileHelper with PodOperationsMixin {
     bool isExternal = false,
   }) async {
     try {
-      // Encrypt note text using created time as the key
-      // av: 20250519 - We need to encrypt the note text because
+      // Encrypt text using created time as the key
+      // av: 20250519 - We need to encrypt the text because
       // at the moment rdflib cannot parse multiline text with
       // # (hash) values in them.
       String encNewsText = encryptVal(
@@ -464,7 +464,7 @@ class NewsFileHelper with PodOperationsMixin {
       if (!context.mounted) return;
 
       Navigator.of(context, rootNavigator: true)
-          .pop(); // Dismiss the saving note dialog
+          .pop(); // Dismiss the saving dialog
 
       scaffoldController.navigateToSubpage(childPage);
 
@@ -473,7 +473,7 @@ class NewsFileHelper with PodOperationsMixin {
       }
     } on Exception catch (e) {
       debugPrint(
-        'Exception (encrypting and saving note, and navigating to return page):\n $e',
+        'Exception (encrypting and saving news file, and navigating to return page):\n $e',
       );
     }
   }

@@ -27,9 +27,9 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/common/rest_api/rest_api.dart';
 import 'package:communitypod/constants/app.dart';
-import 'package:communitypod/models/note.dart';
-import 'package:communitypod/models/notes_call_result.dart';
-import 'package:communitypod/models/selected_note.dart';
+import 'package:communitypod/models/news.dart';
+import 'package:communitypod/models/news_call_result.dart';
+import 'package:communitypod/models/selected_news.dart';
 import 'package:communitypod/notes/list_notes.dart';
 import 'package:communitypod/notes/new_note.dart';
 import 'package:communitypod/widgets/err_card.dart';

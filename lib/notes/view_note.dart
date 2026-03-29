@@ -31,7 +31,7 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/constants/colours.dart';
 import 'package:communitypod/constants/ui.dart';
-import 'package:communitypod/models/note.dart';
+import 'package:communitypod/models/news.dart';
 import 'package:communitypod/notes/edit_note.dart';
 import 'package:communitypod/notes/list_notes_screen.dart';
 import 'package:communitypod/notes/share_note.dart';

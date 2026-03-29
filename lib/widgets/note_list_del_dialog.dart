@@ -30,7 +30,7 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/constants/app.dart';
 import 'package:communitypod/constants/ui.dart';
-import 'package:communitypod/models/selected_note.dart';
+import 'package:communitypod/models/selected_news.dart';
 import 'package:communitypod/widgets/note_back_button.dart';
 import 'package:communitypod/widgets/note_list_del_button.dart';
 

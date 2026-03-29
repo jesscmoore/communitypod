@@ -32,7 +32,7 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/constants/colours.dart';
 import 'package:communitypod/constants/turtle_structures.dart';
-import 'package:communitypod/models/note.dart';
+import 'package:communitypod/models/news.dart';
 import 'package:communitypod/widgets/save_dialog.dart';
 
 /// A stylised back button widget for news posts. On click it checks if edited data exists, if found it asks if the user wants to save or not save or cancel the back action. Then it navigates to the provided child page.

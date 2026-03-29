@@ -28,8 +28,8 @@ library;
 import 'package:solidpod/solidpod.dart';
 
 import 'package:communitypod/constants/turtle_structures.dart';
-import 'package:communitypod/models/note_content.dart';
-import 'package:communitypod/models/own_note.dart';
+import 'package:communitypod/models/news_content.dart';
+import 'package:communitypod/models/own_news.dart';
 
 /// Data model for any news object
 

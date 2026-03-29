@@ -31,10 +31,10 @@ import 'package:solidpod/solidpod.dart';
 
 import 'package:communitypod/common/rest_api/file_helper.dart';
 import 'package:communitypod/models/call_status.dart';
-import 'package:communitypod/models/note.dart';
-import 'package:communitypod/models/note_content.dart';
-import 'package:communitypod/models/notes_call_result.dart';
-import 'package:communitypod/models/selected_note.dart';
+import 'package:communitypod/models/news.dart';
+import 'package:communitypod/models/news_content.dart';
+import 'package:communitypod/models/news_call_result.dart';
+import 'package:communitypod/models/selected_news.dart';
 import 'package:communitypod/utils/turtle/note_serializer.dart';
 
 /// Get the list of user's note objects.

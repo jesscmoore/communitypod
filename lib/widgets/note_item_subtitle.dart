@@ -24,7 +24,7 @@ library;
 
 import 'package:flutter/material.dart';
 
-import 'package:communitypod/models/note.dart';
+import 'package:communitypod/models/news.dart';
 import 'package:communitypod/utils/get_id.dart';
 import 'package:communitypod/utils/misc.dart';
 

@@ -28,8 +28,8 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/constants/app.dart';
 import 'package:communitypod/constants/ui.dart';
-import 'package:communitypod/models/note.dart';
-import 'package:communitypod/models/selected_note.dart';
+import 'package:communitypod/models/news.dart';
+import 'package:communitypod/models/selected_news.dart';
 import 'package:communitypod/notes/list_notes_screen.dart';
 import 'package:communitypod/notes/non_readable_note.dart';
 import 'package:communitypod/notes/view_note.dart';

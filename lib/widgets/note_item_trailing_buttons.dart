@@ -26,7 +26,7 @@ import 'package:flutter/material.dart';
 
 import 'package:solidui/solidui.dart';
 
-import 'package:communitypod/models/note.dart';
+import 'package:communitypod/models/news.dart';
 import 'package:communitypod/notes/list_notes_screen.dart';
 import 'package:communitypod/notes/share_note.dart';
 import 'package:communitypod/widgets/simple_action_button.dart';

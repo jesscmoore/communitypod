@@ -25,8 +25,8 @@
 
 library;
 
-import 'package:communitypod/models/note.dart';
-import 'package:communitypod/models/selected_note.dart';
+import 'package:communitypod/models/news.dart';
+import 'package:communitypod/models/selected_news.dart';
 
 /// Data model for result of get news list future call
 

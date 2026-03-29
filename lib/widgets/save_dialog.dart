@@ -32,7 +32,7 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/common/rest_api/file_helper.dart';
 import 'package:communitypod/constants/app.dart';
-import 'package:communitypod/models/note.dart';
+import 'package:communitypod/models/news.dart';
 
 /// A save note options dialog providing the user with the options to
 /// save or don't save the note, or cancel their back action.

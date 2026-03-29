@@ -34,7 +34,7 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/constants/app.dart';
 import 'package:communitypod/constants/turtle_structures.dart';
-import 'package:communitypod/models/note.dart';
+import 'package:communitypod/models/news.dart';
 import 'package:communitypod/widgets/markdown_editor.dart';
 import 'package:communitypod/widgets/note_back_button.dart';
 import 'package:communitypod/widgets/note_save_button.dart';

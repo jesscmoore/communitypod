@@ -62,8 +62,8 @@ class ItemTrailingButtons extends StatelessWidget {
           SimpleActionButton(
             icon: const Icon(Icons.share),
             childPage: ShareNews(
-              noteUrl: _note.noteUrl,
-              noteOwner: _note.noteOwner,
+              newsUrl: _note.newsUrl,
+              newsOwner: _note.newsOwner,
               isExternal: _note.isExternalRes,
               backPage: ListNewsScreen(
                 scaffoldController: _scaffoldController,

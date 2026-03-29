@@ -40,12 +40,12 @@ import 'package:communitypod/widgets/show_path_metadata.dart';
 /// Arguments:
 /// - [createdDateTime] - note created date time.
 /// - [modifiedDateTime] - note last modified data time.
-/// - [noteOwner] - webId of note owner.
+/// - [newsOwner] - webId of note owner.
 /// - [permissionGranter] - webId of entity that shared the note
 /// to the user.
 /// - [permissionList] - list of permissions granted to the user.
-/// - [noteFileName] - note file name.
-/// - [noteUrl] - url of note.
+/// - [newsFileName] - note file name.
+/// - [newsUrl] - url of note.
 /// - [showDates] - flag describing whether to show data metadata of
 /// note.
 /// - [showFileName] - flag describing whether to show filename of
@@ -58,11 +58,11 @@ import 'package:communitypod/widgets/show_path_metadata.dart';
 class DisplayNewsMetadata extends StatelessWidget {
   final String createdDateTime;
   final String modifiedDateTime;
-  final String noteOwner;
+  final String newsOwner;
   final String? permissionGranter;
   final String? permissionList;
-  final String noteFileName;
-  final String noteUrl;
+  final String newsFileName;
+  final String newsUrl;
 
   final bool isExternal;
   final bool showDates;
@@ -74,11 +74,11 @@ class DisplayNewsMetadata extends StatelessWidget {
     super.key,
     this.createdDateTime = '',
     this.modifiedDateTime = '',
-    this.noteOwner = '',
+    this.newsOwner = '',
     this.permissionGranter,
     this.permissionList,
-    this.noteFileName = '',
-    this.noteUrl = '',
+    this.newsFileName = '',
+    this.newsUrl = '',
     this.isExternal = false,
     this.showDates = false,
     this.showFileName = false,
@@ -95,8 +95,8 @@ class DisplayNewsMetadata extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           // ShowFileName
-          if (showFileName && noteFileName.isNotEmpty)
-            ShowFilenameMetadata(filename: noteFileName),
+          if (showFileName && newsFileName.isNotEmpty)
+            ShowFilenameMetadata(filename: newsFileName),
           // ShowDates (created and modified)
           if (showDates &&
               createdDateTime.isNotEmpty &&
@@ -108,12 +108,12 @@ class DisplayNewsMetadata extends StatelessWidget {
           // Show sharing info (owner, provider, access list)
           if (showSharing)
             ShowAccessMetadata(
-              noteOwner: noteOwner,
+              newsOwner: newsOwner,
               permissionGranter: permissionGranter!,
               permissionList: permissionList!,
             ),
           // Show path info (filename and path)
-          if (showPathInfo && noteUrl != '') ShowPathMetadata(fileUrl: noteUrl),
+          if (showPathInfo && newsUrl != '') ShowPathMetadata(fileUrl: newsUrl),
           const SizedBox(height: 10),
         ],
       ),

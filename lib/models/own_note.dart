@@ -1,4 +1,4 @@
-/// Data models for user's notes
+/// Data models for user's news
 ///
 /// Copyright (C) 2023-2025, Software Innovation Institute
 ///
@@ -33,34 +33,34 @@ import 'package:communitypod/models/note_content.dart';
 /// Data model for user's note
 
 class OwnNews {
-  final String noteFileName;
-  final String noteUrl;
-  final String noteOwner;
+  final String newsFileName;
+  final String newsUrl;
+  final String newsOwner;
   NewsContent? content;
   final Map<dynamic, dynamic>? authUserList;
 
   OwnNews({
-    required this.noteFileName,
-    required this.noteUrl,
-    required this.noteOwner,
+    required this.newsFileName,
+    required this.newsUrl,
+    required this.newsOwner,
     this.content,
     this.authUserList,
   });
 
   factory OwnNews.fromJson(Map<String, dynamic> json) {
     return OwnNews(
-      noteFileName: json[noteFileNamePred],
-      noteUrl: json[noteUrlPred],
-      noteOwner: json[noteOwnerPred],
+      newsFileName: json[newsFileNamePred],
+      newsUrl: json[newsUrlPred],
+      newsOwner: json[newsOwnerPred],
       content: json[contentPred],
       authUserList: json[authUserPred],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        noteFileNamePred: noteFileName,
-        noteUrlPred: noteUrl,
-        noteOwnerPred: noteOwner,
+        newsFileNamePred: newsFileName,
+        newsUrlPred: newsUrl,
+        newsOwnerPred: newsOwner,
         contentPred: content,
         authUserPred: authUserList,
       };
@@ -69,16 +69,16 @@ class OwnNews {
   /// updated copy of another instance
 
   OwnNews copyWith({
-    String? noteFileName,
-    String? noteUrl,
-    String? noteOwner,
+    String? newsFileName,
+    String? newsUrl,
+    String? newsOwner,
     NewsContent? content,
     Map<dynamic, dynamic>? authUserList,
   }) {
     return OwnNews(
-      noteFileName: noteFileName ?? this.noteFileName,
-      noteUrl: noteUrl ?? this.noteUrl,
-      noteOwner: noteOwner ?? this.noteOwner,
+      newsFileName: newsFileName ?? this.newsFileName,
+      newsUrl: newsUrl ?? this.newsUrl,
+      newsOwner: newsOwner ?? this.newsOwner,
       content: content ?? this.content,
       authUserList: authUserList ?? this.authUserList,
     );

@@ -49,7 +49,7 @@ Container noteDisplayMarkdown(
   );
   // 20250717 jm Alt method retained for reference
   // MarkdownParse(
-  //   data: noteData[noteContentPred],
+  //   data: noteData[newsContentPred],
   //   // onTapHastag: (String name, String match) {
   //   //   // name => hashtag
   //   //   // match => #hashtag

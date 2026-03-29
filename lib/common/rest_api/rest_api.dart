@@ -57,7 +57,7 @@ Future<NewsCallResult> getOwnNewsList() async {
     final List<SelectedNews> unparseableNews = [];
 
     // Get note owner
-    final String noteOwner = await getWebId() ?? '';
+    final String newsOwner = await getWebId() ?? '';
 
     // Get file list in owner's Pod
     fileList = await NewsFileHelper().scanFileListDirectory();
@@ -79,28 +79,28 @@ Future<NewsCallResult> getOwnNewsList() async {
 
     // Read note file content and fetch file Urls
     List<String> fileUrls = await Future.wait(futuresFileUrl);
-    List<String> noteContentResults =
+    List<String> newsContentResults =
         await Future.wait(futuresNewsContentResult);
 
     // Retrieve note data
     for (int i = 0; i < fileList.length; i++) {
       // Extract ttl data to content data of notes object
-      if (noteContentResults[i].isNotEmpty) {
+      if (newsContentResults[i].isNotEmpty) {
         try {
           // Extract note from turtle string
           final NewsContent? content;
           content = TurtleSerializer.noteFromTurtle(
-            noteContentResults[i],
+            newsContentResults[i],
           );
 
           if (content != null) {
             // Add note content data to note objects list
-            // where user = noteOwner
+            // where user = newsOwner
             notes.add(
               News(
-                noteFileName: fileList[i],
-                noteUrl: fileUrls[i],
-                noteOwner: noteOwner,
+                newsFileName: fileList[i],
+                newsUrl: fileUrls[i],
+                newsOwner: newsOwner,
                 content: content,
                 permissionList: 'append,read,write,control',
               ),
@@ -110,9 +110,9 @@ Future<NewsCallResult> getOwnNewsList() async {
             // Add note that failed parsing to bad notes list
             unparseableNews.add(
               SelectedNews(
-                noteFileName: fileList[i],
-                noteUrl: fileUrls[i],
-                noteOwner: noteOwner,
+                newsFileName: fileList[i],
+                newsUrl: fileUrls[i],
+                newsOwner: newsOwner,
               ),
             );
             debugPrint('Found unparseable file: ${fileList[i]}');
@@ -125,9 +125,9 @@ Future<NewsCallResult> getOwnNewsList() async {
         // If empty, add to unparseable file object list
         unparseableNews.add(
           SelectedNews(
-            noteFileName: fileList[i],
-            noteUrl: fileUrls[i],
-            noteOwner: noteOwner,
+            newsFileName: fileList[i],
+            newsUrl: fileUrls[i],
+            newsOwner: newsOwner,
           ),
         );
         debugPrint('Found empty file: ${fileList[i]}');
@@ -146,7 +146,7 @@ Future<NewsCallResult> getOwnNewsList() async {
       final NewsCallResult results;
 
       final List<String> fileList =
-          notes.map((note) => note.noteFileName).toList();
+          notes.map((note) => note.newsFileName).toList();
 
       final Map<dynamic, dynamic> permissionMaps = await readPermissionFileList(
         fileList: fileList,
@@ -155,7 +155,7 @@ Future<NewsCallResult> getOwnNewsList() async {
       fullNews = notes.addAuthUserLists(permissionMaps: permissionMaps);
 
       results = NewsCallResult(
-        notes: fullNews,
+        news: fullNews,
         unparseableNews: unparseableNews,
       );
       final endTime = DateTime.now();
@@ -284,9 +284,9 @@ Future<NewsCallResult> getExternalNewsList({
         } else if (extNewsWithContentResults[i] == FileCallStatus.parsingFail) {
           unparseableNews.add(
             SelectedNews(
-              noteFileName: notes[i].noteFileName,
-              noteUrl: notes[i].noteUrl,
-              noteOwner: notes[i].noteOwner,
+              newsFileName: notes[i].newsFileName,
+              newsUrl: notes[i].newsUrl,
+              newsOwner: notes[i].newsOwner,
             ),
           );
         } else if (extNewsWithContentResults[i] ==
@@ -300,7 +300,7 @@ Future<NewsCallResult> getExternalNewsList({
     }
 
     results = NewsCallResult(
-      notes: fullNews,
+      news: fullNews,
       nonExistentNews: nonExistentNews,
       unparseableNews: unparseableNews,
     );
@@ -340,15 +340,15 @@ Future<dynamic> getExternalNewsContent({
     }
 
     // Get decrypted note content from external file
-    final noteContentResult = await readExternalPod(
-      note.noteUrl,
+    final newsContentResult = await readExternalPod(
+      note.newsUrl,
     );
 
-    // Extract external note ttl data to noteContent
+    // Extract external note ttl data to newsContent
     try {
       // Deserialize note content
       final NewsContent? content;
-      content = TurtleSerializer.noteFromTurtle(noteContentResult);
+      content = TurtleSerializer.noteFromTurtle(newsContentResult);
 
       if (content != null) {
         // Add note content data to external notes object

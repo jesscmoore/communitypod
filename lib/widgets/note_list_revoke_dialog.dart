@@ -181,12 +181,12 @@ class _NewsRevokeDialogState extends State<NewsRevokeDialog> {
                         ),
                         child: ListTile(
                           title: Text(
-                            'News Url: ${widget.nonExistentNews[index].noteUrl}',
+                            'News Url: ${widget.nonExistentNews[index].newsUrl}',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
                           subtitle: Text(
-                            'Owner: ${getId(widget.nonExistentNews[index].noteOwner)} \nShared by: ${getId(widget.nonExistentNews[index].permissionGranter!)} \nPermissions: ${widget.nonExistentNews[index].permissionList}',
+                            'Owner: ${getId(widget.nonExistentNews[index].newsOwner)} \nShared by: ${getId(widget.nonExistentNews[index].permissionGranter!)} \nPermissions: ${widget.nonExistentNews[index].permissionList}',
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -210,7 +210,7 @@ class _NewsRevokeDialogState extends State<NewsRevokeDialog> {
                       scaffoldController: _scaffoldController,
                     ),
                     // Back button
-                    BackButton(
+                    NewsBackButton(
                       childPage: widget.childPage,
                       scaffoldController: _scaffoldController,
                     ),

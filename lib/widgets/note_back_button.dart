@@ -35,22 +35,22 @@ import 'package:communitypod/constants/turtle_structures.dart';
 import 'package:communitypod/models/note.dart';
 import 'package:communitypod/widgets/save_dialog.dart';
 
-/// A stylised back button widget for notes. On click it checks if edited data exists, if found it asks if the user wants to save or not save or cancel the back action. Then it navigates to the provided child page.
+/// A stylised back button widget for news posts. On click it checks if edited data exists, if found it asks if the user wants to save or not save or cancel the back action. Then it navigates to the provided child page.
 ///
 /// Arguments:
 /// - [childPage] - The child page to navigate back to.
 ///   [scaffoldController] - Controller for the Solid scaffold.
 /// - [textController] - Optional text controller if back is being called from note editor.
-/// - [formKey] - Key of the form to edit note metadata
-/// - [prevNews] - Optional existing user's note data object. Required
-/// for saving existing notes. (Default: null).
-/// - [isExternal] - Optional boolean denoting whether note is externally
+/// - [formKey] - Key of the form to edit news post metadata
+/// - [prevNews] - Optional existing user's news data object. Required
+/// for saving existing news posts. (Default: null).
+/// - [isExternal] - Optional boolean denoting whether news post is externally
 /// owned. (Default: false).
-/// - [isExisting] - Optional boolean denoting whether note already
+/// - [isExisting] - Optional boolean denoting whether news post already
 /// exists. (Default: false).
 
-class BackButton extends StatelessWidget {
-  const BackButton({
+class NewsBackButton extends StatelessWidget {
+  const NewsBackButton({
     super.key,
     required this.childPage,
     required this.scaffoldController,
@@ -84,14 +84,14 @@ class BackButton extends StatelessWidget {
           if (textController != null) {
             String noteText = textController!.text;
             Map formData = formKey?.currentState?.value as Map;
-            String noteTitle = formData[noteTitlePred].replaceAll('\n', '');
+            String newsTitle = formData[newsTitlePred].replaceAll('\n', '');
 
             if (isExisting) {
               // Get previous title and content
-              prevNewsTitle = prevNews!.content!.noteTitle;
-              prevNewsContent = prevNews!.content!.noteContent;
+              prevNewsTitle = prevNews!.content!.newsTitle;
+              prevNewsContent = prevNews!.content!.newsContent;
               // Check if title or content changed
-              if (noteTitle != prevNewsTitle || noteText != prevNewsContent) {
+              if (newsTitle != prevNewsTitle || noteText != prevNewsContent) {
                 showDialog<void>(
                   context: context,
                   barrierDismissible: false, // user must tap button!

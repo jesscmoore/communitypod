@@ -33,19 +33,19 @@ import 'package:communitypod/constants/app.dart';
 /// the permissions granted to the user.
 ///
 /// Arguments:
-/// - [noteOwner] - Owner of the note.
+/// - [newsOwner] - Owner of the note.
 /// - [permissionGranter] - Other user that shared the note to
 /// the user.
 /// - [permissionList] - List of permissions granted to the user.
 
 class ShowAccessMetadata extends StatelessWidget {
-  final String noteOwner;
+  final String newsOwner;
   final String? permissionGranter;
   final String permissionList;
 
   const ShowAccessMetadata({
     super.key,
-    required this.noteOwner,
+    required this.newsOwner,
     this.permissionGranter,
     required this.permissionList,
   });
@@ -63,7 +63,7 @@ class ShowAccessMetadata extends StatelessWidget {
                 child: Container(
                   padding: metadataPadding,
                   child: Text(
-                    'Owner: $noteOwner',
+                    'Owner: $newsOwner',
                     style: metadataTextStyle,
                   ),
                 ),

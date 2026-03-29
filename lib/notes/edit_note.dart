@@ -86,7 +86,7 @@ class EditNewsState extends State<EditNews> {
     _scaffoldController = widget.scaffoldController;
     // Initialise note content field
     _textController = TextEditingController();
-    _textController!.text = _note.content!.noteContent;
+    _textController!.text = _note.content!.newsContent;
     // Start listening to changes.
     _textController!.addListener(_renderMarkdown);
     _scrollController = ScrollController();
@@ -157,7 +157,7 @@ class EditNewsState extends State<EditNews> {
       ),
       data: data,
       prevNews: _note,
-      noteTitle: _note.content!.noteTitle,
+      newsTitle: _note.content!.newsTitle,
       isExisting: true,
       isExternal: _note.isExternalRes,
     );

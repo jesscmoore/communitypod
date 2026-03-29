@@ -18,7 +18,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
-/// Authors: Anushka Vidanage, Jess Moore
+/// Authors: Jess Moore
 
 library;
 
@@ -26,8 +26,7 @@ import 'package:flutter/material.dart';
 
 import 'package:solidpod/solidpod.dart';
 
-// const myNewsDir = 'mynotes';
-const noteFileNamePrefix = 'note-';
+const newsFileNamePrefix = 'news-';
 
 // IRIs (Internationalized Resource Identifiers).
 //
@@ -44,35 +43,35 @@ String communitypodTerms = 'https://solidcommunity.au/' 'predicates/terms#';
 String createdDateTimePred = 'createdDateTime';
 String createdDateTimePredErr = 'createdDateERROR';
 String modifiedDateTimePred = 'modifiedDateTime';
-String noteContentPred = 'noteContent';
-String noteTitlePred = 'noteTitle';
+String newsContentPred = 'newsContent';
+String newsTitlePred = 'newsTitle';
 //String encNewsContentPred = 'encNewsContent';
 String mePred = ':me';
 // 20251006 jess Keep meKey as ref, even though mePred is shorthand
 // String meKey = '#me';
 
-// All notes details
-String noteUrlPred = 'noteUrl';
-String noteFileNamePred = 'noteFileName';
-String noteOwnerPred = 'noteOwner';
+// All news details
+String newsUrlPred = 'newsUrl';
+String newsFileNamePred = 'newsFileName';
+String newsOwnerPred = 'newsOwner';
 String contentPred = 'content';
 String isSelectedPred = 'isSelected';
 
-// Shared notes details
+// Shared news details
 String sharedTimePred = 'sharedTime';
 String permissionGranterPred = 'permissionGranter';
 String permissionRecepientPred = 'permissionRecepient';
 String permissionTypePred = 'permissionType';
 String permissionListPred = 'permissionList';
 
-// Set up encrypted note file content
+// Set up encrypted news file content
 String genNewsTTLStr(
   String createdTimeStr,
   String updatedTimeStr,
-  String noteTitle,
-  String noteContent,
+  String newsTitle,
+  String newsContent,
 ) {
-  String noteTTLStr = '''@prefix : <#>.
+  String newsTTLStr = '''@prefix : <#>.
       @prefix foaf: <$foaf>.
       @prefix terms: <$terms>.
       @prefix communitypodTerms: <$communitypodTerms>.
@@ -81,14 +80,14 @@ String genNewsTTLStr(
           terms:title "News";
           communitypodTerms:$createdDateTimePred "$createdTimeStr";
           communitypodTerms:$modifiedDateTimePred "$updatedTimeStr";
-          communitypodTerms:$noteTitlePred "$noteTitle";
-          communitypodTerms:$noteContentPred "$noteContent".''';
+          communitypodTerms:$newsTitlePred "$newsTitle";
+          communitypodTerms:$newsContentPred "$newsContent".''';
 
-  // 20251008 jm: code to generate a corrupt note
+  // 20251008 jm: code to generate a corrupt news file
   // for testing purposes only.
   // Generates TTL with incorrect predicate
-  String noteTTLStrErr = '';
-  // String noteTTLStrErr = '''@prefix : <#>.
+  String newsTTLStrErr = '';
+  // String newsTTLStrErr = '''@prefix : <#>.
   //     @prefix foaf: <$foaf>.
   //     @prefix terms: <$terms>.
   //     @prefix communitypodTerms: <$communitypodTerms>.
@@ -97,23 +96,23 @@ String genNewsTTLStr(
   //         terms:title "News";
   //         communitypodTerms:$createdDateTimePredErr "$createdTimeStr";
   //         communitypodTerms:$modifiedDateTimePred "$updatedTimeStr";
-  //         communitypodTerms:$noteTitlePred "$noteTitle";
-  //         communitypodTerms:$noteContentPred "$noteContent".''';
+  //         communitypodTerms:$newsTitlePred "$newsTitle";
+  //         communitypodTerms:$newsContentPred "$newsContent".''';
 
   final String chosenTTL;
   // // Choose erroneous TTL
-  // chosenTTL = noteTTLStrErr;
+  // chosenTTL = newsTTLStrErr;
   // Choose correct TTL
-  chosenTTL = noteTTLStr;
+  chosenTTL = newsTTLStr;
 
-  if (chosenTTL == noteTTLStrErr) {
+  if (chosenTTL == newsTTLStrErr) {
     debugPrint(
-      'Writing note file using incorrect predicate $createdDateTimePredErr',
+      'Writing news file using incorrect predicate $createdDateTimePredErr',
     );
-  } else if (chosenTTL == noteTTLStr) {
-    debugPrint('Writing note file using correct predicates');
+  } else if (chosenTTL == newsTTLStr) {
+    debugPrint('Writing news file using correct predicates');
   }
 
   return chosenTTL;
-  // return noteTTLStr;
+  // return newsTTLStr;
 }

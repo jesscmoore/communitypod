@@ -44,10 +44,10 @@ class TurtleSerializer {
       final triples = TurtleParsingUtils.safeParseTtlToTriple(ttlContent);
       if (triples == null) return null;
 
-      String? noteTitle;
+      String? newsTitle;
       String? createdDateTime;
       String? modifiedDateTime;
-      String? noteContent;
+      String? newsContent;
 
       // Find note resource and extract information.
 
@@ -57,14 +57,14 @@ class TurtleSerializer {
         for (final predicate in predicates.keys) {
           final value = predicates[predicate]!;
 
-          if (predicate.contains(noteTitlePred)) {
-            noteTitle = value;
+          if (predicate.contains(newsTitlePred)) {
+            newsTitle = value;
           } else if (predicate.contains(createdDateTimePred)) {
             createdDateTime = value;
           } else if (predicate.contains(modifiedDateTimePred)) {
             modifiedDateTime = value;
-          } else if (predicate.contains(noteContentPred)) {
-            noteContent = decryptVal(value, createdDateTime!);
+          } else if (predicate.contains(newsContentPred)) {
+            newsContent = decryptVal(value, createdDateTime!);
           }
         }
       }
@@ -72,10 +72,10 @@ class TurtleSerializer {
       // Create the note object
 
       return NewsContent(
-        noteTitle: noteTitle!,
+        newsTitle: newsTitle!,
         createdDateTime: createdDateTime!,
         modifiedDateTime: modifiedDateTime!,
-        noteContent: noteContent!,
+        newsContent: newsContent!,
       );
     } catch (e) {
       return null;

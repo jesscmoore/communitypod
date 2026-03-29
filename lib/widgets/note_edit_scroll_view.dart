@@ -57,7 +57,7 @@ class NewsEditScrollView extends StatelessWidget {
     this.prevNews,
     this.isExternal = false,
     this.isExisting = false,
-    this.noteTitle,
+    this.newsTitle,
   })  : _textController = textController,
         _scrollController = scrollController,
         _scaffoldController = scaffoldController,
@@ -95,7 +95,7 @@ class NewsEditScrollView extends StatelessWidget {
   final bool isExisting;
 
   /// Title of note where note already exists
-  final String? noteTitle;
+  final String? newsTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +133,7 @@ class NewsEditScrollView extends StatelessWidget {
                 ),
                 // Back button
                 // Nav to view note or view isExternal note
-                BackButton(
+                NewsBackButton(
                   childPage: childPage,
                   textController: _textController,
                   formKey: formKey,
@@ -190,8 +190,8 @@ class NewsEditScrollView extends StatelessWidget {
                           // Edit existing note: populated text field with
                           // previous note data
                           FormBuilderTextField(
-                            name: noteTitlePred,
-                            initialValue: (isExisting) ? noteTitle : null,
+                            name: newsTitlePred,
+                            initialValue: (isExisting) ? newsTitle : null,
                             // Initial focus in title field
                             autofocus: true,
                             focusNode: _focusTitle,

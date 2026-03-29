@@ -94,13 +94,13 @@ class NewsListRevokeButton extends StatelessWidget {
                       // this non-existent file
 
                       await revokePermissionToDelFile(
-                        fileName: newsPost.noteUrl,
+                        fileName: newsPost.newsUrl,
                         isFileEncrypted: true,
                         permissionList:
                             newsPost.permissionList.split(',') as List<dynamic>,
                         recipientWebId:
                             newsPost.permissionRecepient!, // ie. the user
-                        ownerWebId: newsPost.noteOwner,
+                        ownerWebId: newsPost.newsOwner,
                         granterWebId: newsPost.permissionGranter!,
                         isFileUrl: true,
                       );

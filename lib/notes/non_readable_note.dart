@@ -95,13 +95,13 @@ class _NonReadableNewsState extends State<NonReadableNews> {
         controller: _scrollController,
         child: Column(
           children: <Widget>[
-            // Display note metadata - show sharing and path info but not dates (as requires noteContent)
+            // Display note metadata - show sharing and path info but not dates (as requires newsContent)
             DisplayNewsMetadata(
-              noteOwner: _note.noteOwner,
+              newsOwner: _note.newsOwner,
               permissionGranter: _note.permissionGranter!,
               permissionList: _note.permissionList,
-              noteFileName: _note.noteFileName,
-              noteUrl: _note.noteUrl,
+              newsFileName: _note.newsFileName,
+              newsUrl: _note.newsUrl,
               showFileName: true,
               showSharing: true,
               showPathInfo: true,
@@ -131,8 +131,8 @@ class _NonReadableNewsState extends State<NonReadableNews> {
                           icon: const Icon(Icons.share),
                           backgroundColor: ButtonBackgroundColor.share,
                           childPage: ShareNews(
-                            noteUrl: _note.noteUrl,
-                            noteOwner: _note.noteOwner,
+                            newsUrl: _note.newsUrl,
+                            newsOwner: _note.newsOwner,
                             isExternal: _note.isExternalRes,
                             backPage: ListNewsScreen(
                               scaffoldController: _scaffoldController,

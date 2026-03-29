@@ -175,7 +175,7 @@ class _NewsDelDialogState extends State<NewsDelDialog> {
                         ),
                         child: ListTile(
                           title: Text(
-                            'Filename: ${widget.unparseableNews[index].noteFileName}',
+                            'Filename: ${widget.unparseableNews[index].newsFileName}',
                           ),
                           // Define width to avoid consuming full width
                         ),
@@ -198,7 +198,7 @@ class _NewsDelDialogState extends State<NewsDelDialog> {
                       isExternal: widget.isExternal,
                     ),
                     // Back button
-                    BackButton(
+                    NewsBackButton(
                       childPage: widget.childPage,
                       scaffoldController: _scaffoldController,
                     ),

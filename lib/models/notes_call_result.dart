@@ -1,4 +1,4 @@
-/// Data models for result of get notes future call.
+/// Data models for result of get news future call.
 ///
 /// Copyright (C) 2023-2025, Software Innovation Institute
 ///
@@ -28,15 +28,15 @@ library;
 import 'package:communitypod/models/note.dart';
 import 'package:communitypod/models/selected_note.dart';
 
-/// Data model for result of get notes list future call
+/// Data model for result of get news list future call
 
 class NewsCallResult {
-  List<News>? notes;
+  List<News>? news;
   List<SelectedNews>? unparseableNews;
   List<News>? nonExistentNews;
 
   NewsCallResult({
-    this.notes = const [],
+    this.news = const [],
     this.unparseableNews = const [],
     this.nonExistentNews = const [],
   });
@@ -48,19 +48,19 @@ extension NewsCallResultExtension on NewsCallResult {
   /// Method to add lists within two NewsCallResults objects.
   ///
   /// Arguments:
-  /// - [results] - Second notes call results object to add to the first notes call results object.
+  /// - [results] - Second news call results object to add to the first news call results object.
 
   NewsCallResult addCallResults({required NewsCallResult results}) {
     // Initialise combined results object as this first note call results object.
     NewsCallResult combinedResults = NewsCallResult(
-      notes: notes,
+      news: news,
       unparseableNews: unparseableNews,
       nonExistentNews: nonExistentNews,
     );
 
-    // Add notes lists
-    if (results.notes!.isNotEmpty) {
-      combinedResults.notes!.addAll(results.notes!);
+    // Add news lists
+    if (results.news!.isNotEmpty) {
+      combinedResults.news!.addAll(results.news!);
     }
 
     // Add unparseableNews lists

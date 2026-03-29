@@ -34,23 +34,23 @@ import 'package:communitypod/widgets/note_back_button.dart';
 /// A [StatefulWidget] for sharing a note owned by the user.
 ///
 /// Arguments:
-/// - [noteUrl] - is the name of the note to be shared.
-/// - [noteOwner] - is the webId of the note owner.
+/// - [newsUrl] - is the name of the note to be shared.
+/// - [newsOwner] - is the webId of the note owner.
 /// - [backPage] - The widget used by Back button.
 /// - [isExternalRes] - Whether the note is externally owned.
 /// - [scaffoldController] - Controller for the Solid scaffold.
 
 class ShareNews extends StatefulWidget {
-  final String noteUrl;
-  final String noteOwner;
+  final String newsUrl;
+  final String newsOwner;
   final Widget backPage;
   final bool isExternal;
   final SolidScaffoldController scaffoldController;
 
   const ShareNews({
     super.key,
-    required this.noteUrl,
-    required this.noteOwner,
+    required this.newsUrl,
+    required this.newsOwner,
     required this.backPage,
     required this.scaffoldController,
     this.isExternal = false,
@@ -95,7 +95,7 @@ class ShareNewsState extends State<ShareNews> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 10),
-                  BackButton(
+                  NewsBackButton(
                     childPage: widget.backPage,
                     scaffoldController: _scaffoldController,
                   ),
@@ -104,8 +104,8 @@ class ShareNewsState extends State<ShareNews> {
                     height: MediaQuery.of(context).size.height * 0.8,
                     child: GrantPermissionUi(
                       showAppBar: false,
-                      resourceName: widget.noteUrl,
-                      ownerWebId: widget.noteOwner,
+                      resourceName: widget.newsUrl,
+                      ownerWebId: widget.newsOwner,
                       isExternalRes: widget.isExternal,
                     ),
                   ),

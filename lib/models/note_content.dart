@@ -32,17 +32,17 @@ import 'package:communitypod/constants/turtle_structures.dart';
 /// Base data model for the nested note within a note object
 
 class NewsContent {
-  final String noteTitle;
+  final String newsTitle;
   final String createdDateTime;
   final String modifiedDateTime;
-  final String noteContent;
+  final String newsContent;
   final List<String> authUsers;
 
   const NewsContent({
-    required this.noteTitle,
+    required this.newsTitle,
     required this.createdDateTime,
     required this.modifiedDateTime,
-    required this.noteContent,
+    required this.newsContent,
     this.authUsers = const [],
   });
 
@@ -50,10 +50,10 @@ class NewsContent {
 
   factory NewsContent.fromJson(Map<String, dynamic> json) {
     return NewsContent(
-      noteTitle: json[noteTitlePred] as String,
+      newsTitle: json[newsTitlePred] as String,
       createdDateTime: json[createdDateTimePred] as String,
       modifiedDateTime: json[modifiedDateTimePred] as String,
-      noteContent: json[noteContentPred] as String,
+      newsContent: json[newsContentPred] as String,
       authUsers: (json[authUserPred] as Map).keys.toList().cast<String>(),
     );
   }
@@ -61,10 +61,10 @@ class NewsContent {
   /// Method to export NewsContent object to json data map
 
   Map<String, dynamic> toJson() => {
-        noteTitlePred: noteTitle,
+        newsTitlePred: newsTitle,
         createdDateTimePred: createdDateTime,
         modifiedDateTimePred: modifiedDateTime,
-        noteContentPred: noteContent,
+        newsContentPred: newsContent,
         authUserPred: authUsers,
       };
 
@@ -72,33 +72,33 @@ class NewsContent {
   /// updated copy of another instance
 
   NewsContent copyWith({
-    String? noteTitle,
+    String? newsTitle,
     String? createdDateTime,
     String? modifiedDateTime,
-    String? noteContent,
+    String? newsContent,
     List<String>? authUsers,
   }) {
     return NewsContent(
-      noteTitle: noteTitle ?? this.noteTitle,
+      newsTitle: newsTitle ?? this.newsTitle,
       createdDateTime: createdDateTime ?? this.createdDateTime,
       modifiedDateTime: modifiedDateTime ?? this.modifiedDateTime,
-      noteContent: noteContent ?? this.noteContent,
+      newsContent: newsContent ?? this.newsContent,
       authUsers: authUsers ?? this.authUsers,
     );
   }
 
-  /// Returns the URL of the first markdown image in [noteContent], or null
+  /// Returns the URL of the first markdown image in [newsContent], or null
   /// if the note contains no images.
 
   String? get highlightImageUrl {
-    final match = RegExp(r'!\[.*?\]\((.*?)\)').firstMatch(noteContent);
+    final match = RegExp(r'!\[.*?\]\((.*?)\)').firstMatch(newsContent);
     return match?.group(1);
   }
 
-  /// Returns [noteContent] with all markdown image tags removed,
+  /// Returns [newsContent] with all markdown image tags removed,
   /// surrounding whitespace trimmed, and empty lines removed.
 
-  String get contentWithoutImages => noteContent
+  String get contentWithoutImages => newsContent
       .split('\n')
       .map((line) => line.replaceAll(RegExp(r'!\[.*?\]\(.*?\)'), '').trim())
       .where((line) => line.isNotEmpty)

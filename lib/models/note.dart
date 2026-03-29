@@ -45,9 +45,9 @@ class News extends OwnNews {
   News({
     super.content,
     super.authUserList,
-    required super.noteUrl,
-    required super.noteFileName,
-    required super.noteOwner,
+    required super.newsUrl,
+    required super.newsFileName,
+    required super.newsOwner,
     this.sharedTime,
     this.permissionGranter,
     this.permissionRecepient,
@@ -61,9 +61,9 @@ class News extends OwnNews {
 
   factory News.fromJson(Map<String, dynamic> json) {
     return News(
-      noteUrl: json[noteUrlPred] as String,
-      noteFileName: json[noteFileNamePred] as String,
-      noteOwner: json[noteOwnerPred] as String,
+      newsUrl: json[newsUrlPred] as String,
+      newsFileName: json[newsFileNamePred] as String,
+      newsOwner: json[newsOwnerPred] as String,
       sharedTime: json[sharedTimePred] as String,
       permissionGranter: json[permissionGranterPred] as String,
       permissionRecepient: json[permissionRecepientPred] as String,
@@ -79,9 +79,9 @@ class News extends OwnNews {
 
   @override
   Map<String, dynamic> toJson() => {
-        noteUrlPred: noteUrl,
-        noteFileNamePred: noteFileName,
-        noteOwnerPred: noteOwner,
+        newsUrlPred: newsUrl,
+        newsFileNamePred: newsFileName,
+        newsOwnerPred: newsOwner,
         sharedTimePred: sharedTime,
         permissionGranterPred: permissionGranter,
         permissionRecepientPred: permissionRecepient,
@@ -99,9 +99,9 @@ class News extends OwnNews {
   News copyWith({
     NewsContent? content,
     Map<dynamic, dynamic>? authUserList,
-    String? noteUrl,
-    String? noteFileName,
-    String? noteOwner,
+    String? newsUrl,
+    String? newsFileName,
+    String? newsOwner,
     String? sharedTime,
     String? permissionGranter,
     String? permissionRecepient,
@@ -112,9 +112,9 @@ class News extends OwnNews {
     return News(
       content: content ?? this.content,
       authUserList: authUserList ?? this.authUserList,
-      noteUrl: noteUrl ?? this.noteUrl,
-      noteFileName: noteFileName ?? this.noteFileName,
-      noteOwner: noteOwner ?? this.noteOwner,
+      newsUrl: newsUrl ?? this.newsUrl,
+      newsFileName: newsFileName ?? this.newsFileName,
+      newsOwner: newsOwner ?? this.newsOwner,
       sharedTime: sharedTime ?? this.sharedTime,
       permissionGranter: permissionGranter ?? this.permissionGranter,
       permissionRecepient: permissionRecepient ?? this.permissionRecepient,
@@ -139,11 +139,11 @@ extension ListNewsExtension on List<News> {
   List<News> addAuthUserLists({required Map permissionMaps}) {
     List<News> updatedNews = [];
 
-    for (var note in this) {
-      final News updatedNews = note.copyWith(
-        authUserList: permissionMaps[note.noteFileName][authUserPred],
+    for (var newsPost in this) {
+      final News updatedNewsPost = newsPost.copyWith(
+        authUserList: permissionMaps[newsPost.newsFileName][authUserPred],
       );
-      updatedNews.add(updatedNews);
+      updatedNews.add(updatedNewsPost);
     }
     return updatedNews;
   }

@@ -94,7 +94,7 @@ class _ListMyNewsScreenState extends State<ListMyNewsScreen> {
     NewsCallResult results,
     SolidScaffoldController scaffoldController,
   ) {
-    final List<News> notes = results.notes!;
+    final List<News> notes = results.news!;
     final List<SelectedNews> unparseableNews = results.unparseableNews!;
 
     if (unparseableNews.isNotEmpty) {

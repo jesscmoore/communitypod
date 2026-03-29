@@ -111,7 +111,7 @@ class _ListNewsScreenState extends State<ListNewsScreen> {
     // Combine the results
     NewsCallResult results =
         ownerListResults.addCallResults(results: extListResults);
-    final List<News> notes = results.notes!;
+    final List<News> notes = results.news!;
     final List<SelectedNews> unparseableNews = results.unparseableNews!;
     final List<News> nonExistentNews = results.nonExistentNews!;
 

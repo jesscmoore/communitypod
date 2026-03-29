@@ -93,13 +93,13 @@ class NewsListDelButton extends StatelessWidget {
 
                 // Delete file
                 for (final SelectedNews note in selectedNews) {
-                  debugPrint('Deleting ${note.noteUrl}...');
+                  debugPrint('Deleting ${note.newsUrl}...');
 
                   // Call solid delete file function
                   // Delete file
                   await NewsFileHelper().deleteNews(
                     context: context,
-                    filename: note.noteFileName,
+                    filename: note.newsFileName,
                     isExternal: isExternal,
                     child: childPage,
                   );

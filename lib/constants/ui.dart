@@ -77,7 +77,7 @@ class DisplayConstants {
 /// Approximate size for grid items used for
 /// displaying text of user's notes.
 
-class NewsItemSize {
+class ItemSize {
   /// Approximate height of compressed item
   /// in user's own notes list
   /// when list item text is line wrapped

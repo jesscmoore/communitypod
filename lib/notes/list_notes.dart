@@ -152,12 +152,12 @@ class _ListNewsState extends State<ListNews> {
         if (a.content == null) return 1;
         if (b.content == null) return -1;
         return _sortTitleAscending
-            ? a.content!.noteTitle
+            ? a.content!.newsTitle
                 .toLowerCase()
-                .compareTo(b.content!.noteTitle.toLowerCase())
-            : b.content!.noteTitle
+                .compareTo(b.content!.newsTitle.toLowerCase())
+            : b.content!.newsTitle
                 .toLowerCase()
-                .compareTo(a.content!.noteTitle.toLowerCase());
+                .compareTo(a.content!.newsTitle.toLowerCase());
       });
 
       // Update current sort method
@@ -193,12 +193,12 @@ class _ListNewsState extends State<ListNews> {
       _sortFilenameAscending = ascending;
       _foundNews.sort(
         (a, b) => _sortFilenameAscending
-            ? a.noteFileName
+            ? a.newsFileName
                 .toLowerCase()
-                .compareTo(b.noteFileName.toLowerCase())
-            : b.noteFileName
+                .compareTo(b.newsFileName.toLowerCase())
+            : b.newsFileName
                 .toLowerCase()
-                .compareTo(a.noteFileName.toLowerCase()),
+                .compareTo(a.newsFileName.toLowerCase()),
       );
 
       // Update current sort method
@@ -213,8 +213,8 @@ class _ListNewsState extends State<ListNews> {
 
       _foundNews.sort(
         (a, b) => _sortOwnerAscending
-            ? a.noteOwner.toLowerCase().compareTo(b.noteOwner.toLowerCase())
-            : b.noteOwner.toLowerCase().compareTo(a.noteOwner.toLowerCase()),
+            ? a.newsOwner.toLowerCase().compareTo(b.newsOwner.toLowerCase())
+            : b.newsOwner.toLowerCase().compareTo(a.newsOwner.toLowerCase()),
       );
 
       // Update current sort method
@@ -251,16 +251,16 @@ class _ListNewsState extends State<ListNews> {
     } else {
       // Search for matches in filename, owner, permission granter or permission list
       results = widget.notes.where((note) {
-        return (note.content?.noteTitle ?? 'unknown')
+        return (note.content?.newsTitle ?? 'unknown')
                 .toLowerCase()
                 .contains(enteredKeyword.toLowerCase()) ||
-            (note.content?.noteContent ?? 'unknown')
+            (note.content?.newsContent ?? 'unknown')
                 .toLowerCase()
                 .contains(enteredKeyword.toLowerCase()) ||
-            note.noteFileName
+            note.newsFileName
                 .toLowerCase()
                 .contains(enteredKeyword.toLowerCase()) ||
-            note.noteOwner
+            note.newsOwner
                 .toLowerCase()
                 .contains(enteredKeyword.toLowerCase()) ||
             (note.permissionGranter ?? 'n/a')
@@ -308,7 +308,7 @@ class _ListNewsState extends State<ListNews> {
 
         // Remove note from selected notes list
         selectedNews.removeWhere(
-          (item) => item.noteFileName == _foundNews[index].noteFileName,
+          (item) => item.newsFileName == _foundNews[index].newsFileName,
         );
       } else {
         // Increment count
@@ -319,9 +319,9 @@ class _ListNewsState extends State<ListNews> {
         // Add note to selected notes list
         selectedNews.add(
           SelectedNews(
-            noteFileName: _foundNews[index].noteFileName,
-            noteUrl: _foundNews[index].noteUrl,
-            noteOwner: _foundNews[index].noteOwner,
+            newsFileName: _foundNews[index].newsFileName,
+            newsUrl: _foundNews[index].newsUrl,
+            newsOwner: _foundNews[index].newsOwner,
           ),
         );
       }
@@ -330,7 +330,7 @@ class _ListNewsState extends State<ListNews> {
 
       debugPrint('Selected notes:');
       for (final SelectedNews selectedNewsPost in selectedNews) {
-        debugPrint(selectedNewsPost.noteFileName);
+        debugPrint(selectedNewsPost.newsFileName);
       }
     });
   }
@@ -611,7 +611,7 @@ class _ListNewsState extends State<ListNews> {
                                         .permissionList
                                         .contains('read'))
                                     ? Text(
-                                        _foundNews[index].content!.noteTitle,
+                                        _foundNews[index].content!.newsTitle,
                                         maxLines:
                                             (!isNarrow) ? 1 : 3, // Limit lines
                                         overflow: TextOverflow.ellipsis,

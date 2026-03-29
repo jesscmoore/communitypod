@@ -110,7 +110,7 @@ class _ViewNewsState extends State<ViewNews> {
                         child: Container(
                           padding: const EdgeInsets.fromLTRB(15, 10, 10, 5),
                           child: Text(
-                            _note.content!.noteTitle,
+                            _note.content!.newsTitle,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 22,
@@ -124,18 +124,18 @@ class _ViewNewsState extends State<ViewNews> {
                   DisplayNewsMetadata(
                     createdDateTime: _note.content!.createdDateTime,
                     modifiedDateTime: _note.content!.modifiedDateTime,
-                    noteOwner: _note.noteOwner,
+                    newsOwner: _note.newsOwner,
                     permissionGranter: _note.permissionGranter ?? 'N/A',
                     permissionList: _note.permissionList,
-                    noteFileName: _note.noteFileName,
-                    noteUrl: _note.noteUrl,
+                    newsFileName: _note.newsFileName,
+                    newsUrl: _note.newsUrl,
                     showDates: true,
                     showFileName: true,
                     showSharing: true,
                     showPathInfo: true,
                   ),
                   // Display markdown note content
-                  noteDisplayMarkdown(_note.content!.noteContent),
+                  noteDisplayMarkdown(_note.content!.newsContent),
                 ],
               ),
             ),
@@ -161,8 +161,8 @@ class _ViewNewsState extends State<ViewNews> {
                           icon: const Icon(Icons.share),
                           backgroundColor: ButtonBackgroundColor.share,
                           childPage: ShareNews(
-                            noteUrl: _note.noteUrl,
-                            noteOwner: _note.noteOwner,
+                            newsUrl: _note.newsUrl,
+                            newsOwner: _note.newsOwner,
                             isExternal: _note.isExternalRes,
                             backPage: ViewNews(
                               note: _note,
@@ -192,7 +192,7 @@ class _ViewNewsState extends State<ViewNews> {
                       /// Delete button
                       if (!_note.isExternalRes) ...[
                         DelButton(
-                          filename: _note.noteFileName,
+                          filename: _note.newsFileName,
                           isExternal: false,
                           isNarrow: isNarrow,
                           childPage: ListNewsScreen(

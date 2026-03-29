@@ -54,15 +54,15 @@ class ItemSubtitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       (!_note.isExternalRes)
-          ? 'Owner: ${getId(_note.noteOwner)} \n'
+          ? 'Owner: ${getId(_note.newsOwner)} \n'
               'Created: ${getDateTimeStr(_note.content!.createdDateTime)}, Modified: ${getDateTimeStr(_note.content!.modifiedDateTime)}\n\n'
               '${_note.content!.contentWithoutImages}'
           : (_note.permissionList.contains('read'))
-              ? 'Owner: ${getId(_note.noteOwner)} \n'
+              ? 'Owner: ${getId(_note.newsOwner)} \n'
                   'Created: ${getDateTimeStr(_note.content!.createdDateTime)}, Modified: ${getDateTimeStr(_note.content!.modifiedDateTime)} \n\n'
                   '${_note.content!.contentWithoutImages}'
-              : 'Filename: ${_note.noteFileName} \n'
-                  'Owner: ${getId(_note.noteOwner)} \n'
+              : 'Filename: ${_note.newsFileName} \n'
+                  'Owner: ${getId(_note.newsOwner)} \n'
                   'Permissions: ${_note.permissionList}',
       maxLines: (!_isNarrow) ? 6 : 12, // Limit lines
       overflow: TextOverflow.ellipsis,

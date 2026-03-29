@@ -25,16 +25,16 @@
 
 library;
 
-/// Data model for unparseable note
+/// Data model for unparseable news post file
 
 class SelectedNews {
-  final String noteFileName;
-  final String noteUrl;
-  final String noteOwner;
+  final String newsFileName;
+  final String newsUrl;
+  final String newsOwner;
 
   const SelectedNews({
-    required this.noteFileName,
-    required this.noteUrl,
-    required this.noteOwner,
+    required this.newsFileName,
+    required this.newsUrl,
+    required this.newsOwner,
   });
 }

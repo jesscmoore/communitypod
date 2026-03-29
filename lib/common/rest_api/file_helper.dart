@@ -60,7 +60,7 @@ class NewsFileHelper with PodOperationsMixin {
       final resources = await getResourcesInContainer(dirUrl);
 
       return resources.files
-          .where((f) => f.startsWith(noteFileNamePrefix) && f.endsWith('.ttl'))
+          .where((f) => f.startsWith(newsFileNamePrefix) && f.endsWith('.ttl'))
           .toList();
     } catch (e) {
       if (!isFileNotFoundError(e) && !isPermissionError(e)) {
@@ -116,9 +116,9 @@ class NewsFileHelper with PodOperationsMixin {
   }) {
     try {
       String? sharedTime;
-      String? noteUrl;
-      String? noteFileName;
-      String? noteOwner;
+      String? newsUrl;
+      String? newsFileName;
+      String? newsOwner;
       String? permissionGranter;
       String? permissionRecepient;
       String? permissionType;
@@ -126,8 +126,8 @@ class NewsFileHelper with PodOperationsMixin {
 
       // Extract external note details information
 
-      noteFileName = fileUrl.split('/').last;
-      // debugPrint('noteFileName: $noteFileName');
+      newsFileName = fileUrl.split('/').last;
+      // debugPrint('newsFileName: $newsFileName');
 
       for (final entry in logRecordOfFile.entries) {
         final predicate = entry.key.toString();
@@ -138,9 +138,9 @@ class NewsFileHelper with PodOperationsMixin {
           sharedTime = value;
         } else if (predicate
             .contains(PermissionLogLiteral.resource.toString())) {
-          noteUrl = value;
+          newsUrl = value;
         } else if (predicate.contains(PermissionLogLiteral.owner.toString())) {
-          noteOwner = value;
+          newsOwner = value;
         } else if (predicate
             .contains(PermissionLogLiteral.granter.toString())) {
           permissionGranter = value;
@@ -158,9 +158,9 @@ class NewsFileHelper with PodOperationsMixin {
       // Create the external note details object
 
       return News(
-        noteUrl: noteUrl!,
-        noteFileName: noteFileName,
-        noteOwner: noteOwner!,
+        newsUrl: newsUrl!,
+        newsFileName: newsFileName,
+        newsOwner: newsOwner!,
         sharedTime: sharedTime!,
         permissionGranter: permissionGranter!,
         permissionRecepient: permissionRecepient!,
@@ -252,7 +252,7 @@ class NewsFileHelper with PodOperationsMixin {
 
       // News title need to be spaceless as we are using that name
       // to create a .acl file. And the acl file url cannot have spaces
-      String noteTitle = formData[noteTitlePred].replaceAll('\n', '');
+      String newsTitle = formData[newsTitlePred].replaceAll('\n', '');
 
       // Get current datetimestamp for mod time and/or creation time
       String modifiedDateTimeStr =
@@ -260,11 +260,11 @@ class NewsFileHelper with PodOperationsMixin {
 
       if (isExisting) {
         // Retrieve existing note title and content for comparison
-        prevNewsTitle = prevNews!.content!.noteTitle;
-        prevNewsContent = prevNews.content!.noteContent;
+        prevNewsTitle = prevNews!.content!.newsTitle;
+        prevNewsContent = prevNews.content!.newsContent;
         // Compare updated title and content to existing
         // title and content
-        if (noteTitle == prevNewsTitle && noteText == prevNewsContent) {
+        if (newsTitle == prevNewsTitle && noteText == prevNewsContent) {
           showErrDialog(context, ErrMsg.noChanges);
         } else {
           // Loading animation
@@ -278,8 +278,8 @@ class NewsFileHelper with PodOperationsMixin {
           try {
             updatedContent = prevNews.content!.copyWith(
               modifiedDateTime: modifiedDateTimeStr,
-              noteTitle: noteTitle,
-              noteContent: noteText,
+              newsTitle: newsTitle,
+              newsContent: noteText,
             );
             updatedNews = prevNews.copyWith(content: updatedContent);
           } on Exception catch (e) {
@@ -295,17 +295,17 @@ class NewsFileHelper with PodOperationsMixin {
               if (!context.mounted) return;
 
               debugPrint('save external note:');
-              debugPrint('noteUrl: ${prevNews.noteUrl}');
-              debugPrint('noteFileName: ${prevNews.noteFileName}');
-              debugPrint('noteOwner: ${prevNews.noteOwner}');
+              debugPrint('newsUrl: ${prevNews.newsUrl}');
+              debugPrint('newsFileName: ${prevNews.newsFileName}');
+              debugPrint('newsOwner: ${prevNews.newsOwner}');
 
               // External note
               // Encrypt note, create TTL, update file in POD
               await saveNewsToPod(
                 context: context,
                 // Use existing file url
-                noteUrl: prevNews.noteUrl,
-                noteOwner: prevNews.noteOwner,
+                newsUrl: prevNews.newsUrl,
+                newsOwner: prevNews.newsOwner,
                 data: updatedContent,
                 childPage: ViewNews(
                   note: updatedNews,
@@ -327,7 +327,7 @@ class NewsFileHelper with PodOperationsMixin {
               await saveNewsToPod(
                 context: context,
                 // Use existing filename
-                noteFileName: prevNews.noteFileName,
+                newsFileName: prevNews.newsFileName,
                 data: updatedContent,
                 overwrite: true,
                 childPage: ViewNews(
@@ -358,8 +358,8 @@ class NewsFileHelper with PodOperationsMixin {
             final newContent = NewsContent(
               createdDateTime: modifiedDateTimeStr,
               modifiedDateTime: modifiedDateTimeStr,
-              noteTitle: noteTitle,
-              noteContent: noteText,
+              newsTitle: newsTitle,
+              newsContent: noteText,
             );
 
             // Encrypt note, create TTL and write to file in POD
@@ -368,7 +368,7 @@ class NewsFileHelper with PodOperationsMixin {
             await saveNewsToPod(
               context: context,
               // Create filename
-              noteFileName: '$noteFileNamePrefix$modifiedDateTimeStr.ttl',
+              newsFileName: '$newsFileNamePrefix$modifiedDateTimeStr.ttl',
               data: newContent,
               childPage: ListMyNewsScreen(
                 scaffoldController: scaffoldController,
@@ -395,20 +395,20 @@ class NewsFileHelper with PodOperationsMixin {
   /// if write to Pod failed to return a successful SolidCallFunctionStatus.
   ///
   /// Examples:
-  /// - `await saveNewsToPod(context: context, data: updatedContent, noteFileName: noteFileName, childPage: ListMyNewsScreen(), scaffoldController: scaffoldController)` - to
+  /// - `await saveNewsToPod(context: context, data: updatedContent, newsFileName: newsFileName, childPage: ListMyNewsScreen(), scaffoldController: scaffoldController)` - to
   /// save a note owned by the user.
   /// - `await saveNewsToPod(context: context, data: updatedContent,
-  /// childPage: ListMyNewsScreen(), noteUrl: noteUrl, noteOwner: noteOwner,
+  /// childPage: ListMyNewsScreen(), newsUrl: newsUrl, newsOwner: newsOwner,
   /// isExternal: true, scaffoldController: scaffoldController)` - to save an externally owned note.
   ///
   /// - [context] - The build context.
   /// - [data] - The note content data to be encrypted and written to Pod.
   /// - [childPage] - The destination widget to navigate to after note is saved.
   ///   [scaffoldController] - Controller for the Solid scaffold.
-  /// - [noteFileName] - Optional filename. Required for saving user's own notes.
-  /// - [noteUrl] - Optional note file url. Required for saving notes
+  /// - [newsFileName] - Optional filename. Required for saving user's own notes.
+  /// - [newsUrl] - Optional note file url. Required for saving notes
   /// that are externally owned.
-  /// - [noteOwner] - Optional note owner webId. Required for saving notes
+  /// - [newsOwner] - Optional note owner webId. Required for saving notes
   /// that are externally owned.
   /// - [overwrite] - Optional boolean defining whether updating an existing owner's note.
   /// - [isExternal] - Optional boolean defining whether writing an external note.
@@ -418,9 +418,9 @@ class NewsFileHelper with PodOperationsMixin {
     required NewsContent data,
     required Widget childPage,
     required SolidScaffoldController scaffoldController,
-    String noteFileName = '',
-    String noteUrl = '',
-    String noteOwner = '',
+    String newsFileName = '',
+    String newsUrl = '',
+    String newsOwner = '',
     bool overwrite = false,
     bool isExternal = false,
   }) async {
@@ -430,7 +430,7 @@ class NewsFileHelper with PodOperationsMixin {
       // at the moment rdflib cannot parse multiline text with
       // # (hash) values in them.
       String encNewsText = encryptVal(
-        plainText: data.noteContent,
+        plainText: data.newsContent,
         encKey: data.createdDateTime,
       );
 
@@ -438,24 +438,24 @@ class NewsFileHelper with PodOperationsMixin {
       final noteTTLStr = genNewsTTLStr(
         data.createdDateTime,
         data.modifiedDateTime,
-        data.noteTitle,
+        data.newsTitle,
         encNewsText,
       );
 
-      if (isExternal && noteUrl != '' && noteOwner != '') {
-        debugPrint('noteUrl: $noteUrl');
-        debugPrint('noteOwner: $noteOwner');
+      if (isExternal && newsUrl != '' && newsOwner != '') {
+        debugPrint('newsUrl: $newsUrl');
+        debugPrint('newsOwner: $newsOwner');
 
         // createNewsStatus = await writeExternalPod(
         await writeExternalPod(
-          noteUrl,
+          newsUrl,
           noteTTLStr,
-          noteOwner,
+          newsOwner,
         );
       } else {
         // Write note to POD
         await writePod(
-          noteFileName,
+          newsFileName,
           noteTTLStr,
           overwrite: overwrite,
         );

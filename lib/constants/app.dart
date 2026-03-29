@@ -57,9 +57,9 @@ double screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 //double screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
 const nonReadableNewsMsg =
-    'You do not have read access to this note and therefore cannot view that. However, you can delete it or share it with others.';
+    'You do not have read access to this news file and therefore cannot view the file. However, you can delete it or share it with others.';
 
-//const noNewsMsg = 'You do not have any notes yet!';
+//const noNewsMsg = 'You do not have any news files yet!';
 
 // SizedBox standardHeight() {
 //   return const SizedBox(
@@ -102,65 +102,65 @@ const String combinedNewsToolTip = 'Go to news accessible to me';
 /// News list messages
 class NewsListMsg {
   /// Message displayed when corrupt files found
-  static const String badFilesFound = 'Corrupt note files present';
+  static const String badFilesFound = 'Corrupt news files present';
 
   /// Message displayed when non existent files found
   static const String nonExistentNewsFound =
-      'Non-existent note files present without \'revoke\' entry in log';
+      'Non-existent news files found in the log without a \'revoke\' entry in the log';
 
-  /// Message displayed when no notes found in user's Pod
-  static const String noNews = 'No notes yet!';
+  /// Message displayed when no news file found in user's Pod
+  static const String noNews = 'No news yet!';
 
-  /// Advises user to write their first note
-  static const String writeFirstNews = 'Write your first note';
+  /// Advises user to write their first news post
+  static const String writeFirstNews = 'Write your first news file';
 }
 
 /// News action messages
 class Msg {
   /// News saving message
-  static const String savingNews = 'Saving the note!';
+  static const String savingNews = 'Saving the news file!';
 
   /// News deleting message
-  static const String deletingNews = 'Deleting the note!';
+  static const String deletingNews = 'Deleting the news file!';
 
   /// Confirm delete note message
   static const String confirmDelete =
-      'Are you sure you want to delete this note?';
+      'Are you sure you want to delete this news file?';
 
-  /// Confirm delete multiple notes message
+  /// Confirm delete multiple news files message
   static const String confirmDeleteMultiple =
-      'Are you sure you want to delete these notes?';
+      'Are you sure you want to delete these news files?';
 
   /// News deleting message
   static const String revokingNews = 'Revoking access!';
 
-  /// Confirm revoke access to note message
+  /// Confirm message to revoke access to news file
   static const String confirmRevoke =
-      'Are you sure you want to revoke access to this note?';
+      'Are you sure you want to revoke access to this news file?';
 
-  /// Confirm revoke access to multiple notes message
+  /// Confirm revoke access to multiple news files message
   static const String confirmRevokeMultiple =
-      'Are you sure you want to revoke access to these notes?';
+      'Are you sure you want to revoke access to these new files?';
 
   /// Please confirm message
   static const String plsConfirm = 'Please Confirm';
 }
 
-/// Error messages for errors occuring on note actions
+/// Error messages for errors occuring on news post actions
 class ErrMsg {
-  /// No changes to note error.
+  /// No changes to news post error.
   static const String noChanges = 'You have no new changes!';
 
-  /// No note content.
-  static const String noContent = 'Please enter some note content.';
+  /// No news post content.
+  static const String noContent = 'Please enter some news post content.';
 
-  /// Invalid note name.
+  /// Invalid news name.
   static const String invalidName =
       'News name validation failed! Try using a different name.';
 
-  /// Error message when fails to save note file to POD
+  /// Error message when fails to save news file to POD
   static const String saveFailed =
-      'Failed to store the note file in your POD. Try again!';
+      'Failed to store the news file in your POD. Try again!';
 
   /// Unsaved changes found
   static const String unsavedChanges = 'Unsaved changed found!';
@@ -173,7 +173,7 @@ class NewsIconSize {
   static const double gap = 15;
 }
 
-// EdgeInsets for metadata block on view notes
+// EdgeInsets for metadata block
 const EdgeInsets metadataPadding = EdgeInsets.fromLTRB(15, 5, 10, 0);
 
 /// Button shape decoration for list pages

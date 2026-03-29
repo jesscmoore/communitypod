@@ -1,4 +1,4 @@
-/// A stateful widget for unreadable externally owned note.
+/// A stateful widget for unreadable externally owned news file.
 ///
 // Time-stamp: <Wednesday 2025-07-16 10:19:02 +1000 Graham Williams>
 ///
@@ -33,33 +33,33 @@ import 'package:communitypod/constants/app.dart';
 import 'package:communitypod/constants/colours.dart';
 import 'package:communitypod/constants/ui.dart';
 import 'package:communitypod/models/news.dart';
-import 'package:communitypod/notes/list_notes_screen.dart';
-import 'package:communitypod/notes/share_note.dart';
+import 'package:communitypod/news/list_notes_screen.dart';
+import 'package:communitypod/news/share_news.dart';
 import 'package:communitypod/widgets/msg_card.dart';
 import 'package:communitypod/widgets/note_action_button.dart';
 import 'package:communitypod/widgets/note_display_metadata.dart';
 
 /// A [stateful] widget for displaying a message when the user tries to view
-/// an externally owned widget shared to the user.
+/// an externally owned news file.
 ///
 /// Arguments:
-/// - [note] - The externally owned note shared to the user.
+/// - [newsPost] - The externally owned news file object.
 
-class NonReadableNews extends StatefulWidget {
-  final News note;
+class NonReadableNewsPost extends StatefulWidget {
+  final News newsPost;
   final SolidScaffoldController scaffoldController;
 
-  const NonReadableNews({
+  const NonReadableNewsPost({
     super.key,
-    required this.note,
+    required this.newsPost,
     required this.scaffoldController,
   });
 
   @override
-  State<NonReadableNews> createState() => _NonReadableNewsState();
+  State<NonReadableNewsPost> createState() => _NonReadableNewsPostState();
 }
 
-class _NonReadableNewsState extends State<NonReadableNews> {
+class _NonReadableNewsPostState extends State<NonReadableNewsPost> {
   /// Scroll controller for single child scroll view
   late final ScrollController _scrollController;
 
@@ -70,14 +70,14 @@ class _NonReadableNewsState extends State<NonReadableNews> {
   late bool isNarrow;
 
   /// News
-  late final News _note;
+  late final News _newsPost;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
     _scaffoldController = widget.scaffoldController;
-    _note = widget.note;
+    _newsPost = widget.newsPost;
   }
 
   @override
@@ -97,11 +97,11 @@ class _NonReadableNewsState extends State<NonReadableNews> {
           children: <Widget>[
             // Display note metadata - show sharing and path info but not dates (as requires newsContent)
             DisplayNewsMetadata(
-              newsOwner: _note.newsOwner,
-              permissionGranter: _note.permissionGranter!,
-              permissionList: _note.permissionList,
-              newsFileName: _note.newsFileName,
-              newsUrl: _note.newsUrl,
+              newsOwner: _newsPost.newsOwner,
+              permissionGranter: _newsPost.permissionGranter!,
+              permissionList: _newsPost.permissionList,
+              newsFileName: _newsPost.newsFileName,
+              newsUrl: _newsPost.newsUrl,
               showFileName: true,
               showSharing: true,
               showPathInfo: true,
@@ -125,15 +125,15 @@ class _NonReadableNewsState extends State<NonReadableNews> {
                     spacing: 5.0,
                     children: [
                       // Share button
-                      if (_note.permissionList.contains('control')) ...[
+                      if (_newsPost.permissionList.contains('control')) ...[
                         ActionButton(
                           label: ButtonLabel.share,
                           icon: const Icon(Icons.share),
                           backgroundColor: ButtonBackgroundColor.share,
                           childPage: ShareNews(
-                            newsUrl: _note.newsUrl,
-                            newsOwner: _note.newsOwner,
-                            isExternal: _note.isExternalRes,
+                            newsUrl: _newsPost.newsUrl,
+                            newsOwner: _newsPost.newsOwner,
+                            isExternal: _newsPost.isExternalRes,
                             backPage: ListNewsScreen(
                               scaffoldController: _scaffoldController,
                             ),

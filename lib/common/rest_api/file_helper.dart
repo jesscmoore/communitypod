@@ -38,8 +38,8 @@ import 'package:communitypod/constants/paths.dart';
 import 'package:communitypod/constants/turtle_structures.dart';
 import 'package:communitypod/models/news.dart';
 import 'package:communitypod/models/news_content.dart';
-import 'package:communitypod/notes/list_my_notes_screen.dart';
-import 'package:communitypod/notes/view_note.dart';
+import 'package:communitypod/news/list_my_notes_screen.dart';
+import 'package:communitypod/news/view_news.dart';
 import 'package:communitypod/utils/encryption.dart';
 import 'package:communitypod/widgets/err_dialogs.dart';
 import 'package:communitypod/widgets/loading_animation.dart' as loading;
@@ -308,7 +308,7 @@ class NewsFileHelper with PodOperationsMixin {
                 newsOwner: prevNews.newsOwner,
                 data: updatedContent,
                 childPage: ViewNews(
-                  note: updatedNews,
+                  newsPost: updatedNews,
                   scaffoldController: scaffoldController,
                 ),
                 scaffoldController: scaffoldController,
@@ -331,7 +331,7 @@ class NewsFileHelper with PodOperationsMixin {
                 data: updatedContent,
                 overwrite: true,
                 childPage: ViewNews(
-                  note: updatedNews,
+                  newsPost: updatedNews,
                   scaffoldController: scaffoldController,
                 ),
                 scaffoldController: scaffoldController,

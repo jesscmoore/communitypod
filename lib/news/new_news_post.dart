@@ -31,7 +31,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:solidui/solidui.dart';
 
-import 'package:communitypod/notes/list_my_notes_screen.dart';
+import 'package:communitypod/news/list_my_notes_screen.dart';
 import 'package:communitypod/widgets/note_edit_scroll_view.dart';
 
 /// A [Stateful] widget for creating a new note.
@@ -39,19 +39,19 @@ import 'package:communitypod/widgets/note_edit_scroll_view.dart';
 /// Parameters:
 ///   [scaffoldController] - Controller for the Solid scaffold.
 
-class NewNews extends StatefulWidget {
+class NewNewsPost extends StatefulWidget {
   final SolidScaffoldController scaffoldController;
 
-  const NewNews({
+  const NewNewsPost({
     super.key,
     required this.scaffoldController,
   });
 
   @override
-  NewNewsState createState() => NewNewsState();
+  NewNewsPostState createState() => NewNewsPostState();
 }
 
-class NewNewsState extends State<NewNews> {
+class NewNewsPostState extends State<NewNewsPost> {
   final formKey = GlobalKey<FormBuilderState>();
 
   TextEditingController? _textController;

@@ -1,4 +1,4 @@
-/// A stateful widget to edit notes owned by the user.
+/// A stateful widget to edit news owned by the user.
 ///
 // Time-stamp: <Wednesday 2025-07-16 14:37:09 +1000 Graham Williams>
 ///
@@ -32,23 +32,23 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/models/news.dart';
-import 'package:communitypod/notes/view_note.dart';
+import 'package:communitypod/news/view_news.dart';
 import 'package:communitypod/widgets/note_edit_scroll_view.dart';
 
-/// A [StatefulWidget] to edit notes owned by the user.
+/// A [StatefulWidget] to edit news owned by the user.
 ///
 /// Arguments:
-///   [note] - is the data of that note.
+///   [note] - is the data of that news object.
 ///   [scaffoldController] - Controller for the Solid scaffold.
 
 class EditNews extends StatefulWidget {
-  /// Data object for the selected note.
-  final News note;
+  /// Data object for the selected news post.
+  final News newsPost;
   final SolidScaffoldController scaffoldController;
 
   const EditNews({
     super.key,
-    required this.note,
+    required this.newsPost,
     required this.scaffoldController,
   });
 
@@ -67,14 +67,14 @@ class EditNewsState extends State<EditNews> {
   /// Scaffold controller
   late final SolidScaffoldController _scaffoldController;
 
-  /// Focus node for note title text field.
+  /// Focus node for news title text field.
   late final FocusNode _focusTitle;
 
-  /// Focus node for note content text field.
+  /// Focus node for news content text field.
   late final FocusNode _focusContent;
 
   /// News
-  late final News _note;
+  late final News _newsPost;
 
   /// News text content
   String data = '';
@@ -82,16 +82,16 @@ class EditNewsState extends State<EditNews> {
   @override
   void initState() {
     super.initState();
-    _note = widget.note;
+    _newsPost = widget.newsPost;
     _scaffoldController = widget.scaffoldController;
-    // Initialise note content field
+    // Initialise news content field
     _textController = TextEditingController();
-    _textController!.text = _note.content!.newsContent;
+    _textController!.text = _newsPost.content!.newsContent;
     // Start listening to changes.
     _textController!.addListener(_renderMarkdown);
     _scrollController = ScrollController();
     // Focus node for the title text field
-    // If 'TAB' key press, move to note content text field
+    // If 'TAB' key press, move to news content text field
     _focusTitle = FocusNode(
       onKeyEvent: (FocusNode node, KeyEvent evt) {
         if (evt.logicalKey == LogicalKeyboardKey.tab) {
@@ -105,9 +105,9 @@ class EditNewsState extends State<EditNews> {
         }
       },
     );
-    // Focus node for the note content markdown editor
+    // Focus node for the news content markdown editor
     _focusContent = FocusNode();
-    // To enable the ENTER => SAVE functionality within a note, replace the
+    // To enable the ENTER => SAVE functionality within a news, replace the
     // above line with the following. For now we will stay with current
     // behaviour. (20250714 gjw).
     //
@@ -116,7 +116,7 @@ class EditNewsState extends State<EditNews> {
     //     if (!HardwareKeyboard.instance.isShiftPressed &&
     //         evt.logicalKey.keyLabel == 'Enter') {
     //       if (evt is KeyDownEvent) {
-    //         // Save note when enter (not shift-enter) pressed
+    //         // Save news when enter (not shift-enter) pressed
     //         NewsFileHelper().saveNews(context, _textController!, formKey, widget.note);
     //       }
     //       return KeyEventResult.handled;
@@ -152,14 +152,14 @@ class EditNewsState extends State<EditNews> {
       focusTitle: _focusTitle,
       focusContent: _focusContent,
       childPage: ViewNews(
-        note: _note,
+        newsPost: _newsPost,
         scaffoldController: _scaffoldController,
       ),
       data: data,
-      prevNews: _note,
-      newsTitle: _note.content!.newsTitle,
+      prevNews: _newsPost,
+      newsTitle: _newsPost.content!.newsTitle,
       isExisting: true,
-      isExternal: _note.isExternalRes,
+      isExternal: _newsPost.isExternalRes,
     );
   }
 }

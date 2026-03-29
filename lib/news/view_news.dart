@@ -1,4 +1,4 @@
-/// A stateful widget to view an externally owned note.
+/// A stateful widget to view a news object.
 ///
 // Time-stamp: <Wednesday 2025-07-16 10:18:07 +1000 Graham Williams>
 ///
@@ -32,27 +32,27 @@ import 'package:solidui/solidui.dart';
 import 'package:communitypod/constants/colours.dart';
 import 'package:communitypod/constants/ui.dart';
 import 'package:communitypod/models/news.dart';
-import 'package:communitypod/notes/edit_note.dart';
-import 'package:communitypod/notes/list_notes_screen.dart';
-import 'package:communitypod/notes/share_note.dart';
+import 'package:communitypod/news/edit_news.dart';
+import 'package:communitypod/news/list_notes_screen.dart';
+import 'package:communitypod/news/share_news.dart';
 import 'package:communitypod/widgets/note_action_button.dart';
 import 'package:communitypod/widgets/note_del_button.dart';
 import 'package:communitypod/widgets/note_display_markdown.dart';
 import 'package:communitypod/widgets/note_display_metadata.dart';
 
-/// A [stateful] widget for viewing an externally owned note.
+/// A [stateful] widget for viewing a news object.
 ///
 /// Arguments:
-/// - [note] - The note to view.
+/// - [newsPost] - The news data object to view.
 /// - [scaffoldController] - Controller for the Solid scaffold.
 
 class ViewNews extends StatefulWidget {
-  final News note;
+  final News newsPost;
   final SolidScaffoldController scaffoldController;
 
   const ViewNews({
     super.key,
-    required this.note,
+    required this.newsPost,
     required this.scaffoldController,
   });
 
@@ -71,7 +71,7 @@ class _ViewNewsState extends State<ViewNews> {
   late bool isNarrow;
 
   /// News data
-  late final News _note;
+  late final News _newsPost;
 
   /// List of user's permissions
   late final List<String> _accessList;
@@ -79,8 +79,8 @@ class _ViewNewsState extends State<ViewNews> {
   @override
   void initState() {
     super.initState();
-    _note = widget.note;
-    _accessList = _note.permissionList.split(',');
+    _newsPost = widget.newsPost;
+    _accessList = _newsPost.permissionList.split(',');
     _scrollController = ScrollController();
     _scaffoldController = widget.scaffoldController;
   }
@@ -110,7 +110,7 @@ class _ViewNewsState extends State<ViewNews> {
                         child: Container(
                           padding: const EdgeInsets.fromLTRB(15, 10, 10, 5),
                           child: Text(
-                            _note.content!.newsTitle,
+                            _newsPost.content!.newsTitle,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 22,
@@ -122,20 +122,20 @@ class _ViewNewsState extends State<ViewNews> {
                   ),
                   // Display note metadata - show dates and sharing info, but not path info (as only shown on non readable note page)
                   DisplayNewsMetadata(
-                    createdDateTime: _note.content!.createdDateTime,
-                    modifiedDateTime: _note.content!.modifiedDateTime,
-                    newsOwner: _note.newsOwner,
-                    permissionGranter: _note.permissionGranter ?? 'N/A',
-                    permissionList: _note.permissionList,
-                    newsFileName: _note.newsFileName,
-                    newsUrl: _note.newsUrl,
+                    createdDateTime: _newsPost.content!.createdDateTime,
+                    modifiedDateTime: _newsPost.content!.modifiedDateTime,
+                    newsOwner: _newsPost.newsOwner,
+                    permissionGranter: _newsPost.permissionGranter ?? 'N/A',
+                    permissionList: _newsPost.permissionList,
+                    newsFileName: _newsPost.newsFileName,
+                    newsUrl: _newsPost.newsUrl,
                     showDates: true,
                     showFileName: true,
                     showSharing: true,
                     showPathInfo: true,
                   ),
                   // Display markdown note content
-                  noteDisplayMarkdown(_note.content!.newsContent),
+                  noteDisplayMarkdown(_newsPost.content!.newsContent),
                 ],
               ),
             ),
@@ -161,11 +161,11 @@ class _ViewNewsState extends State<ViewNews> {
                           icon: const Icon(Icons.share),
                           backgroundColor: ButtonBackgroundColor.share,
                           childPage: ShareNews(
-                            newsUrl: _note.newsUrl,
-                            newsOwner: _note.newsOwner,
-                            isExternal: _note.isExternalRes,
+                            newsUrl: _newsPost.newsUrl,
+                            newsOwner: _newsPost.newsOwner,
+                            isExternal: _newsPost.isExternalRes,
                             backPage: ViewNews(
-                              note: _note,
+                              newsPost: _newsPost,
                               scaffoldController: _scaffoldController,
                             ),
                             scaffoldController: _scaffoldController,
@@ -181,7 +181,7 @@ class _ViewNewsState extends State<ViewNews> {
                           icon: const Icon(Icons.edit),
                           backgroundColor: ButtonBackgroundColor.edit,
                           childPage: EditNews(
-                            note: _note,
+                            newsPost: _newsPost,
                             scaffoldController: _scaffoldController,
                           ),
                           scaffoldController: _scaffoldController,
@@ -190,9 +190,9 @@ class _ViewNewsState extends State<ViewNews> {
                       ],
 
                       /// Delete button
-                      if (!_note.isExternalRes) ...[
+                      if (!_newsPost.isExternalRes) ...[
                         DelButton(
-                          filename: _note.newsFileName,
+                          filename: _newsPost.newsFileName,
                           isExternal: false,
                           isNarrow: isNarrow,
                           childPage: ListNewsScreen(

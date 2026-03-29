@@ -1,4 +1,4 @@
-/// A stateful widget for sharing a note owned by the user.
+/// A stateful widget for sharing a news file.
 ///
 // Time-stamp: <Friday 2025-10-24 12:01:03 +1100 Graham Williams>
 ///
@@ -31,13 +31,13 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/widgets/note_back_button.dart';
 
-/// A [StatefulWidget] for sharing a note owned by the user.
+/// A [StatefulWidget] for sharing a news file.
 ///
 /// Arguments:
-/// - [newsUrl] - is the name of the note to be shared.
-/// - [newsOwner] - is the webId of the note owner.
+/// - [newsUrl] - is the name of the news file to be shared.
+/// - [newsOwner] - is the webId of the news file owner.
 /// - [backPage] - The widget used by Back button.
-/// - [isExternalRes] - Whether the note is externally owned.
+/// - [isExternalRes] - Whether the file is externally owned.
 /// - [scaffoldController] - Controller for the Solid scaffold.
 
 class ShareNews extends StatefulWidget {

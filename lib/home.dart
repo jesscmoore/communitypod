@@ -30,9 +30,9 @@ import 'package:solidpod/solidpod.dart';
 import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/constants/app.dart';
-import 'package:communitypod/notes/list_my_notes_screen.dart';
-import 'package:communitypod/notes/list_notes_screen.dart';
-import 'package:communitypod/notes/new_note.dart';
+import 'package:communitypod/news/list_my_notes_screen.dart';
+import 'package:communitypod/news/list_notes_screen.dart';
+import 'package:communitypod/news/new_news_post.dart';
 
 class AppHomePage extends StatefulWidget {
   /// Initialise widget variables.
@@ -116,7 +116,7 @@ class AppHomePageState extends State<AppHomePage> {
             tooltip: newNewsToolTip,
             onPressed: () {
               scaffoldController.navigateToSubpage(
-                NewNews(
+                NewNewsPost(
                   scaffoldController: scaffoldController,
                 ),
               );
@@ -145,7 +145,7 @@ class AppHomePageState extends State<AppHomePage> {
           title: newNewsPostTitle,
           // Or Icons.add_circle
           icon: Icons.post_add_rounded,
-          child: NewNews(
+          child: NewNewsPost(
             scaffoldController: scaffoldController,
           ),
           tooltip: newNewsToolTip,

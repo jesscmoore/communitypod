@@ -30,7 +30,7 @@ import 'package:solidpod/solidpod.dart';
 import 'package:communitypod/constants/turtle_structures.dart';
 import 'package:communitypod/models/note_content.dart';
 
-/// Data model for user's note
+/// Data model for user's news file
 
 class OwnNews {
   final String newsFileName;

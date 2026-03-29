@@ -29,7 +29,7 @@ import 'package:solidpod/solidpod.dart';
 
 import 'package:communitypod/constants/turtle_structures.dart';
 
-/// Base data model for the nested note within a note object
+/// Base data model for the text content object within a news object
 
 class NewsContent {
   final String newsTitle;

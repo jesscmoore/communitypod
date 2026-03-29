@@ -1,4 +1,4 @@
-/// Data models for notes
+/// Data models for news
 ///
 /// Copyright (C) 2023-2025, Software Innovation Institute
 ///
@@ -31,7 +31,7 @@ import 'package:communitypod/constants/turtle_structures.dart';
 import 'package:communitypod/models/note_content.dart';
 import 'package:communitypod/models/own_note.dart';
 
-/// Data model for any note
+/// Data model for any news object
 
 class News extends OwnNews {
   final String? sharedTime;
@@ -125,11 +125,11 @@ class News extends OwnNews {
   }
 }
 
-/// Class for operations on list of notes
+/// Class for operations on list of news files
 
 extension ListNewsExtension on List<News> {
   /// Method to add authorised user list map to each file in
-  /// list of notes
+  /// list of files
   ///
   /// Arguments:
   /// - [permissionMaps] - map of permission maps, with the

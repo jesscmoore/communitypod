@@ -1,4 +1,4 @@
-/// Data models for unparseable notes
+/// Data model for selected news object
 ///
 /// Copyright (C) 2023-2025, Software Innovation Institute
 ///
@@ -25,7 +25,7 @@
 
 library;
 
-/// Data model for unparseable news post file
+/// Data model for selected unparseable news files
 
 class SelectedNews {
   final String newsFileName;

@@ -104,3 +104,9 @@ Desktop (≥960px): sidebar menu + content. Mobile: tab-based navigation. Handle
 - **flutter_form_builder** + **form_builder_validators** — Form management
 - **markdown_widget** + **markdown_toolbar** — Markdown editor/renderer
 - **file_picker** — File/image selection
+
+<!-- markdownlint-disable-file  MD009 MD012 MD013 MD029 MD032 MD036 MD040 MD060 -->
+<!-- MD009 - no trailing spaces -->
+<!-- MD012 - no multiple blanks -->
+<!-- MD013 - line limit -->
+<!-- MD036 - emphasised text as heading -->

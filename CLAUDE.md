@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-CommunityPod is a Flutter app (forked from NotePod) for privacy-preserving news/notes sharing using [Solid Pods](https://solidproject.org/about) — decentralized personal data vaults. Notes are stored as encrypted RDF/Turtle files on the user's own Solid Pod server.
+CommunityPod is a Flutter app (forked from NotePod) for privacy-preserving news/notes sharing using [Solid Pods](https://solidproject.org/about) — decentralized personal data vaults. News are stored as encrypted RDF/Turtle files on the user's own Solid Pod server.
 
 ## Common Commands
 
@@ -58,11 +58,11 @@ All of these must pass before merging (run against Flutter 3.41.4):
 
 ```
 Solid Pod (encrypted Turtle files on remote server)
-  → rest_api.dart: readPod() / getOwnNoteList()
-  → NoteFileHelper.scanFileListDirectory() — scans Pod directory
-  → TurtleSerializer.noteFromTurtle() — parses TTL to NoteContent
+  → rest_api.dart: readPod() / getOwnNewsList()
+  → NewsFileHelper.scanFileListDirectory() — scans Pod directory
+  → TurtleSerializer.noteFromTurtle() — parses TTL to NewsContent
   → Encryption.decryptVal() — on-device decryption
-  → Note / OwnNote models
+  → Note / OwnNews models
   → FutureBuilder renders UI
 ```
 
@@ -76,7 +76,7 @@ No external state container (no Provider/Riverpod/BLoC). The app uses:
 ### Key directories
 
 - `lib/common/rest_api/` — Pod API layer (`rest_api.dart`, `file_helper.dart`, `operations.dart`)
-- `lib/models/` — Data models (`Note`, `OwnNote`, `NoteContent`, `NotesCallResult`)
+- `lib/models/` — Data models (`Note`, `OwnNews`, `NewsContent`, `NewsCallResult`)
 - `lib/notes/` — Feature screens (list, view, edit, new, share note)
 - `lib/utils/turtle/` — RDF Turtle serialization (`note_serializer.dart`, `parsing_utils.dart`)
 - `lib/utils/encryption.dart` — On-device encrypt/decrypt (server never sees plaintext)
@@ -86,7 +86,7 @@ No external state container (no Provider/Riverpod/BLoC). The app uses:
 
 ### Data storage format
 
-Notes are stored as RDF Turtle (`.ttl`) files on the user's Solid Pod. `TurtleSerializer` converts between TTL strings and `NoteContent` objects using the `rdflib` package. Predicate names are defined in `lib/constants/turtle_structures.dart`.
+News are stored as RDF Turtle (`.ttl`) files on the user's Solid Pod. `TurtleSerializer` converts between TTL strings and `NewsContent` objects using the `rdflib` package. Predicate names are defined in `lib/constants/turtle_structures.dart`.
 
 ### Authentication
 

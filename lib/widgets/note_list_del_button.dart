@@ -40,7 +40,7 @@ import 'package:communitypod/widgets/loading_animation.dart' as loading;
 /// A delete button widget for deleting a list of notes.
 ///
 /// Arguments:
-/// - [selectedNotes] - list of selected notes.
+/// - [selectedNews] - list of selected notes.
 /// - [childPage] - child widget to return to.
 /// - [scaffoldController] - Controller for the Solid scaffold.
 /// - [isSelectionMode] - flag denoting whether notes were selected.
@@ -49,17 +49,17 @@ import 'package:communitypod/widgets/loading_animation.dart' as loading;
 /// - [isExternal] - flag denoting whether note is an external
 /// note shared to the user.
 
-class NoteListDelButton extends StatelessWidget {
-  final List<SelectedNote> selectedNotes;
+class NewsListDelButton extends StatelessWidget {
+  final List<SelectedNews> selectedNews;
   final Widget childPage;
   final SolidScaffoldController scaffoldController;
   final bool isSelectionMode;
   final bool isExtFileSelected;
   final bool isExternal;
 
-  const NoteListDelButton({
+  const NewsListDelButton({
     super.key,
-    required this.selectedNotes,
+    required this.selectedNews,
     required this.childPage,
     required this.scaffoldController,
     this.isSelectionMode = false,
@@ -74,7 +74,7 @@ class NoteListDelButton extends StatelessWidget {
         return AlertDialog(
           title: const Text(Msg.plsConfirm),
           content: Text(
-            selectedNotes.length > 1
+            selectedNews.length > 1
                 ? Msg.confirmDeleteMultiple
                 : Msg.confirmDelete,
           ),
@@ -87,17 +87,17 @@ class NoteListDelButton extends StatelessWidget {
 
                 loading.showAnimationDialog(
                   context,
-                  Msg.deletingNote,
+                  Msg.deletingNews,
                   false,
                 );
 
                 // Delete file
-                for (final SelectedNote note in selectedNotes) {
+                for (final SelectedNews note in selectedNews) {
                   debugPrint('Deleting ${note.noteUrl}...');
 
                   // Call solid delete file function
                   // Delete file
-                  await NoteFileHelper().deleteNote(
+                  await NewsFileHelper().deleteNews(
                     context: context,
                     filename: note.noteFileName,
                     isExternal: isExternal,

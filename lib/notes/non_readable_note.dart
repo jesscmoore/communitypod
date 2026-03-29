@@ -45,21 +45,21 @@ import 'package:communitypod/widgets/note_display_metadata.dart';
 /// Arguments:
 /// - [note] - The externally owned note shared to the user.
 
-class NonReadableNote extends StatefulWidget {
-  final Note note;
+class NonReadableNews extends StatefulWidget {
+  final News note;
   final SolidScaffoldController scaffoldController;
 
-  const NonReadableNote({
+  const NonReadableNews({
     super.key,
     required this.note,
     required this.scaffoldController,
   });
 
   @override
-  State<NonReadableNote> createState() => _NonReadableNoteState();
+  State<NonReadableNews> createState() => _NonReadableNewsState();
 }
 
-class _NonReadableNoteState extends State<NonReadableNote> {
+class _NonReadableNewsState extends State<NonReadableNews> {
   /// Scroll controller for single child scroll view
   late final ScrollController _scrollController;
 
@@ -69,8 +69,8 @@ class _NonReadableNoteState extends State<NonReadableNote> {
   /// Boolean describing whether window is narrow
   late bool isNarrow;
 
-  /// Note
-  late final Note _note;
+  /// News
+  late final News _note;
 
   @override
   void initState() {
@@ -96,7 +96,7 @@ class _NonReadableNoteState extends State<NonReadableNote> {
         child: Column(
           children: <Widget>[
             // Display note metadata - show sharing and path info but not dates (as requires noteContent)
-            DisplayNoteMetadata(
+            DisplayNewsMetadata(
               noteOwner: _note.noteOwner,
               permissionGranter: _note.permissionGranter!,
               permissionList: _note.permissionList,
@@ -112,7 +112,7 @@ class _NonReadableNoteState extends State<NonReadableNote> {
               Icons.info,
               Colors.amber,
               'Access Permission!',
-              nonReadableNoteMsg,
+              nonReadableNewsMsg,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -126,15 +126,15 @@ class _NonReadableNoteState extends State<NonReadableNote> {
                     children: [
                       // Share button
                       if (_note.permissionList.contains('control')) ...[
-                        NoteActionButton(
+                        ActionButton(
                           label: ButtonLabel.share,
                           icon: const Icon(Icons.share),
                           backgroundColor: ButtonBackgroundColor.share,
-                          childPage: ShareNote(
+                          childPage: ShareNews(
                             noteUrl: _note.noteUrl,
                             noteOwner: _note.noteOwner,
                             isExternal: _note.isExternalRes,
-                            backPage: ListNotesScreen(
+                            backPage: ListNewsScreen(
                               scaffoldController: _scaffoldController,
                             ),
                             scaffoldController: _scaffoldController,
@@ -147,16 +147,16 @@ class _NonReadableNoteState extends State<NonReadableNote> {
                       // /// 20250719 jesscmoore Commented out as also commented out
                       // /// external note with read-write-control-append access
                       // if (noteMetaData[permissionListPred].contains('write')) ...[
-                      //   NoteDelButton(noteData: noteMetaData, isExternal: true),
+                      //   DelButton(noteData: noteMetaData, isExternal: true),
                       //   const SizedBox(
                       //     width: 5,
                       //   ),
                       // ],
-                      NoteActionButton(
+                      ActionButton(
                         label: ButtonLabel.back,
                         icon: const Icon(Icons.keyboard_backspace),
                         backgroundColor: ButtonBackgroundColor.back,
-                        childPage: ListNotesScreen(
+                        childPage: ListNewsScreen(
                           scaffoldController: _scaffoldController,
                         ),
                         scaffoldController: _scaffoldController,

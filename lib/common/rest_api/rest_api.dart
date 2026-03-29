@@ -40,39 +40,39 @@ import 'package:communitypod/utils/turtle/note_serializer.dart';
 /// Get the list of user's note objects.
 ///
 /// Example:
-/// - `_asyncDataFetch = getOwnNoteList()`
+/// - `_asyncDataFetch = getOwnNewsList()`
 /// - used to define async function in future call to get user's notes.
 ///
-/// Returns: [NotesCallResult] object comprising:
-/// - [notes] - list of [Note] note objects.
-/// - [unparseableNotes] - list of [SelectedNote] objects of
+/// Returns: [NewsCallResult] object comprising:
+/// - [notes] - list of [News] note objects.
+/// - [unparseableNews] - list of [SelectedNews] objects of
 /// unparseable notes.
 
-Future<NotesCallResult> getOwnNoteList() async {
+Future<NewsCallResult> getOwnNewsList() async {
   try {
     final startTime = DateTime.now();
 
     final List<String> fileList;
-    final List<Note> notes = [];
-    final List<SelectedNote> unparseableNotes = [];
+    final List<News> notes = [];
+    final List<SelectedNews> unparseableNews = [];
 
     // Get note owner
     final String noteOwner = await getWebId() ?? '';
 
     // Get file list in owner's Pod
-    fileList = await NoteFileHelper().scanFileListDirectory();
+    fileList = await NewsFileHelper().scanFileListDirectory();
 
     // Create a list of future functions for reading pod and
     // getting fileUrl
     List<Future<String>> futuresFileUrl = [];
-    List<Future<String>> futuresNoteContentResult = [];
+    List<Future<String>> futuresNewsContentResult = [];
     for (final fileName in fileList) {
       futuresFileUrl.add(
         filenameToResourceUrl(
           fileName: fileName,
         ),
       );
-      futuresNoteContentResult.add(
+      futuresNewsContentResult.add(
         readPod(fileName),
       );
     }
@@ -80,7 +80,7 @@ Future<NotesCallResult> getOwnNoteList() async {
     // Read note file content and fetch file Urls
     List<String> fileUrls = await Future.wait(futuresFileUrl);
     List<String> noteContentResults =
-        await Future.wait(futuresNoteContentResult);
+        await Future.wait(futuresNewsContentResult);
 
     // Retrieve note data
     for (int i = 0; i < fileList.length; i++) {
@@ -88,7 +88,7 @@ Future<NotesCallResult> getOwnNoteList() async {
       if (noteContentResults[i].isNotEmpty) {
         try {
           // Extract note from turtle string
-          final NoteContent? content;
+          final NewsContent? content;
           content = TurtleSerializer.noteFromTurtle(
             noteContentResults[i],
           );
@@ -97,7 +97,7 @@ Future<NotesCallResult> getOwnNoteList() async {
             // Add note content data to note objects list
             // where user = noteOwner
             notes.add(
-              Note(
+              News(
                 noteFileName: fileList[i],
                 noteUrl: fileUrls[i],
                 noteOwner: noteOwner,
@@ -108,8 +108,8 @@ Future<NotesCallResult> getOwnNoteList() async {
           } else {
             // Found unparseable file content
             // Add note that failed parsing to bad notes list
-            unparseableNotes.add(
-              SelectedNote(
+            unparseableNews.add(
+              SelectedNews(
                 noteFileName: fileList[i],
                 noteUrl: fileUrls[i],
                 noteOwner: noteOwner,
@@ -123,8 +123,8 @@ Future<NotesCallResult> getOwnNoteList() async {
         }
       } else {
         // If empty, add to unparseable file object list
-        unparseableNotes.add(
-          SelectedNote(
+        unparseableNews.add(
+          SelectedNews(
             noteFileName: fileList[i],
             noteUrl: fileUrls[i],
             noteOwner: noteOwner,
@@ -134,16 +134,16 @@ Future<NotesCallResult> getOwnNoteList() async {
       }
     }
 
-    if (unparseableNotes.isNotEmpty) {
-      debugPrint('Found ${unparseableNotes.length} unparseable or empty files');
+    if (unparseableNews.isNotEmpty) {
+      debugPrint('Found ${unparseableNews.length} unparseable or empty files');
     } else {
       debugPrint('All owners files parsed successfully!');
     }
 
     // Fetch permission lists of who each note is shared with
     try {
-      final List<Note> fullNotes;
-      final NotesCallResult results;
+      final List<News> fullNews;
+      final NewsCallResult results;
 
       final List<String> fileList =
           notes.map((note) => note.noteFileName).toList();
@@ -152,15 +152,15 @@ Future<NotesCallResult> getOwnNoteList() async {
         fileList: fileList,
       );
 
-      fullNotes = notes.addAuthUserLists(permissionMaps: permissionMaps);
+      fullNews = notes.addAuthUserLists(permissionMaps: permissionMaps);
 
-      results = NotesCallResult(
-        notes: fullNotes,
-        unparseableNotes: unparseableNotes,
+      results = NewsCallResult(
+        notes: fullNews,
+        unparseableNews: unparseableNews,
       );
       final endTime = DateTime.now();
       final duration = endTime.difference(startTime);
-      debugPrint('[getOwnNoteList] Load time: ${duration.inMilliseconds} ms');
+      debugPrint('[getOwnNewsList] Load time: ${duration.inMilliseconds} ms');
 
       return results;
     } catch (e) {
@@ -183,33 +183,33 @@ Future<NotesCallResult> getOwnNoteList() async {
 /// which the user has or has previously been granted access will be returned. (Default: true, ie. only returns list of external notes
 /// that user has current access to.
 ///
-/// Returns: [NotesCallResult] object comprising:
-/// - [notes] - list of [Note] note objects.
-/// - [unparseableNotes] - list of [SelectedNote] objects of
+/// Returns: [NewsCallResult] object comprising:
+/// - [notes] - list of [News] note objects.
+/// - [unparseableNews] - list of [SelectedNews] objects of
 /// unparseable notes.
-/// - [nonExistentNotes] - list of non-existent [Note] note
+/// - [nonExistentNews] - list of non-existent [News] note
 /// objects, if external files were deleted by their owner without
 /// first revoking access to the user (and other recipients).
 
-Future<NotesCallResult> getExternalNoteList({
+Future<NewsCallResult> getExternalNewsList({
   bool hasCurrentAccess = true,
 }) async {
   final startTime = DateTime.now();
 
-  final List<Note> notes = [];
+  final List<News> notes = [];
   // Build list of external notes shared to user
 
-  final Map<dynamic, dynamic> externalNotesLog;
+  final Map<dynamic, dynamic> externalNewsLog;
 
-  externalNotesLog = await NoteFileHelper().scanPermLogFile();
+  externalNewsLog = await NewsFileHelper().scanPermLogFile();
 
   List<String> unparseableLogRecords = [];
 
-  if (externalNotesLog.isNotEmpty) {
-    for (final fileUrl in externalNotesLog.keys) {
+  if (externalNewsLog.isNotEmpty) {
+    for (final fileUrl in externalNewsLog.keys) {
       // Each log record of an external file
       final Map<PermissionLogLiteral, dynamic> logRecordOfFile =
-          externalNotesLog[fileUrl] as Map<PermissionLogLiteral, dynamic>;
+          externalNewsLog[fileUrl] as Map<PermissionLogLiteral, dynamic>;
 
       // Ignore log records of files where access has been
       // revoked
@@ -220,18 +220,18 @@ Future<NotesCallResult> getExternalNoteList({
 
       // Deserialise external note log record
       try {
-        final Note? note;
+        final News? note;
 
         // Extract log record of each external note
         // where user currently has access
         // Applies isExternalRes == true to loaded notes
-        note = NoteFileHelper.extFileDetailsFromLog(
+        note = NewsFileHelper.extFileDetailsFromLog(
           logRecordOfFile: logRecordOfFile,
           fileUrl: fileUrl,
         );
 
         if (note != null) {
-          // Add log details of note to ExternalNote objects list
+          // Add log details of note to ExternalNews objects list
           notes.add(note);
         } else {
           // Found unparseable log record
@@ -256,59 +256,59 @@ Future<NotesCallResult> getExternalNoteList({
   // Fetch and deserialize external note content
   // or count bad files according to error type
   try {
-    final List<Note> fullNotes = [];
-    final List<Note> nonExistentNotes = [];
-    final List<SelectedNote> unparseableNotes = [];
-    final NotesCallResult results;
+    final List<News> fullNews = [];
+    final List<News> nonExistentNews = [];
+    final List<SelectedNews> unparseableNews = [];
+    final NewsCallResult results;
 
     if (notes.isNotEmpty) {
       // Create a list of future functions for reading external Pods
-      List<Future<dynamic>> futuresExtNoteContentResult = [];
+      List<Future<dynamic>> futuresExtNewsContentResult = [];
       for (final note in notes) {
-        futuresExtNoteContentResult.add(
-          getExternalNoteContent(
+        futuresExtNewsContentResult.add(
+          getExternalNewsContent(
             note: note,
           ),
         );
       }
 
-      List<dynamic> extNoteWithContentResults =
-          await Future.wait(futuresExtNoteContentResult);
+      List<dynamic> extNewsWithContentResults =
+          await Future.wait(futuresExtNewsContentResult);
 
       // Retrieve note data
       for (int i = 0; i < notes.length; i++) {
-        if (extNoteWithContentResults[i] ==
+        if (extNewsWithContentResults[i] ==
             FileCallStatus.fileAccessForbidden) {
           // Files with access forbidden have note with default null content
-          fullNotes.add(notes[i]);
-        } else if (extNoteWithContentResults[i] == FileCallStatus.parsingFail) {
-          unparseableNotes.add(
-            SelectedNote(
+          fullNews.add(notes[i]);
+        } else if (extNewsWithContentResults[i] == FileCallStatus.parsingFail) {
+          unparseableNews.add(
+            SelectedNews(
               noteFileName: notes[i].noteFileName,
               noteUrl: notes[i].noteUrl,
               noteOwner: notes[i].noteOwner,
             ),
           );
-        } else if (extNoteWithContentResults[i] ==
+        } else if (extNewsWithContentResults[i] ==
             FileCallStatus.fileNotExists) {
-          nonExistentNotes.add(notes[i]);
-        } else if (extNoteWithContentResults[i] != null) {
+          nonExistentNews.add(notes[i]);
+        } else if (extNewsWithContentResults[i] != null) {
           // Add note content data to note objects list
-          fullNotes.add(extNoteWithContentResults[i]);
+          fullNews.add(extNewsWithContentResults[i]);
         }
       }
     }
 
-    results = NotesCallResult(
-      notes: fullNotes,
-      nonExistentNotes: nonExistentNotes,
-      unparseableNotes: unparseableNotes,
+    results = NewsCallResult(
+      notes: fullNews,
+      nonExistentNews: nonExistentNews,
+      unparseableNews: unparseableNews,
     );
 
     final endTime = DateTime.now();
     final duration = endTime.difference(startTime);
     debugPrint(
-      '[getExternalNoteList] Load time: ${duration.inMilliseconds} ms',
+      '[getExternalNewsList] Load time: ${duration.inMilliseconds} ms',
     );
 
     return results;
@@ -325,13 +325,13 @@ Future<NotesCallResult> getExternalNoteList({
 /// - [note] - The externally owned note data object including metadata.
 ///
 /// Returns: [FileCallStatus] object comprising one of:
-/// - [note] - [Note] note object containing note content.
+/// - [note] - [News] note object containing note content.
 /// - [FileCallStatus] - where [FileCallStatus] captures read failures
 /// including [FileCallStatus.fileNotExists] and
 /// [FileCallStatus.parsingFail].
 
-Future<dynamic> getExternalNoteContent({
-  required Note note,
+Future<dynamic> getExternalNewsContent({
+  required News note,
 }) async {
   try {
     // Check permissions include read
@@ -347,7 +347,7 @@ Future<dynamic> getExternalNoteContent({
     // Extract external note ttl data to noteContent
     try {
       // Deserialize note content
-      final NoteContent? content;
+      final NewsContent? content;
       content = TurtleSerializer.noteFromTurtle(noteContentResult);
 
       if (content != null) {

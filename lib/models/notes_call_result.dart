@@ -30,32 +30,32 @@ import 'package:communitypod/models/selected_note.dart';
 
 /// Data model for result of get notes list future call
 
-class NotesCallResult {
-  List<Note>? notes;
-  List<SelectedNote>? unparseableNotes;
-  List<Note>? nonExistentNotes;
+class NewsCallResult {
+  List<News>? notes;
+  List<SelectedNews>? unparseableNews;
+  List<News>? nonExistentNews;
 
-  NotesCallResult({
+  NewsCallResult({
     this.notes = const [],
-    this.unparseableNotes = const [],
-    this.nonExistentNotes = const [],
+    this.unparseableNews = const [],
+    this.nonExistentNews = const [],
   });
 }
 
-/// Extension class for NoteCallResult objects
+/// Extension class for NewsCallResult objects
 
-extension NotesCallResultExtension on NotesCallResult {
-  /// Method to add lists within two NoteCallResults objects.
+extension NewsCallResultExtension on NewsCallResult {
+  /// Method to add lists within two NewsCallResults objects.
   ///
   /// Arguments:
   /// - [results] - Second notes call results object to add to the first notes call results object.
 
-  NotesCallResult addCallResults({required NotesCallResult results}) {
+  NewsCallResult addCallResults({required NewsCallResult results}) {
     // Initialise combined results object as this first note call results object.
-    NotesCallResult combinedResults = NotesCallResult(
+    NewsCallResult combinedResults = NewsCallResult(
       notes: notes,
-      unparseableNotes: unparseableNotes,
-      nonExistentNotes: nonExistentNotes,
+      unparseableNews: unparseableNews,
+      nonExistentNews: nonExistentNews,
     );
 
     // Add notes lists
@@ -63,14 +63,14 @@ extension NotesCallResultExtension on NotesCallResult {
       combinedResults.notes!.addAll(results.notes!);
     }
 
-    // Add unparseableNotes lists
-    if (results.unparseableNotes!.isNotEmpty) {
-      combinedResults.unparseableNotes!.addAll(results.unparseableNotes!);
+    // Add unparseableNews lists
+    if (results.unparseableNews!.isNotEmpty) {
+      combinedResults.unparseableNews!.addAll(results.unparseableNews!);
     }
 
-    // Add nonExistentNotes lists
-    if (results.nonExistentNotes!.isNotEmpty) {
-      combinedResults.nonExistentNotes!.addAll(results.nonExistentNotes!);
+    // Add nonExistentNews lists
+    if (results.nonExistentNews!.isNotEmpty) {
+      combinedResults.nonExistentNews!.addAll(results.nonExistentNews!);
     }
 
     return combinedResults;

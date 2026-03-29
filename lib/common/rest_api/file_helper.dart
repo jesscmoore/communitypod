@@ -46,8 +46,8 @@ import 'package:communitypod/widgets/loading_animation.dart' as loading;
 
 /// Helper class for note file operations.
 
-class NoteFileHelper with PodOperationsMixin {
-  NoteFileHelper();
+class NewsFileHelper with PodOperationsMixin {
+  NewsFileHelper();
 
   /// Scans the note pod directory for note files.
   ///
@@ -110,7 +110,7 @@ class NoteFileHelper with PodOperationsMixin {
   ///
   /// Returns: parsed map of details of external note file.
 
-  static Note? extFileDetailsFromLog({
+  static News? extFileDetailsFromLog({
     required Map logRecordOfFile,
     required String fileUrl,
   }) {
@@ -157,7 +157,7 @@ class NoteFileHelper with PodOperationsMixin {
 
       // Create the external note details object
 
-      return Note(
+      return News(
         noteUrl: noteUrl!,
         noteFileName: noteFileName,
         noteOwner: noteOwner!,
@@ -181,7 +181,7 @@ class NoteFileHelper with PodOperationsMixin {
   /// - [filename] - The note filename. For external notes this should be the note Url.
   /// - [isExternal] - Boolean describing whether the note is an external note. (Default: false).
 
-  Future<void> deleteNote({
+  Future<void> deleteNews({
     required BuildContext context,
     required String filename,
     required Widget child,
@@ -215,42 +215,42 @@ class NoteFileHelper with PodOperationsMixin {
   /// and then navigates to the appropriate return page.
   ///
   /// Examples:
-  /// - `await saveNote(context: context, textController: textController, formKey: formKey, prevOwnNote: note, isExisting: true)` - to save note
+  /// - `await saveNews(context: context, textController: textController, formKey: formKey, prevOwnNews: note, isExisting: true)` - to save note
   /// owned by the user.
-  /// - `await saveNote(context: context, textController: textController, formKey: formKey, prevExternalNote: note, isExisting: true, isExternal: true)`
+  /// - `await saveNews(context: context, textController: textController, formKey: formKey, prevExternalNews: note, isExisting: true, isExternal: true)`
   /// - to save an externally owned note.
   ///
   /// - [context] - The build context.
   /// - [textController] - Text controller of the note text content editor.
   /// - [formKey] - Key of the form to edit note metadata.
   ///   [scaffoldController] - Controller for the Solid scaffold.
-  /// - [prevNote] - Optional existing note data object. Required if isExisting is true.
+  /// - [prevNews] - Optional existing note data object. Required if isExisting is true.
   /// - [isExternal] - Optional boolean denoting whether note is externally
   /// owned. (Default: false).
   /// - [isExisting] - Optional boolean denoting whether note already
   /// exists. (Default: false).
 
-  Future<void> saveNote({
+  Future<void> saveNews({
     required BuildContext context,
     required TextEditingController textController,
     required GlobalKey<FormBuilderState> formKey,
     required SolidScaffoldController scaffoldController,
-    Note? prevNote,
+    News? prevNews,
     bool isExternal = false,
     bool isExisting = false,
   }) async {
     if (formKey.currentState?.saveAndValidate() ?? false) {
-      // Compares to prevNoteData if previous note data provided
+      // Compares to prevNewsData if previous note data provided
       // Adds sharing metadata if shared==true
 
       Map formData = formKey.currentState?.value as Map;
       String noteText = textController.text;
-      final String prevNoteTitle;
-      final String prevNoteContent;
-      final Note updatedNote;
-      final NoteContent updatedContent;
+      final String prevNewsTitle;
+      final String prevNewsContent;
+      final News updatedNews;
+      final NewsContent updatedContent;
 
-      // Note title need to be spaceless as we are using that name
+      // News title need to be spaceless as we are using that name
       // to create a .acl file. And the acl file url cannot have spaces
       String noteTitle = formData[noteTitlePred].replaceAll('\n', '');
 
@@ -260,28 +260,28 @@ class NoteFileHelper with PodOperationsMixin {
 
       if (isExisting) {
         // Retrieve existing note title and content for comparison
-        prevNoteTitle = prevNote!.content!.noteTitle;
-        prevNoteContent = prevNote.content!.noteContent;
+        prevNewsTitle = prevNews!.content!.noteTitle;
+        prevNewsContent = prevNews.content!.noteContent;
         // Compare updated title and content to existing
         // title and content
-        if (noteTitle == prevNoteTitle && noteText == prevNoteContent) {
+        if (noteTitle == prevNewsTitle && noteText == prevNewsContent) {
           showErrDialog(context, ErrMsg.noChanges);
         } else {
           // Loading animation
           loading.showAnimationDialog(
             context,
-            Msg.savingNote,
+            Msg.savingNews,
             false,
           );
 
           // Update content of note
           try {
-            updatedContent = prevNote.content!.copyWith(
+            updatedContent = prevNews.content!.copyWith(
               modifiedDateTime: modifiedDateTimeStr,
               noteTitle: noteTitle,
               noteContent: noteText,
             );
-            updatedNote = prevNote.copyWith(content: updatedContent);
+            updatedNews = prevNews.copyWith(content: updatedContent);
           } on Exception catch (e) {
             debugPrint(
               'Exception (formatting update to existing note):\n $e',
@@ -295,20 +295,20 @@ class NoteFileHelper with PodOperationsMixin {
               if (!context.mounted) return;
 
               debugPrint('save external note:');
-              debugPrint('noteUrl: ${prevNote.noteUrl}');
-              debugPrint('noteFileName: ${prevNote.noteFileName}');
-              debugPrint('noteOwner: ${prevNote.noteOwner}');
+              debugPrint('noteUrl: ${prevNews.noteUrl}');
+              debugPrint('noteFileName: ${prevNews.noteFileName}');
+              debugPrint('noteOwner: ${prevNews.noteOwner}');
 
               // External note
               // Encrypt note, create TTL, update file in POD
-              await saveNoteToPod(
+              await saveNewsToPod(
                 context: context,
                 // Use existing file url
-                noteUrl: prevNote.noteUrl,
-                noteOwner: prevNote.noteOwner,
+                noteUrl: prevNews.noteUrl,
+                noteOwner: prevNews.noteOwner,
                 data: updatedContent,
-                childPage: ViewNote(
-                  note: updatedNote,
+                childPage: ViewNews(
+                  note: updatedNews,
                   scaffoldController: scaffoldController,
                 ),
                 scaffoldController: scaffoldController,
@@ -324,14 +324,14 @@ class NoteFileHelper with PodOperationsMixin {
 
               // Edited my note
               // Encrypt note, create TTL, update file in POD
-              await saveNoteToPod(
+              await saveNewsToPod(
                 context: context,
                 // Use existing filename
-                noteFileName: prevNote.noteFileName,
+                noteFileName: prevNews.noteFileName,
                 data: updatedContent,
                 overwrite: true,
-                childPage: ViewNote(
-                  note: updatedNote,
+                childPage: ViewNews(
+                  note: updatedNews,
                   scaffoldController: scaffoldController,
                 ),
                 scaffoldController: scaffoldController,
@@ -350,12 +350,12 @@ class NoteFileHelper with PodOperationsMixin {
             // Loading animation
             loading.showAnimationDialog(
               context,
-              Msg.savingNote,
+              Msg.savingNews,
               false,
             );
 
             // Create new note data structure
-            final newContent = NoteContent(
+            final newContent = NewsContent(
               createdDateTime: modifiedDateTimeStr,
               modifiedDateTime: modifiedDateTimeStr,
               noteTitle: noteTitle,
@@ -365,12 +365,12 @@ class NoteFileHelper with PodOperationsMixin {
             // Encrypt note, create TTL and write to file in POD
             if (!context.mounted) return;
 
-            await saveNoteToPod(
+            await saveNewsToPod(
               context: context,
               // Create filename
               noteFileName: '$noteFileNamePrefix$modifiedDateTimeStr.ttl',
               data: newContent,
-              childPage: ListMyNotesScreen(
+              childPage: ListMyNewsScreen(
                 scaffoldController: scaffoldController,
               ),
               scaffoldController: scaffoldController,
@@ -395,10 +395,10 @@ class NoteFileHelper with PodOperationsMixin {
   /// if write to Pod failed to return a successful SolidCallFunctionStatus.
   ///
   /// Examples:
-  /// - `await saveNoteToPod(context: context, data: updatedContent, noteFileName: noteFileName, childPage: ListMyNotesScreen(), scaffoldController: scaffoldController)` - to
+  /// - `await saveNewsToPod(context: context, data: updatedContent, noteFileName: noteFileName, childPage: ListMyNewsScreen(), scaffoldController: scaffoldController)` - to
   /// save a note owned by the user.
-  /// - `await saveNoteToPod(context: context, data: updatedContent,
-  /// childPage: ListMyNotesScreen(), noteUrl: noteUrl, noteOwner: noteOwner,
+  /// - `await saveNewsToPod(context: context, data: updatedContent,
+  /// childPage: ListMyNewsScreen(), noteUrl: noteUrl, noteOwner: noteOwner,
   /// isExternal: true, scaffoldController: scaffoldController)` - to save an externally owned note.
   ///
   /// - [context] - The build context.
@@ -413,9 +413,9 @@ class NoteFileHelper with PodOperationsMixin {
   /// - [overwrite] - Optional boolean defining whether updating an existing owner's note.
   /// - [isExternal] - Optional boolean defining whether writing an external note.
 
-  Future<void> saveNoteToPod({
+  Future<void> saveNewsToPod({
     required BuildContext context,
-    required NoteContent data,
+    required NewsContent data,
     required Widget childPage,
     required SolidScaffoldController scaffoldController,
     String noteFileName = '',
@@ -429,24 +429,24 @@ class NoteFileHelper with PodOperationsMixin {
       // av: 20250519 - We need to encrypt the note text because
       // at the moment rdflib cannot parse multiline text with
       // # (hash) values in them.
-      String encNoteText = encryptVal(
+      String encNewsText = encryptVal(
         plainText: data.noteContent,
         encKey: data.createdDateTime,
       );
 
       // Create TTL body for note
-      final noteTTLStr = genNoteTTLStr(
+      final noteTTLStr = genNewsTTLStr(
         data.createdDateTime,
         data.modifiedDateTime,
         data.noteTitle,
-        encNoteText,
+        encNewsText,
       );
 
       if (isExternal && noteUrl != '' && noteOwner != '') {
         debugPrint('noteUrl: $noteUrl');
         debugPrint('noteOwner: $noteOwner');
 
-        // createNoteStatus = await writeExternalPod(
+        // createNewsStatus = await writeExternalPod(
         await writeExternalPod(
           noteUrl,
           noteTTLStr,

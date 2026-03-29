@@ -26,7 +26,7 @@ import 'package:flutter/material.dart';
 
 import 'package:solidpod/solidpod.dart';
 
-// const myNotesDir = 'mynotes';
+// const myNewsDir = 'mynotes';
 const noteFileNamePrefix = 'note-';
 
 // IRIs (Internationalized Resource Identifiers).
@@ -46,7 +46,7 @@ String createdDateTimePredErr = 'createdDateERROR';
 String modifiedDateTimePred = 'modifiedDateTime';
 String noteContentPred = 'noteContent';
 String noteTitlePred = 'noteTitle';
-//String encNoteContentPred = 'encNoteContent';
+//String encNewsContentPred = 'encNewsContent';
 String mePred = ':me';
 // 20251006 jess Keep meKey as ref, even though mePred is shorthand
 // String meKey = '#me';
@@ -66,7 +66,7 @@ String permissionTypePred = 'permissionType';
 String permissionListPred = 'permissionList';
 
 // Set up encrypted note file content
-String genNoteTTLStr(
+String genNewsTTLStr(
   String createdTimeStr,
   String updatedTimeStr,
   String noteTitle,
@@ -78,7 +78,7 @@ String genNoteTTLStr(
       @prefix communitypodTerms: <$communitypodTerms>.
       $mePred
           a foaf:PersonalProfileDocument;
-          terms:title "Note";
+          terms:title "News";
           communitypodTerms:$createdDateTimePred "$createdTimeStr";
           communitypodTerms:$modifiedDateTimePred "$updatedTimeStr";
           communitypodTerms:$noteTitlePred "$noteTitle";
@@ -94,7 +94,7 @@ String genNoteTTLStr(
   //     @prefix communitypodTerms: <$communitypodTerms>.
   //     $mePred
   //         a foaf:PersonalProfileDocument;
-  //         terms:title "Note";
+  //         terms:title "News";
   //         communitypodTerms:$createdDateTimePredErr "$createdTimeStr";
   //         communitypodTerms:$modifiedDateTimePred "$updatedTimeStr";
   //         communitypodTerms:$noteTitlePred "$noteTitle";

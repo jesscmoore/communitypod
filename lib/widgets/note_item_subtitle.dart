@@ -39,15 +39,15 @@ import 'package:communitypod/utils/misc.dart';
 /// - [isNarrow] - Flag describing whether window is narrower than
 /// narrow threshold.
 ///
-class NoteItemSubtitle extends StatelessWidget {
-  const NoteItemSubtitle({
+class ItemSubtitle extends StatelessWidget {
+  const ItemSubtitle({
     super.key,
-    required Note note,
+    required News note,
     required bool isNarrow,
   })  : _note = note,
         _isNarrow = isNarrow;
 
-  final Note _note;
+  final News _note;
   final bool _isNarrow;
 
   @override

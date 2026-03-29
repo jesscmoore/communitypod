@@ -85,38 +85,38 @@ class AppHomePageState extends State<AppHomePage> {
           // tooltip: 'Custom version tooltip',
         ),
         actions: [
-          // All Accessible Notes
+          // All Accessible News
           SolidAppBarAction(
             icon: Icons.newspaper,
             tooltip: combinedNewsToolTip,
             onPressed: () {
               scaffoldController.navigateToSubpage(
-                ListNotesScreen(
+                ListNewsScreen(
                   scaffoldController: scaffoldController,
                 ),
               );
             },
           ),
-          // My Notes (Owner's Notes)
+          // My News (Owner's News)
           SolidAppBarAction(
             // More gender neutral icon
             icon: Icons.person_3,
             tooltip: myNewsToolTip,
             onPressed: () {
               scaffoldController.navigateToSubpage(
-                ListMyNotesScreen(
+                ListMyNewsScreen(
                   scaffoldController: scaffoldController,
                 ),
               );
             },
           ),
-          // New Note
+          // New News Post
           SolidAppBarAction(
             icon: Icons.post_add_rounded,
             tooltip: newNewsToolTip,
             onPressed: () {
               scaffoldController.navigateToSubpage(
-                NewNote(
+                NewNews(
                   scaffoldController: scaffoldController,
                 ),
               );
@@ -125,27 +125,27 @@ class AppHomePageState extends State<AppHomePage> {
         ],
       ),
       menu: [
-        // All Accessible Notes
+        // All Accessible News
         SolidMenuItem(
           title: combinedNewsTitle,
           icon: Icons.newspaper,
-          child: ListNotesScreen(scaffoldController: scaffoldController),
+          child: ListNewsScreen(scaffoldController: scaffoldController),
           tooltip: combinedNewsToolTip,
         ),
-        // My Notes
+        // My News
         SolidMenuItem(
           title: myNewsTitle,
           // More gender neutral icon
           icon: Icons.person_3,
-          child: ListMyNotesScreen(scaffoldController: scaffoldController),
+          child: ListMyNewsScreen(scaffoldController: scaffoldController),
           tooltip: myNewsToolTip,
         ),
-        // New Note
+        // New News
         SolidMenuItem(
           title: newNewsPostTitle,
           // Or Icons.add_circle
           icon: Icons.post_add_rounded,
-          child: NewNote(
+          child: NewNews(
             scaffoldController: scaffoldController,
           ),
           tooltip: newNewsToolTip,

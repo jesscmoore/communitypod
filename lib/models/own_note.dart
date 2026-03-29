@@ -32,14 +32,14 @@ import 'package:communitypod/models/note_content.dart';
 
 /// Data model for user's note
 
-class OwnNote {
+class OwnNews {
   final String noteFileName;
   final String noteUrl;
   final String noteOwner;
-  NoteContent? content;
+  NewsContent? content;
   final Map<dynamic, dynamic>? authUserList;
 
-  OwnNote({
+  OwnNews({
     required this.noteFileName,
     required this.noteUrl,
     required this.noteOwner,
@@ -47,8 +47,8 @@ class OwnNote {
     this.authUserList,
   });
 
-  factory OwnNote.fromJson(Map<String, dynamic> json) {
-    return OwnNote(
+  factory OwnNews.fromJson(Map<String, dynamic> json) {
+    return OwnNews(
       noteFileName: json[noteFileNamePred],
       noteUrl: json[noteUrlPred],
       noteOwner: json[noteOwnerPred],
@@ -68,14 +68,14 @@ class OwnNote {
   /// Copy method for creating a new instance that is an
   /// updated copy of another instance
 
-  OwnNote copyWith({
+  OwnNews copyWith({
     String? noteFileName,
     String? noteUrl,
     String? noteOwner,
-    NoteContent? content,
+    NewsContent? content,
     Map<dynamic, dynamic>? authUserList,
   }) {
-    return OwnNote(
+    return OwnNews(
       noteFileName: noteFileName ?? this.noteFileName,
       noteUrl: noteUrl ?? this.noteUrl,
       noteOwner: noteOwner ?? this.noteOwner,

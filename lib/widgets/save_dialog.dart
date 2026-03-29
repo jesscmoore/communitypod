@@ -42,7 +42,7 @@ import 'package:communitypod/models/note.dart';
 /// - [textController] - text controller holding text of the note body.
 ///   [scaffoldController] - Controller for the Solid scaffold.
 /// - [formKey] - form key holding text of the note title.
-/// - [prevNote] - Optional existing note data object. Required for saving existing note. (Default: null).
+/// - [prevNews] - Optional existing note data object. Required for saving existing note. (Default: null).
 /// - [isExternal] - Optional boolean denoting whether note is externally
 /// owned. (Default: false).
 
@@ -51,7 +51,7 @@ class SaveDialog extends StatelessWidget {
   final TextEditingController textController;
   final SolidScaffoldController scaffoldController;
   final GlobalKey<FormBuilderState> formKey;
-  final Note? prevNote;
+  final News? prevNews;
   final bool isExternal;
 
   /// Only called for existing notes
@@ -63,7 +63,7 @@ class SaveDialog extends StatelessWidget {
     required this.textController,
     required this.scaffoldController,
     required this.formKey,
-    this.prevNote,
+    this.prevNews,
     this.isExternal = false,
   });
 
@@ -88,12 +88,12 @@ class SaveDialog extends StatelessWidget {
           child: const Text('Save'),
           onPressed: () async {
             // Save note
-            await NoteFileHelper().saveNote(
+            await NewsFileHelper().saveNews(
               context: context,
               textController: textController,
               scaffoldController: scaffoldController,
               formKey: formKey,
-              prevNote: prevNote,
+              prevNews: prevNews,
               isExisting: isExisting,
               isExternal: isExternal,
             );

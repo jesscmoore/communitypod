@@ -50,7 +50,7 @@ import 'package:communitypod/widgets/simple_action_button.dart';
 /// - [isNarrow] - Boolean describing whether displaying
 /// in a narrow window.
 
-class NoteActionButton extends StatelessWidget {
+class ActionButton extends StatelessWidget {
   /// Button label
   final String label;
 
@@ -75,7 +75,7 @@ class NoteActionButton extends StatelessWidget {
   /// Boolean describing whether window is narrow
   final bool isNarrow;
 
-  const NoteActionButton({
+  const ActionButton({
     super.key,
     required this.label,
     required this.icon,
@@ -95,7 +95,7 @@ class NoteActionButton extends StatelessWidget {
             childPage: childPage,
             scaffoldController: scaffoldController,
             backgroundColor: backgroundColor,
-            // When SimpleActionButton called from NoteActionButton, default foreground color
+            // When SimpleActionButton called from ActionButton, default foreground color
             // is ButtonForegroundColor.view
             foregroundColor: foregroundColor,
           )

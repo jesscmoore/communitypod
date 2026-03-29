@@ -54,7 +54,7 @@ class ShowFilenameMetadata extends StatelessWidget {
                 child: Container(
                   padding: metadataPadding,
                   child: Text(
-                    'Note file name: $filename',
+                    'News file name: $filename',
                     style: metadataTextStyle,
                   ),
                 ),

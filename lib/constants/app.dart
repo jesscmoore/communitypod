@@ -56,10 +56,10 @@ const double badListItemHeight = 68.0;
 double screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 //double screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
-const nonReadableNoteMsg =
+const nonReadableNewsMsg =
     'You do not have read access to this note and therefore cannot view that. However, you can delete it or share it with others.';
 
-//const noNotesMsg = 'You do not have any notes yet!';
+//const noNewsMsg = 'You do not have any notes yet!';
 
 // SizedBox standardHeight() {
 //   return const SizedBox(
@@ -99,29 +99,29 @@ const String combinedNewsTitle = 'News';
 const String combinedNewsExplanation = 'accessible to me';
 const String combinedNewsToolTip = 'Go to news accessible to me';
 
-/// Note list messages
-class NoteListMsg {
+/// News list messages
+class NewsListMsg {
   /// Message displayed when corrupt files found
   static const String badFilesFound = 'Corrupt note files present';
 
   /// Message displayed when non existent files found
-  static const String nonExistentNotesFound =
+  static const String nonExistentNewsFound =
       'Non-existent note files present without \'revoke\' entry in log';
 
   /// Message displayed when no notes found in user's Pod
-  static const String noNotes = 'No notes yet!';
+  static const String noNews = 'No notes yet!';
 
   /// Advises user to write their first note
-  static const String writeFirstNote = 'Write your first note';
+  static const String writeFirstNews = 'Write your first note';
 }
 
-/// Note action messages
+/// News action messages
 class Msg {
-  /// Note saving message
-  static const String savingNote = 'Saving the note!';
+  /// News saving message
+  static const String savingNews = 'Saving the note!';
 
-  /// Note deleting message
-  static const String deletingNote = 'Deleting the note!';
+  /// News deleting message
+  static const String deletingNews = 'Deleting the note!';
 
   /// Confirm delete note message
   static const String confirmDelete =
@@ -131,8 +131,8 @@ class Msg {
   static const String confirmDeleteMultiple =
       'Are you sure you want to delete these notes?';
 
-  /// Note deleting message
-  static const String revokingNote = 'Revoking access!';
+  /// News deleting message
+  static const String revokingNews = 'Revoking access!';
 
   /// Confirm revoke access to note message
   static const String confirmRevoke =
@@ -156,7 +156,7 @@ class ErrMsg {
 
   /// Invalid note name.
   static const String invalidName =
-      'Note name validation failed! Try using a different name.';
+      'News name validation failed! Try using a different name.';
 
   /// Error message when fails to save note file to POD
   static const String saveFailed =
@@ -166,7 +166,7 @@ class ErrMsg {
   static const String unsavedChanges = 'Unsaved changed found!';
 }
 
-class NoteIconSize {
+class NewsIconSize {
   static const double width = 50;
   static const double height = 50;
   static const double twoIconWidth = (width * 2) + gap;

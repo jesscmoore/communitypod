@@ -41,22 +41,22 @@ import 'package:communitypod/widgets/note_edit_scroll_view.dart';
 ///   [note] - is the data of that note.
 ///   [scaffoldController] - Controller for the Solid scaffold.
 
-class EditNote extends StatefulWidget {
+class EditNews extends StatefulWidget {
   /// Data object for the selected note.
-  final Note note;
+  final News note;
   final SolidScaffoldController scaffoldController;
 
-  const EditNote({
+  const EditNews({
     super.key,
     required this.note,
     required this.scaffoldController,
   });
 
   @override
-  EditNoteState createState() => EditNoteState();
+  EditNewsState createState() => EditNewsState();
 }
 
-class EditNoteState extends State<EditNote> {
+class EditNewsState extends State<EditNews> {
   final formKey = GlobalKey<FormBuilderState>();
 
   TextEditingController? _textController;
@@ -73,10 +73,10 @@ class EditNoteState extends State<EditNote> {
   /// Focus node for note content text field.
   late final FocusNode _focusContent;
 
-  /// Note
-  late final Note _note;
+  /// News
+  late final News _note;
 
-  /// Note text content
+  /// News text content
   String data = '';
 
   @override
@@ -117,7 +117,7 @@ class EditNoteState extends State<EditNote> {
     //         evt.logicalKey.keyLabel == 'Enter') {
     //       if (evt is KeyDownEvent) {
     //         // Save note when enter (not shift-enter) pressed
-    //         NoteFileHelper().saveNote(context, _textController!, formKey, widget.note);
+    //         NewsFileHelper().saveNews(context, _textController!, formKey, widget.note);
     //       }
     //       return KeyEventResult.handled;
     //     } else {
@@ -144,19 +144,19 @@ class EditNoteState extends State<EditNote> {
 
   @override
   Widget build(BuildContext context) {
-    return NoteEditScrollView(
+    return NewsEditScrollView(
       formKey: formKey,
       textController: _textController,
       scrollController: _scrollController,
       scaffoldController: _scaffoldController,
       focusTitle: _focusTitle,
       focusContent: _focusContent,
-      childPage: ViewNote(
+      childPage: ViewNews(
         note: _note,
         scaffoldController: _scaffoldController,
       ),
       data: data,
-      prevNote: _note,
+      prevNews: _note,
       noteTitle: _note.content!.noteTitle,
       isExisting: true,
       isExternal: _note.isExternalRes,

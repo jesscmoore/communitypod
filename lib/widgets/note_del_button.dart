@@ -47,7 +47,7 @@ import 'package:communitypod/widgets/loading_animation.dart' as loading;
 /// - [isNarrow] - Boolean describing whether displaying
 /// in a narrow window.
 
-class NoteDelButton extends StatelessWidget {
+class DelButton extends StatelessWidget {
   final String filename;
 
   /// Childpage
@@ -65,7 +65,7 @@ class NoteDelButton extends StatelessWidget {
   /// Boolean describing whether window is narrow
   final bool isNarrow;
 
-  const NoteDelButton({
+  const DelButton({
     super.key,
     required this.filename,
     required this.childPage,
@@ -94,13 +94,13 @@ class NoteDelButton extends StatelessWidget {
 
                 loading.showAnimationDialog(
                   context,
-                  Msg.deletingNote,
+                  Msg.deletingNews,
                   false,
                 );
 
                 try {
                   // Delete file
-                  await NoteFileHelper().deleteNote(
+                  await NewsFileHelper().deleteNews(
                     context: context,
                     filename: filename,
                     isExternal: isExternal,

@@ -46,21 +46,21 @@ import 'package:communitypod/widgets/note_display_metadata.dart';
 /// - [note] - The note to view.
 /// - [scaffoldController] - Controller for the Solid scaffold.
 
-class ViewNote extends StatefulWidget {
-  final Note note;
+class ViewNews extends StatefulWidget {
+  final News note;
   final SolidScaffoldController scaffoldController;
 
-  const ViewNote({
+  const ViewNews({
     super.key,
     required this.note,
     required this.scaffoldController,
   });
 
   @override
-  State<ViewNote> createState() => _ViewNoteState();
+  State<ViewNews> createState() => _ViewNewsState();
 }
 
-class _ViewNoteState extends State<ViewNote> {
+class _ViewNewsState extends State<ViewNews> {
   /// Scroll controller for single child scroll view
   late final ScrollController _scrollController;
 
@@ -70,8 +70,8 @@ class _ViewNoteState extends State<ViewNote> {
   /// Boolean describing whether window is narrow
   late bool isNarrow;
 
-  /// Note data
-  late final Note _note;
+  /// News data
+  late final News _note;
 
   /// List of user's permissions
   late final List<String> _accessList;
@@ -121,7 +121,7 @@ class _ViewNoteState extends State<ViewNote> {
                     ],
                   ),
                   // Display note metadata - show dates and sharing info, but not path info (as only shown on non readable note page)
-                  DisplayNoteMetadata(
+                  DisplayNewsMetadata(
                     createdDateTime: _note.content!.createdDateTime,
                     modifiedDateTime: _note.content!.modifiedDateTime,
                     noteOwner: _note.noteOwner,
@@ -156,15 +156,15 @@ class _ViewNoteState extends State<ViewNote> {
                     children: [
                       // Share button if control access
                       if (_accessList.contains('control')) ...[
-                        NoteActionButton(
+                        ActionButton(
                           label: ButtonLabel.share,
                           icon: const Icon(Icons.share),
                           backgroundColor: ButtonBackgroundColor.share,
-                          childPage: ShareNote(
+                          childPage: ShareNews(
                             noteUrl: _note.noteUrl,
                             noteOwner: _note.noteOwner,
                             isExternal: _note.isExternalRes,
-                            backPage: ViewNote(
+                            backPage: ViewNews(
                               note: _note,
                               scaffoldController: _scaffoldController,
                             ),
@@ -176,11 +176,11 @@ class _ViewNoteState extends State<ViewNote> {
                       ],
                       // Edit button if write access
                       if (_accessList.contains('write')) ...[
-                        NoteActionButton(
+                        ActionButton(
                           label: ButtonLabel.edit,
                           icon: const Icon(Icons.edit),
                           backgroundColor: ButtonBackgroundColor.edit,
-                          childPage: EditNote(
+                          childPage: EditNews(
                             note: _note,
                             scaffoldController: _scaffoldController,
                           ),
@@ -191,22 +191,22 @@ class _ViewNoteState extends State<ViewNote> {
 
                       /// Delete button
                       if (!_note.isExternalRes) ...[
-                        NoteDelButton(
+                        DelButton(
                           filename: _note.noteFileName,
                           isExternal: false,
                           isNarrow: isNarrow,
-                          childPage: ListNotesScreen(
+                          childPage: ListNewsScreen(
                             scaffoldController: _scaffoldController,
                           ),
                           scaffoldController: _scaffoldController,
                         ),
                       ],
                       // Back button
-                      NoteActionButton(
+                      ActionButton(
                         label: ButtonLabel.back,
                         icon: const Icon(Icons.keyboard_backspace),
                         backgroundColor: ButtonBackgroundColor.back,
-                        childPage: ListNotesScreen(
+                        childPage: ListNewsScreen(
                           scaffoldController: _scaffoldController,
                         ),
                         scaffoldController: _scaffoldController,

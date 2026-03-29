@@ -40,29 +40,29 @@ import 'package:communitypod/widgets/note_list_revoke_button.dart';
 /// record for all files in the list.
 ///
 /// Arguments:
-/// - [nonExistentNotes] - note list of non-existent files.
+/// - [nonExistentNews] - note list of non-existent files.
 /// - [childPage] - child widget to return to.
 /// - [scaffoldController] - Controller for the Solid scaffold.
 
-class NotesRevokeDialog extends StatefulWidget {
-  final List<Note> nonExistentNotes;
+class NewsRevokeDialog extends StatefulWidget {
+  final List<News> nonExistentNews;
   final Widget childPage;
 
   /// Scaffold controller
   final SolidScaffoldController scaffoldController;
 
-  const NotesRevokeDialog({
+  const NewsRevokeDialog({
     super.key,
-    required this.nonExistentNotes,
+    required this.nonExistentNews,
     required this.childPage,
     required this.scaffoldController,
   });
 
   @override
-  State<NotesRevokeDialog> createState() => _NotesRevokeDialogState();
+  State<NewsRevokeDialog> createState() => _NewsRevokeDialogState();
 }
 
-class _NotesRevokeDialogState extends State<NotesRevokeDialog> {
+class _NewsRevokeDialogState extends State<NewsRevokeDialog> {
   /// Scroll controller for single child scroll view
   late final ScrollController _scrollController;
 
@@ -97,7 +97,7 @@ class _NotesRevokeDialogState extends State<NotesRevokeDialog> {
         // Derive whether window is narrow
         isNarrow = WindowSize().isNarrowWindow(constraints);
         // Calculate the aspect radio for grid cards
-        cardAspectRatio = NoteItemSize().calculateCardAspectRatio(constraints);
+        cardAspectRatio = ItemSize().calculateCardAspectRatio(constraints);
         return SizedBox(
           child: Column(
             children: [
@@ -136,7 +136,7 @@ class _NotesRevokeDialogState extends State<NotesRevokeDialog> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          NoteListMsg.nonExistentNotesFound,
+                          NewsListMsg.nonExistentNewsFound,
                           style: titleStyle,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -150,9 +150,9 @@ class _NotesRevokeDialogState extends State<NotesRevokeDialog> {
                     ),
                     const SizedBox(height: 30),
                     Text(
-                      widget.nonExistentNotes.length > 1
-                          ? 'Found ${widget.nonExistentNotes.length} non-existent notes'
-                          : 'Found ${widget.nonExistentNotes.length} non-existent note',
+                      widget.nonExistentNews.length > 1
+                          ? 'Found ${widget.nonExistentNews.length} non-existent notes'
+                          : 'Found ${widget.nonExistentNews.length} non-existent note',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                       ),
@@ -173,7 +173,7 @@ class _NotesRevokeDialogState extends State<NotesRevokeDialog> {
                       childAspectRatio: cardAspectRatio,
                     ),
                     padding: const EdgeInsets.all(10),
-                    itemCount: widget.nonExistentNotes.length,
+                    itemCount: widget.nonExistentNews.length,
                     itemBuilder: (context, index) => Card(
                       child: Container(
                         decoration: const BoxDecoration(
@@ -181,12 +181,12 @@ class _NotesRevokeDialogState extends State<NotesRevokeDialog> {
                         ),
                         child: ListTile(
                           title: Text(
-                            'Note Url: ${widget.nonExistentNotes[index].noteUrl}',
+                            'News Url: ${widget.nonExistentNews[index].noteUrl}',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
                           subtitle: Text(
-                            'Owner: ${getId(widget.nonExistentNotes[index].noteOwner)} \nShared by: ${getId(widget.nonExistentNotes[index].permissionGranter!)} \nPermissions: ${widget.nonExistentNotes[index].permissionList}',
+                            'Owner: ${getId(widget.nonExistentNews[index].noteOwner)} \nShared by: ${getId(widget.nonExistentNews[index].permissionGranter!)} \nPermissions: ${widget.nonExistentNews[index].permissionList}',
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -203,14 +203,14 @@ class _NotesRevokeDialogState extends State<NotesRevokeDialog> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   spacing: 5.0,
                   children: [
-                    // Note list revoke button
-                    NoteListRevokeButton(
-                      nonExistentNotes: widget.nonExistentNotes,
+                    // News list revoke button
+                    NewsListRevokeButton(
+                      nonExistentNews: widget.nonExistentNews,
                       childPage: widget.childPage,
                       scaffoldController: _scaffoldController,
                     ),
                     // Back button
-                    NoteBackButton(
+                    BackButton(
                       childPage: widget.childPage,
                       scaffoldController: _scaffoldController,
                     ),

@@ -55,7 +55,7 @@ import 'package:communitypod/widgets/show_path_metadata.dart';
 /// - [showPathInfo] - flag describing whether to show url path of
 /// note.
 
-class DisplayNoteMetadata extends StatelessWidget {
+class DisplayNewsMetadata extends StatelessWidget {
   final String createdDateTime;
   final String modifiedDateTime;
   final String noteOwner;
@@ -70,7 +70,7 @@ class DisplayNoteMetadata extends StatelessWidget {
   final bool showSharing;
   final bool showPathInfo;
 
-  const DisplayNoteMetadata({
+  const DisplayNewsMetadata({
     super.key,
     this.createdDateTime = '',
     this.modifiedDateTime = '',

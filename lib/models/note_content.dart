@@ -31,14 +31,14 @@ import 'package:communitypod/constants/turtle_structures.dart';
 
 /// Base data model for the nested note within a note object
 
-class NoteContent {
+class NewsContent {
   final String noteTitle;
   final String createdDateTime;
   final String modifiedDateTime;
   final String noteContent;
   final List<String> authUsers;
 
-  const NoteContent({
+  const NewsContent({
     required this.noteTitle,
     required this.createdDateTime,
     required this.modifiedDateTime,
@@ -46,10 +46,10 @@ class NoteContent {
     this.authUsers = const [],
   });
 
-  /// Method to create NoteContent object from json data map
+  /// Method to create NewsContent object from json data map
 
-  factory NoteContent.fromJson(Map<String, dynamic> json) {
-    return NoteContent(
+  factory NewsContent.fromJson(Map<String, dynamic> json) {
+    return NewsContent(
       noteTitle: json[noteTitlePred] as String,
       createdDateTime: json[createdDateTimePred] as String,
       modifiedDateTime: json[modifiedDateTimePred] as String,
@@ -58,7 +58,7 @@ class NoteContent {
     );
   }
 
-  /// Method to export NoteContent object to json data map
+  /// Method to export NewsContent object to json data map
 
   Map<String, dynamic> toJson() => {
         noteTitlePred: noteTitle,
@@ -71,14 +71,14 @@ class NoteContent {
   /// Copy method for creating a new instance that is an
   /// updated copy of another instance
 
-  NoteContent copyWith({
+  NewsContent copyWith({
     String? noteTitle,
     String? createdDateTime,
     String? modifiedDateTime,
     String? noteContent,
     List<String>? authUsers,
   }) {
-    return NoteContent(
+    return NewsContent(
       noteTitle: noteTitle ?? this.noteTitle,
       createdDateTime: createdDateTime ?? this.createdDateTime,
       modifiedDateTime: modifiedDateTime ?? this.modifiedDateTime,

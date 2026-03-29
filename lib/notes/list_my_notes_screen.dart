@@ -43,19 +43,19 @@ import 'package:communitypod/widgets/note_list_del_dialog.dart';
 /// Parameters:
 ///   [scaffoldController] - Controller for the Solid scaffold.
 
-class ListMyNotesScreen extends StatefulWidget {
+class ListMyNewsScreen extends StatefulWidget {
   final SolidScaffoldController scaffoldController;
 
-  const ListMyNotesScreen({
+  const ListMyNewsScreen({
     super.key,
     required this.scaffoldController,
   });
 
   @override
-  State<ListMyNotesScreen> createState() => _ListMyNotesScreenState();
+  State<ListMyNewsScreen> createState() => _ListMyNewsScreenState();
 }
 
-class _ListMyNotesScreenState extends State<ListMyNotesScreen> {
+class _ListMyNewsScreenState extends State<ListMyNewsScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   /// Future function to retrieve user's notes list
@@ -71,7 +71,7 @@ class _ListMyNotesScreenState extends State<ListMyNotesScreen> {
   void initState() {
     super.initState();
     _scaffoldController = widget.scaffoldController;
-    _asyncDataFetch = getOwnNoteList();
+    _asyncDataFetch = getOwnNewsList();
     _scrollController = ScrollController();
   }
 
@@ -86,21 +86,21 @@ class _ListMyNotesScreenState extends State<ListMyNotesScreen> {
   /// notes.
   ///
   /// Arguments:
-  ///   [results] - [NotesCallResult] class containing [notes] of
-  /// files found in user's app data folder, and [unparseableNotes]
+  ///   [results] - [NewsCallResult] class containing [notes] of
+  /// files found in user's app data folder, and [unparseableNews]
   /// list of any unparseable files.
 
-  Widget _loadedNotesScreen(
-    NotesCallResult results,
+  Widget _loadedNewsScreen(
+    NewsCallResult results,
     SolidScaffoldController scaffoldController,
   ) {
-    final List<Note> notes = results.notes!;
-    final List<SelectedNote> unparseableNotes = results.unparseableNotes!;
+    final List<News> notes = results.notes!;
+    final List<SelectedNews> unparseableNews = results.unparseableNews!;
 
-    if (unparseableNotes.isNotEmpty) {
-      return NotesDelDialog(
-        unparseableNotes: unparseableNotes,
-        childPage: ListNotes(
+    if (unparseableNews.isNotEmpty) {
+      return NewsDelDialog(
+        unparseableNews: unparseableNews,
+        childPage: ListNews(
           notes: notes,
           title: '$myNewsTitle ($myNewsExplanation)',
           scaffoldController: scaffoldController,
@@ -108,9 +108,9 @@ class _ListMyNotesScreenState extends State<ListMyNotesScreen> {
         scaffoldController: _scaffoldController,
       );
     } else if (notes.isEmpty) {
-      return _loadNewNote(scaffoldController);
+      return _loadNewNews(scaffoldController);
     } else {
-      return ListNotes(
+      return ListNews(
         notes: notes,
         title: '$myNewsTitle ($myNewsExplanation)',
         scaffoldController: scaffoldController,
@@ -121,7 +121,7 @@ class _ListMyNotesScreenState extends State<ListMyNotesScreen> {
   /// Advises user to create their first note if no notes found.
   ///
   /// Arguments: none.
-  Widget _loadNewNote(SolidScaffoldController scaffoldController) {
+  Widget _loadNewNews(SolidScaffoldController scaffoldController) {
     return Scrollbar(
       thumbVisibility: true,
       controller: _scrollController,
@@ -135,11 +135,11 @@ class _ListMyNotesScreenState extends State<ListMyNotesScreen> {
               context,
               Icons.info,
               Colors.amber,
-              NoteListMsg.noNotes,
-              NoteListMsg.writeFirstNote,
+              NewsListMsg.noNews,
+              NewsListMsg.writeFirstNews,
               isSmall: true,
             ),
-            NewNote(
+            NewNews(
               scaffoldController: scaffoldController,
             ),
           ],
@@ -169,15 +169,15 @@ class _ListMyNotesScreenState extends State<ListMyNotesScreen> {
                     'Error: data loading failed',
                   );
                 } else if (snapshot.hasData && snapshot.data != null) {
-                  // Successfully returned NotesCallResult
-                  return _loadedNotesScreen(
-                    snapshot.data as NotesCallResult,
+                  // Successfully returned NewsCallResult
+                  return _loadedNewsScreen(
+                    snapshot.data as NewsCallResult,
                     _scaffoldController,
                   );
                 } else if (snapshot.data == null ||
                     snapshot.data.toString() == 'null') {
                   // No notes found
-                  return _loadNewNote(_scaffoldController);
+                  return _loadNewNews(_scaffoldController);
                 } else {
                   // Unknown error
                   return errCard(

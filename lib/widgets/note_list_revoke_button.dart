@@ -39,18 +39,18 @@ import 'package:communitypod/widgets/loading_animation.dart' as loading;
 /// of notes.
 ///
 /// Arguments:
-/// - [nonExistentNotes] - note list of non-existent files.
+/// - [nonExistentNews] - note list of non-existent files.
 /// - [childPage] - child widget to return to.
 /// - [scaffoldController] - Controller for the Solid scaffold.
 
-class NoteListRevokeButton extends StatelessWidget {
-  final List<Note> nonExistentNotes;
+class NewsListRevokeButton extends StatelessWidget {
+  final List<News> nonExistentNews;
   final Widget childPage;
   final SolidScaffoldController scaffoldController;
 
-  const NoteListRevokeButton({
+  const NewsListRevokeButton({
     super.key,
-    required this.nonExistentNotes,
+    required this.nonExistentNews,
     required this.childPage,
     required this.scaffoldController,
   });
@@ -70,7 +70,7 @@ class NoteListRevokeButton extends StatelessWidget {
             return AlertDialog(
               title: const Text(Msg.plsConfirm),
               content: Text(
-                nonExistentNotes.length > 1
+                nonExistentNews.length > 1
                     ? Msg.confirmRevokeMultiple
                     : Msg.confirmRevoke,
               ),
@@ -83,25 +83,25 @@ class NoteListRevokeButton extends StatelessWidget {
 
                     loading.showAnimationDialog(
                       context,
-                      Msg.revokingNote,
+                      Msg.revokingNews,
                       false,
                     );
 
                     // Update log with revoke record for each file
-                    for (Note note in nonExistentNotes) {
+                    for (News newsPost in nonExistentNews) {
                       // Call Solidpod function to update user
                       // permission log with a revoke record for
                       // this non-existent file
 
                       await revokePermissionToDelFile(
-                        fileName: note.noteUrl,
+                        fileName: newsPost.noteUrl,
                         isFileEncrypted: true,
                         permissionList:
-                            note.permissionList.split(',') as List<dynamic>,
+                            newsPost.permissionList.split(',') as List<dynamic>,
                         recipientWebId:
-                            note.permissionRecepient!, // ie. the user
-                        ownerWebId: note.noteOwner,
-                        granterWebId: note.permissionGranter!,
+                            newsPost.permissionRecepient!, // ie. the user
+                        ownerWebId: newsPost.noteOwner,
+                        granterWebId: newsPost.permissionGranter!,
                         isFileUrl: true,
                       );
                     }

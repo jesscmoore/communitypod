@@ -35,36 +35,36 @@ import 'package:communitypod/constants/colours.dart';
 import 'package:communitypod/models/note.dart';
 
 /// A stylised save button widget which on click saves the note content
-/// Pod. External notes are written to the note owner's Pod. Notes created
+/// Pod. External notes are written to the note owner's Pod. News created
 /// by the user are written to the user's Pod.
 ///
 /// Examples
-/// - `NoteSaveButton(textController: _textController!, formKey: formKey, shared: shared, notesMap: notesMap)` save the metadata and content of a new note to user's Pod.
-/// - `NoteSaveButton(textController: _textController!, formKey: formKey, prevNoteData: prevNoteData, shared: shared, notesMap: notesMap)` save the updated metadata and content of an existing note to the owner's Pod (whether that be the user or an external owner).
+/// - `NewsSaveButton(textController: _textController!, formKey: formKey, shared: shared, notesMap: notesMap)` save the metadata and content of a new note to user's Pod.
+/// - `NewsSaveButton(textController: _textController!, formKey: formKey, prevNewsData: prevNewsData, shared: shared, notesMap: notesMap)` save the updated metadata and content of an existing note to the owner's Pod (whether that be the user or an external owner).
 ///
 /// - [textController] - Text controller of the note text content editor.
 /// - [formKey] - Key of the form to edit the note metadata.
 ///   [scaffoldController] - Controller for the Solid scaffold.
-/// - [prevNote] - Optional existing note data object. Required for saving existing note. (Default: null).
+/// - [prevNews] - Optional existing note data object. Required for saving existing note. (Default: null).
 /// - [isExternal] - Optional boolean denoting whether note is externally
 /// owned. (Default: false).
 /// - [isExisting] - Optional boolean denoting whether note already
 /// exists. (Default: false).
 
-class NoteSaveButton extends StatelessWidget {
+class NewsSaveButton extends StatelessWidget {
   final TextEditingController textController;
   final GlobalKey<FormBuilderState> formKey;
   final SolidScaffoldController scaffoldController;
-  final Note? prevNote;
+  final News? prevNews;
   final bool isExisting;
   final bool isExternal;
 
-  const NoteSaveButton({
+  const NewsSaveButton({
     super.key,
     required this.textController,
     required this.formKey,
     required this.scaffoldController,
-    this.prevNote,
+    this.prevNews,
     this.isExisting = false,
     this.isExternal = false,
   });
@@ -79,12 +79,12 @@ class NoteSaveButton extends StatelessWidget {
       ),
       onPressed: () async {
         // Save note and redirect to view note page
-        await NoteFileHelper().saveNote(
+        await NewsFileHelper().saveNews(
           context: context,
           textController: textController,
           formKey: formKey,
           scaffoldController: scaffoldController,
-          prevNote: prevNote,
+          prevNews: prevNews,
           isExisting: isExisting,
           isExternal: isExternal,
         );

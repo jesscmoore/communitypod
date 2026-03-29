@@ -38,15 +38,15 @@ import 'package:communitypod/widgets/simple_action_button.dart';
 /// - [note] - A note.
 /// - [scaffoldController] - Controller for the Solid scaffold.
 ///
-class NoteItemTrailingButtons extends StatelessWidget {
-  const NoteItemTrailingButtons({
+class ItemTrailingButtons extends StatelessWidget {
+  const ItemTrailingButtons({
     super.key,
-    required Note note,
+    required News note,
     required SolidScaffoldController scaffoldController,
   })  : _note = note,
         _scaffoldController = scaffoldController;
 
-  final Note _note;
+  final News _note;
   final SolidScaffoldController _scaffoldController;
 
   @override
@@ -61,11 +61,11 @@ class NoteItemTrailingButtons extends StatelessWidget {
         if (accessList.contains('control')) ...[
           SimpleActionButton(
             icon: const Icon(Icons.share),
-            childPage: ShareNote(
+            childPage: ShareNews(
               noteUrl: _note.noteUrl,
               noteOwner: _note.noteOwner,
               isExternal: _note.isExternalRes,
-              backPage: ListNotesScreen(
+              backPage: ListNewsScreen(
                 scaffoldController: _scaffoldController,
               ),
               scaffoldController: _scaffoldController,

@@ -16,7 +16,7 @@ communitypod - a privacy respecting app for note taking, based on the Solid spec
 
 *A description of your app detailing features and functionality.*
 
-communitypod - Private and Shareable Notes
+communitypod - Private and Shareable News
 
 communitypod is an app built with the Solid (Social Linked Data) specification where you can store your notes data in your own personal data vault. Using communitypod you can read, write, and share encrypted notes stored on your personal data vault (also called a Personal Online Datastore or Pod) hosted on a Solid Server.
 
@@ -38,7 +38,7 @@ Features of communitypod:
 - Share notes to anyone.
 - You control who can access each note and the type of access given.
 - You can revoke another user's access to your note at any time or change the access you have given them.
-- Notes use standard non-proprietary Markdown formatting, with a interactive WYSIWYG formatting interface to assist new users.
+- News use standard non-proprietary Markdown formatting, with a interactive WYSIWYG formatting interface to assist new users.
 
 ## Keywords
 
@@ -69,17 +69,17 @@ https://solidcommunity.au/
 
 v0.3.0+18
 
-MyNotesList.png
+MyNewsList.png
 
-![image](screenshots/macOS/MyNotesList.png)
+![image](screenshots/macOS/MyNewsList.png)
 
 MyNoteView.png
 
 ![image](screenshots/macOS/MyNoteView.png)
 
-NewNoteEditor.png
+NewNewsEditor.png
 
-![image](screenshots/macOS/NewNoteEditor.png)
+![image](screenshots/macOS/NewNewsEditor.png)
 
 SharedNewsList.png
 

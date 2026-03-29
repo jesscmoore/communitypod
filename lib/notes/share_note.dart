@@ -40,14 +40,14 @@ import 'package:communitypod/widgets/note_back_button.dart';
 /// - [isExternalRes] - Whether the note is externally owned.
 /// - [scaffoldController] - Controller for the Solid scaffold.
 
-class ShareNote extends StatefulWidget {
+class ShareNews extends StatefulWidget {
   final String noteUrl;
   final String noteOwner;
   final Widget backPage;
   final bool isExternal;
   final SolidScaffoldController scaffoldController;
 
-  const ShareNote({
+  const ShareNews({
     super.key,
     required this.noteUrl,
     required this.noteOwner,
@@ -57,10 +57,10 @@ class ShareNote extends StatefulWidget {
   });
 
   @override
-  ShareNoteState createState() => ShareNoteState();
+  ShareNewsState createState() => ShareNewsState();
 }
 
-class ShareNoteState extends State<ShareNote> {
+class ShareNewsState extends State<ShareNews> {
   /// Scroll controller for single child scroll view
   late final ScrollController _scrollController;
 
@@ -95,7 +95,7 @@ class ShareNoteState extends State<ShareNote> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 10),
-                  NoteBackButton(
+                  BackButton(
                     childPage: widget.backPage,
                     scaffoldController: _scaffoldController,
                   ),

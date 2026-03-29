@@ -59,7 +59,7 @@ Container markdownEditor(
                 maxLines: null,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Note Content',
+                  labelText: 'News Post Content',
                 ),
               ),
               MarkdownToolbar(

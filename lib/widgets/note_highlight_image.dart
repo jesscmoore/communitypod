@@ -41,8 +41,8 @@ import 'package:communitypod/utils/image_helper.dart';
 /// Arguments:
 /// - [imageUrl] - URL of the image to display, or null for no image.
 ///
-class NoteHighlightImage extends StatelessWidget {
-  const NoteHighlightImage({
+class HighlightImage extends StatelessWidget {
+  const HighlightImage({
     super.key,
     required String? imageUrl,
   }) : _imageUrl = imageUrl;

@@ -43,8 +43,8 @@ import 'package:communitypod/widgets/note_save_button.dart';
 /// SingleChildScrollView() to edit a note, whether a
 /// new note or a pre-existing note, and whether owned
 /// by the user or shared to the user.
-class NoteEditScrollView extends StatelessWidget {
-  const NoteEditScrollView({
+class NewsEditScrollView extends StatelessWidget {
+  const NewsEditScrollView({
     super.key,
     required this.formKey,
     required TextEditingController? textController,
@@ -54,7 +54,7 @@ class NoteEditScrollView extends StatelessWidget {
     required FocusNode focusContent,
     required this.childPage,
     required this.data,
-    this.prevNote,
+    this.prevNews,
     this.isExternal = false,
     this.isExisting = false,
     this.noteTitle,
@@ -85,7 +85,7 @@ class NoteEditScrollView extends StatelessWidget {
   final String data;
 
   /// Existing note data is note already exists
-  final Note? prevNote;
+  final News? prevNews;
 
   /// Boolean describing whether note is shared to pod owner from an
   /// external source.
@@ -112,33 +112,33 @@ class NoteEditScrollView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         spacing: 5.0,
         children: (!isExisting)
-            // New Note: save button only
+            // New News: save button only
             ? [
-                NoteSaveButton(
+                NewsSaveButton(
                   textController: _textController!,
                   formKey: formKey,
                   scaffoldController: _scaffoldController,
                 ),
               ]
             : [
-                // Edit Note: save and back buttons
+                // Edit News: save and back buttons
                 // Save button
-                NoteSaveButton(
+                NewsSaveButton(
                   textController: _textController!,
                   formKey: formKey,
                   scaffoldController: _scaffoldController,
-                  prevNote: prevNote,
+                  prevNews: prevNews,
                   isExisting: true,
                   isExternal: isExternal,
                 ),
                 // Back button
                 // Nav to view note or view isExternal note
-                NoteBackButton(
+                BackButton(
                   childPage: childPage,
                   textController: _textController,
                   formKey: formKey,
                   scaffoldController: _scaffoldController,
-                  prevNote: prevNote,
+                  prevNews: prevNews,
                   isExisting: isExisting,
                   isExternal: isExternal,
                 ),
@@ -196,7 +196,7 @@ class NoteEditScrollView extends StatelessWidget {
                             autofocus: true,
                             focusNode: _focusTitle,
                             decoration: const InputDecoration(
-                              labelText: 'Note Title',
+                              labelText: 'News Title',
                               labelStyle: TextStyle(
                                 letterSpacing: 1.5,
                                 fontSize: 13.0,

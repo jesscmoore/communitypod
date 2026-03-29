@@ -68,7 +68,7 @@ class CommunityPod extends StatelessWidget {
               'stored in your POD.',
         ),
         child: AppHomePage(
-          childPage: ListMyNotesScreen(
+          childPage: ListMyNewsScreen(
             scaffoldController: scaffoldController,
           ),
         ),

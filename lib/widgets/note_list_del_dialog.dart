@@ -38,13 +38,13 @@ import 'package:communitypod/widgets/note_list_del_button.dart';
 /// all files in the list.
 ///
 /// Arguments:
-/// - [unparseableNotes] - list of unparseable notes.
+/// - [unparseableNews] - list of unparseable notes.
 /// - [childPage] - child widget to navigate to after delete dialog.
 ///   [scaffoldController] - Controller for the Solid scaffold.
 /// - [isExternal] - flag describing whether files are externally owned.
 
-class NotesDelDialog extends StatefulWidget {
-  final List<SelectedNote> unparseableNotes;
+class NewsDelDialog extends StatefulWidget {
+  final List<SelectedNews> unparseableNews;
 
   /// Childpage to navigate to after delete dialog
   final Widget childPage;
@@ -55,19 +55,19 @@ class NotesDelDialog extends StatefulWidget {
   /// Boolean describing whether note is external
   final bool isExternal;
 
-  const NotesDelDialog({
+  const NewsDelDialog({
     super.key,
-    required this.unparseableNotes,
+    required this.unparseableNews,
     required this.childPage,
     required this.scaffoldController,
     this.isExternal = false,
   });
 
   @override
-  State<NotesDelDialog> createState() => _NotesDelDialogState();
+  State<NewsDelDialog> createState() => _NewsDelDialogState();
 }
 
-class _NotesDelDialogState extends State<NotesDelDialog> {
+class _NewsDelDialogState extends State<NewsDelDialog> {
   /// Scroll controller for single child scroll view
   late final ScrollController _scrollController;
 
@@ -102,7 +102,7 @@ class _NotesDelDialogState extends State<NotesDelDialog> {
         // Derive whether window is narrow
         isNarrow = WindowSize().isNarrowWindow(constraints);
         // Calculate the aspect radio for grid cards
-        cardAspectRatio = NoteItemSize().calculateCardAspectRatio(constraints);
+        cardAspectRatio = ItemSize().calculateCardAspectRatio(constraints);
         return SizedBox(
           child: Column(
             children: [
@@ -141,16 +141,16 @@ class _NotesDelDialogState extends State<NotesDelDialog> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          NoteListMsg.badFilesFound,
+                          NewsListMsg.badFilesFound,
                           style: titleStyle,
                         ),
                       ],
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      widget.unparseableNotes.length > 1
-                          ? 'Found ${widget.unparseableNotes.length} unparseable notes'
-                          : 'Found ${widget.unparseableNotes.length} unparseable note',
+                      widget.unparseableNews.length > 1
+                          ? 'Found ${widget.unparseableNews.length} unparseable notes'
+                          : 'Found ${widget.unparseableNews.length} unparseable note',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                       ),
@@ -166,7 +166,7 @@ class _NotesDelDialogState extends State<NotesDelDialog> {
                   child: ListView.builder(
                     controller: _scrollController,
                     padding: const EdgeInsets.all(10),
-                    itemCount: widget.unparseableNotes.length,
+                    itemCount: widget.unparseableNews.length,
                     itemExtent: badListItemHeight,
                     itemBuilder: (context, index) => Card(
                       child: Container(
@@ -175,7 +175,7 @@ class _NotesDelDialogState extends State<NotesDelDialog> {
                         ),
                         child: ListTile(
                           title: Text(
-                            'Filename: ${widget.unparseableNotes[index].noteFileName}',
+                            'Filename: ${widget.unparseableNews[index].noteFileName}',
                           ),
                           // Define width to avoid consuming full width
                         ),
@@ -190,15 +190,15 @@ class _NotesDelDialogState extends State<NotesDelDialog> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   spacing: 5.0,
                   children: [
-                    /// Note list delete button
-                    NoteListDelButton(
-                      selectedNotes: widget.unparseableNotes,
+                    /// News list delete button
+                    NewsListDelButton(
+                      selectedNews: widget.unparseableNews,
                       childPage: widget.childPage,
                       scaffoldController: _scaffoldController,
                       isExternal: widget.isExternal,
                     ),
                     // Back button
-                    NoteBackButton(
+                    BackButton(
                       childPage: widget.childPage,
                       scaffoldController: _scaffoldController,
                     ),

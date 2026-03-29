@@ -33,7 +33,7 @@ import 'package:communitypod/models/own_note.dart';
 
 /// Data model for any note
 
-class Note extends OwnNote {
+class News extends OwnNews {
   final String? sharedTime;
   final String? permissionGranter;
   final String? permissionRecepient;
@@ -42,7 +42,7 @@ class Note extends OwnNote {
   bool isExternalRes;
   bool isSelected;
 
-  Note({
+  News({
     super.content,
     super.authUserList,
     required super.noteUrl,
@@ -57,10 +57,10 @@ class Note extends OwnNote {
     this.isSelected = false,
   });
 
-  /// Method to create Note object from json data map
+  /// Method to create News object from json data map
 
-  factory Note.fromJson(Map<String, dynamic> json) {
-    return Note(
+  factory News.fromJson(Map<String, dynamic> json) {
+    return News(
       noteUrl: json[noteUrlPred] as String,
       noteFileName: json[noteFileNamePred] as String,
       noteOwner: json[noteOwnerPred] as String,
@@ -70,12 +70,12 @@ class Note extends OwnNote {
       permissionType: json[permissionTypePred] as String,
       permissionList: json[permissionListPred] as String,
       isSelected: json[isSelectedPred] as bool,
-      content: json[contentPred] as NoteContent,
+      content: json[contentPred] as NewsContent,
       authUserList: json[authUserPred] as Map<dynamic, dynamic>,
     );
   }
 
-  /// Method to export Note object to json data map
+  /// Method to export News object to json data map
 
   @override
   Map<String, dynamic> toJson() => {
@@ -96,8 +96,8 @@ class Note extends OwnNote {
   /// updated copy of another instance
 
   @override
-  Note copyWith({
-    NoteContent? content,
+  News copyWith({
+    NewsContent? content,
     Map<dynamic, dynamic>? authUserList,
     String? noteUrl,
     String? noteFileName,
@@ -109,7 +109,7 @@ class Note extends OwnNote {
     String? permissionList,
     bool? isSelected,
   }) {
-    return Note(
+    return News(
       content: content ?? this.content,
       authUserList: authUserList ?? this.authUserList,
       noteUrl: noteUrl ?? this.noteUrl,
@@ -127,7 +127,7 @@ class Note extends OwnNote {
 
 /// Class for operations on list of notes
 
-extension ListNoteExtension on List<Note> {
+extension ListNewsExtension on List<News> {
   /// Method to add authorised user list map to each file in
   /// list of notes
   ///
@@ -136,15 +136,15 @@ extension ListNoteExtension on List<Note> {
   /// filename as key and the permission map obtained by
   /// readPermissions() as value.
 
-  List<Note> addAuthUserLists({required Map permissionMaps}) {
-    List<Note> updatedNotes = [];
+  List<News> addAuthUserLists({required Map permissionMaps}) {
+    List<News> updatedNews = [];
 
     for (var note in this) {
-      final Note updatedNote = note.copyWith(
+      final News updatedNews = note.copyWith(
         authUserList: permissionMaps[note.noteFileName][authUserPred],
       );
-      updatedNotes.add(updatedNote);
+      updatedNews.add(updatedNews);
     }
-    return updatedNotes;
+    return updatedNews;
   }
 }

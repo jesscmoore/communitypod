@@ -39,19 +39,19 @@ import 'package:communitypod/widgets/note_edit_scroll_view.dart';
 /// Parameters:
 ///   [scaffoldController] - Controller for the Solid scaffold.
 
-class NewNote extends StatefulWidget {
+class NewNews extends StatefulWidget {
   final SolidScaffoldController scaffoldController;
 
-  const NewNote({
+  const NewNews({
     super.key,
     required this.scaffoldController,
   });
 
   @override
-  NewNoteState createState() => NewNoteState();
+  NewNewsState createState() => NewNewsState();
 }
 
-class NewNoteState extends State<NewNote> {
+class NewNewsState extends State<NewNews> {
   final formKey = GlobalKey<FormBuilderState>();
 
   TextEditingController? _textController;
@@ -107,7 +107,7 @@ class NewNoteState extends State<NewNote> {
     //         evt.logicalKey.keyLabel == 'Enter') {
     //       if (evt is KeyDownEvent) {
     //         // Save note when enter (not shift-enter) pressed
-    //         NoteFileHelper().saveNote(context, _textController!, formKey);
+    //         NewsFileHelper().saveNews(context, _textController!, formKey);
     //       }
     //       return KeyEventResult.handled;
     //     } else {
@@ -134,14 +134,14 @@ class NewNoteState extends State<NewNote> {
 
   @override
   Widget build(BuildContext context) {
-    return NoteEditScrollView(
+    return NewsEditScrollView(
       formKey: formKey,
       textController: _textController,
       scrollController: _scrollController,
       scaffoldController: _scaffoldController,
       focusTitle: _focusTitle,
       focusContent: _focusContent,
-      childPage: ListMyNotesScreen(
+      childPage: ListMyNewsScreen(
         scaffoldController: _scaffoldController,
       ),
       data: data,

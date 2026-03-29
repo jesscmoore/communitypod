@@ -60,7 +60,7 @@ All of these must pass before merging (run against Flutter 3.41.4):
 Solid Pod (encrypted Turtle files on remote server)
   → rest_api.dart: readPod() / getOwnNewsList()
   → NewsFileHelper.scanFileListDirectory() — scans Pod directory
-  → TurtleSerializer.noteFromTurtle() — parses TTL to NewsContent
+  → TurtleSerializer.newsFromTurtle() — parses TTL to NewsContent
   → Encryption.decryptVal() — on-device decryption
   → Note / OwnNews models
   → FutureBuilder renders UI

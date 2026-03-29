@@ -77,9 +77,9 @@ MyNoteView.png
 
 ![image](screenshots/macOS/MyNoteView.png)
 
-NewNewsEditor.png
+NewNewsPostEditor.png
 
-![image](screenshots/macOS/NewNewsEditor.png)
+![image](screenshots/macOS/NewNewsPostEditor.png)
 
 SharedNewsList.png
 

@@ -30,8 +30,8 @@ import 'package:solidpod/solidpod.dart';
 import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/constants/app.dart';
-import 'package:communitypod/news/list_my_notes_screen.dart';
-import 'package:communitypod/news/list_notes_screen.dart';
+import 'package:communitypod/news/list_my_news_screen.dart';
+import 'package:communitypod/news/list_news_screen.dart';
 import 'package:communitypod/news/new_news_post.dart';
 
 class AppHomePage extends StatefulWidget {

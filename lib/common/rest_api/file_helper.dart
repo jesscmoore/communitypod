@@ -38,7 +38,7 @@ import 'package:communitypod/constants/paths.dart';
 import 'package:communitypod/constants/turtle_structures.dart';
 import 'package:communitypod/models/news.dart';
 import 'package:communitypod/models/news_content.dart';
-import 'package:communitypod/news/list_my_notes_screen.dart';
+import 'package:communitypod/news/list_my_news_screen.dart';
 import 'package:communitypod/news/view_news.dart';
 import 'package:communitypod/utils/encryption.dart';
 import 'package:communitypod/widgets/err_dialogs.dart';

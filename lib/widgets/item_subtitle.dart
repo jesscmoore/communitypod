@@ -1,4 +1,4 @@
-/// A stateless widget to show subtitle of a note list item.
+/// A stateless widget to show subtitle of a list item.
 ///
 /// Copyright (C) 2026 Software Innovation Institute, Australian National University
 ///
@@ -28,42 +28,38 @@ import 'package:communitypod/models/news.dart';
 import 'package:communitypod/utils/get_id.dart';
 import 'package:communitypod/utils/misc.dart';
 
-/// A [stateless] widget to show subtitle of a note list item.
-/// It shows the number of recipients that the note is shared
-/// with if note owned by user, or entity that share it if
-/// owned by another, and does not show encrypted content if
-/// read access denied.
+/// A [stateless] widget to show subtitle of a list item.
 ///
 /// Arguments:
-/// - [note] - A note.
+/// - [item] - A list item.
 /// - [isNarrow] - Flag describing whether window is narrower than
 /// narrow threshold.
 ///
 class ItemSubtitle extends StatelessWidget {
   const ItemSubtitle({
     super.key,
-    required News note,
+    required News item,
     required bool isNarrow,
-  })  : _note = note,
+  })  : _item = item,
         _isNarrow = isNarrow;
 
-  final News _note;
+  final News _item;
   final bool _isNarrow;
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      (!_note.isExternalRes)
-          ? 'Owner: ${getId(_note.newsOwner)} \n'
-              'Created: ${getDateTimeStr(_note.content!.createdDateTime)}, Modified: ${getDateTimeStr(_note.content!.modifiedDateTime)}\n\n'
-              '${_note.content!.contentWithoutImages}'
-          : (_note.permissionList.contains('read'))
-              ? 'Owner: ${getId(_note.newsOwner)} \n'
-                  'Created: ${getDateTimeStr(_note.content!.createdDateTime)}, Modified: ${getDateTimeStr(_note.content!.modifiedDateTime)} \n\n'
-                  '${_note.content!.contentWithoutImages}'
-              : 'Filename: ${_note.newsFileName} \n'
-                  'Owner: ${getId(_note.newsOwner)} \n'
-                  'Permissions: ${_note.permissionList}',
+      (!_item.isExternalRes)
+          ? 'Owner: ${getId(_item.newsOwner)} \n'
+              'Created: ${getDateTimeStr(_item.content!.createdDateTime)}, Modified: ${getDateTimeStr(_item.content!.modifiedDateTime)}\n\n'
+              '${_item.content!.contentWithoutImages}'
+          : (_item.permissionList.contains('read'))
+              ? 'Owner: ${getId(_item.newsOwner)} \n'
+                  'Created: ${getDateTimeStr(_item.content!.createdDateTime)}, Modified: ${getDateTimeStr(_item.content!.modifiedDateTime)} \n\n'
+                  '${_item.content!.contentWithoutImages}'
+              : 'Filename: ${_item.newsFileName} \n'
+                  'Owner: ${getId(_item.newsOwner)} \n'
+                  'Permissions: ${_item.permissionList}',
       maxLines: (!_isNarrow) ? 6 : 12, // Limit lines
       overflow: TextOverflow.ellipsis,
     );

@@ -1,4 +1,4 @@
-/// DESCRIPTION
+/// A widget to display news post text.
 ///
 // Time-stamp: <Friday 2025-07-17 20:25:18 +1000 Jess Moore>
 ///
@@ -31,9 +31,8 @@ import 'package:markdown_widget/markdown_widget.dart';
 
 import 'package:communitypod/widgets/read_image.dart';
 
-// Displays note content with MarkdownBlock()
-// Expanded noteDisplayMarkdown(
-Container noteDisplayMarkdown(
+// Displays news post text content with MarkdownBlock()
+Container displayPostText(
   String data,
 ) {
   return Container(

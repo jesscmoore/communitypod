@@ -31,8 +31,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:solidui/solidui.dart';
 
-import 'package:communitypod/news/list_my_notes_screen.dart';
-import 'package:communitypod/widgets/note_edit_scroll_view.dart';
+import 'package:communitypod/news/list_my_news_screen.dart';
+import 'package:communitypod/widgets/edit_scroll_view.dart';
 
 /// A [Stateful] widget for creating a new note.
 ///
@@ -134,7 +134,7 @@ class NewNewsPostState extends State<NewNewsPost> {
 
   @override
   Widget build(BuildContext context) {
-    return NewsEditScrollView(
+    return EditScrollView(
       formKey: formKey,
       textController: _textController,
       scrollController: _scrollController,

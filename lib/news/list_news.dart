@@ -30,13 +30,13 @@ import 'package:communitypod/constants/app.dart';
 import 'package:communitypod/constants/ui.dart';
 import 'package:communitypod/models/news.dart';
 import 'package:communitypod/models/selected_news.dart';
-import 'package:communitypod/news/list_notes_screen.dart';
+import 'package:communitypod/news/list_news_screen.dart';
 import 'package:communitypod/news/non_readable_news_post.dart';
 import 'package:communitypod/news/view_news.dart';
-import 'package:communitypod/widgets/note_highlight_image.dart';
-import 'package:communitypod/widgets/note_item_subtitle.dart';
-import 'package:communitypod/widgets/note_item_trailing_buttons.dart';
-import 'package:communitypod/widgets/note_list_del_button.dart';
+import 'package:communitypod/widgets/highlight_image.dart';
+import 'package:communitypod/widgets/item_subtitle.dart';
+import 'package:communitypod/widgets/item_trailing_buttons.dart';
+import 'package:communitypod/widgets/list_del_button.dart';
 
 /// A [stateful] widget to list news accessible to the
 /// user.
@@ -447,7 +447,7 @@ class _ListNewsState extends State<ListNews> {
                             // icon shows as inactive if _isExtFileSelect=true
                             if (_isSelectionMode) ...[
                               // Multi delete button
-                              NewsListDelButton(
+                              ListDelButton(
                                 selectedNews: selectedNews,
                                 // Reload list after deletion
                                 childPage: ListNewsScreen(
@@ -619,7 +619,7 @@ class _ListNewsState extends State<ListNews> {
                                     : const Text(''),
                                 // News post item subtitle
                                 subtitle: ItemSubtitle(
-                                  note: _foundNews[index],
+                                  item: _foundNews[index],
                                   isNarrow: isNarrow,
                                 ),
                                 // Define width to avoid consuming full width
@@ -627,7 +627,7 @@ class _ListNewsState extends State<ListNews> {
                                   height: 60,
                                   width: 120,
                                   child: ItemTrailingButtons(
-                                    note: _foundNews[index],
+                                    item: _foundNews[index],
                                     scaffoldController: _scaffoldController,
                                   ),
                                 ),

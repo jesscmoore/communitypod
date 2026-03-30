@@ -1,4 +1,4 @@
-/// A widget to display note metadata.
+/// A widget to display news post metadata.
 ///
 // Time-stamp: <Friday 2025-10-14 14:59:05 +1000 Graham Williams>
 ///
@@ -31,31 +31,31 @@ import 'package:communitypod/widgets/show_date_metadata.dart';
 import 'package:communitypod/widgets/show_filename_metadata.dart';
 import 'package:communitypod/widgets/show_path_metadata.dart';
 
-/// Display the metadata of an externally owned note.
+/// Display the metadata of a news post.
 /// showDates requires created and modified date time.
 /// showSharing requires note owner, premission granter and
 /// permission list.
 /// showPathInfo requires note file name and note url.
 ///
 /// Arguments:
-/// - [createdDateTime] - note created date time.
-/// - [modifiedDateTime] - note last modified data time.
-/// - [newsOwner] - webId of note owner.
-/// - [permissionGranter] - webId of entity that shared the note
+/// - [createdDateTime] - post created date time.
+/// - [modifiedDateTime] - post last modified data time.
+/// - [newsOwner] - webId of news post owner.
+/// - [permissionGranter] - webId of entity that shared the news post
 /// to the user.
 /// - [permissionList] - list of permissions granted to the user.
-/// - [newsFileName] - note file name.
-/// - [newsUrl] - url of note.
+/// - [newsFileName] - news post file name.
+/// - [newsUrl] - url of news post.
 /// - [showDates] - flag describing whether to show data metadata of
-/// note.
+/// news post.
 /// - [showFileName] - flag describing whether to show filename of
-/// note.
+/// news post.
 /// - [showSharing] - flag describing whether to show sharing
-/// metadata of note.
+/// metadata of news post.
 /// - [showPathInfo] - flag describing whether to show url path of
-/// note.
+/// news post.
 
-class DisplayNewsMetadata extends StatelessWidget {
+class DisplayMetadata extends StatelessWidget {
   final String createdDateTime;
   final String modifiedDateTime;
   final String newsOwner;
@@ -70,7 +70,7 @@ class DisplayNewsMetadata extends StatelessWidget {
   final bool showSharing;
   final bool showPathInfo;
 
-  const DisplayNewsMetadata({
+  const DisplayMetadata({
     super.key,
     this.createdDateTime = '',
     this.modifiedDateTime = '',

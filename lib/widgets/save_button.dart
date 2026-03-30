@@ -1,4 +1,4 @@
-/// The save note button.
+/// The save file button.
 ///
 /// Copyright (C) 2023, Software Innovation Institute
 ///
@@ -34,21 +34,19 @@ import 'package:communitypod/common/rest_api/file_helper.dart';
 import 'package:communitypod/constants/colours.dart';
 import 'package:communitypod/models/news.dart';
 
-/// A stylised save button widget which on click saves the note content
-/// Pod. External notes are written to the note owner's Pod. News created
+/// A stylised save button widget which on click saves the content to a file in a
+/// Pod. External news posts are written to the owner's Pod. News created
 /// by the user are written to the user's Pod.
 ///
-/// Examples
-/// - `NewsSaveButton(textController: _textController!, formKey: formKey, shared: shared, notesMap: notesMap)` save the metadata and content of a new note to user's Pod.
-/// - `NewsSaveButton(textController: _textController!, formKey: formKey, prevNewsData: prevNewsData, shared: shared, notesMap: notesMap)` save the updated metadata and content of an existing note to the owner's Pod (whether that be the user or an external owner).
+/// Arguments:
 ///
-/// - [textController] - Text controller of the note text content editor.
-/// - [formKey] - Key of the form to edit the note metadata.
+/// - [textController] - Text controller of the text content editor.
+/// - [formKey] - Key of the form to edit the metadata.
 ///   [scaffoldController] - Controller for the Solid scaffold.
-/// - [prevNews] - Optional existing note data object. Required for saving existing note. (Default: null).
-/// - [isExternal] - Optional boolean denoting whether note is externally
+/// - [prevNews] - Optional existing file data object. Required for saving existing file. (Default: null).
+/// - [isExternal] - Optional boolean denoting whether file is externally
 /// owned. (Default: false).
-/// - [isExisting] - Optional boolean denoting whether note already
+/// - [isExisting] - Optional boolean denoting whether file already
 /// exists. (Default: false).
 
 class NewsSaveButton extends StatelessWidget {
@@ -78,7 +76,7 @@ class NewsSaveButton extends StatelessWidget {
         Icons.save,
       ),
       onPressed: () async {
-        // Save note and redirect to view note page
+        // Save file and redirect to view file page
         await NewsFileHelper().saveNews(
           context: context,
           textController: textController,

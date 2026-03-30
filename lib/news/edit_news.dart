@@ -33,7 +33,7 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/models/news.dart';
 import 'package:communitypod/news/view_news.dart';
-import 'package:communitypod/widgets/note_edit_scroll_view.dart';
+import 'package:communitypod/widgets/edit_scroll_view.dart';
 
 /// A [StatefulWidget] to edit news owned by the user.
 ///
@@ -144,7 +144,7 @@ class EditNewsState extends State<EditNews> {
 
   @override
   Widget build(BuildContext context) {
-    return NewsEditScrollView(
+    return EditScrollView(
       formKey: formKey,
       textController: _textController,
       scrollController: _scrollController,

@@ -32,7 +32,7 @@ import 'package:solidui/solidui.dart';
 import 'package:communitypod/constants/app.dart';
 import 'package:communitypod/constants/colours.dart';
 import 'package:communitypod/home.dart';
-import 'package:communitypod/news/list_my_notes_screen.dart';
+import 'package:communitypod/news/list_my_news_screen.dart';
 
 /// The root widget for the [CommunityPod] app.
 ///

@@ -33,12 +33,12 @@ import 'package:communitypod/constants/colours.dart';
 import 'package:communitypod/constants/ui.dart';
 import 'package:communitypod/models/news.dart';
 import 'package:communitypod/news/edit_news.dart';
-import 'package:communitypod/news/list_notes_screen.dart';
+import 'package:communitypod/news/list_news_screen.dart';
 import 'package:communitypod/news/share_news.dart';
-import 'package:communitypod/widgets/note_action_button.dart';
-import 'package:communitypod/widgets/note_del_button.dart';
-import 'package:communitypod/widgets/note_display_markdown.dart';
-import 'package:communitypod/widgets/note_display_metadata.dart';
+import 'package:communitypod/widgets/action_button.dart';
+import 'package:communitypod/widgets/del_button.dart';
+import 'package:communitypod/widgets/display_post_text.dart';
+import 'package:communitypod/widgets/display_metadata.dart';
 
 /// A [stateful] widget for viewing a news object.
 ///
@@ -121,7 +121,7 @@ class _ViewNewsState extends State<ViewNews> {
                     ],
                   ),
                   // Display note metadata - show dates and sharing info, but not path info (as only shown on non readable note page)
-                  DisplayNewsMetadata(
+                  DisplayMetadata(
                     createdDateTime: _newsPost.content!.createdDateTime,
                     modifiedDateTime: _newsPost.content!.modifiedDateTime,
                     newsOwner: _newsPost.newsOwner,
@@ -135,7 +135,7 @@ class _ViewNewsState extends State<ViewNews> {
                     showPathInfo: true,
                   ),
                   // Display markdown note content
-                  noteDisplayMarkdown(_newsPost.content!.newsContent),
+                  displayPostText(_newsPost.content!.newsContent),
                 ],
               ),
             ),

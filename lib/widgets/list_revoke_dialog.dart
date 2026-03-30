@@ -1,4 +1,4 @@
-/// A dialog for deleting unparseable files.
+/// A dialog for revoking access to any deleted external files.
 ///
 /// Copyright (C) 2023, Software Innovation Institute
 ///
@@ -6,7 +6,7 @@
 ///
 /// License: https://opensource.org/license/gpl-3-0
 //
-// Time-stamp: <Monday 2025-10-06 16:03:04 +1100 Graham Williams>
+// Time-stamp: <Sunday 2025-11-02 17:03:04 +1100 Graham Williams>
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -30,44 +30,39 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/constants/app.dart';
 import 'package:communitypod/constants/ui.dart';
-import 'package:communitypod/models/selected_news.dart';
-import 'package:communitypod/widgets/note_back_button.dart';
-import 'package:communitypod/widgets/note_list_del_button.dart';
+import 'package:communitypod/models/news.dart';
+import 'package:communitypod/utils/get_id.dart';
+import 'package:communitypod/widgets/custom_back_button.dart';
+import 'package:communitypod/widgets/list_revoke_button.dart';
 
-/// A page listing unparseable note files with button to delete
-/// all files in the list.
+/// A page listing external file records which no longer
+/// exist with button to update permission log with 'revoke'
+/// entry in each file in the list.
 ///
 /// Arguments:
-/// - [unparseableNews] - list of unparseable notes.
-/// - [childPage] - child widget to navigate to after delete dialog.
-///   [scaffoldController] - Controller for the Solid scaffold.
-/// - [isExternal] - flag describing whether files are externally owned.
+/// - [nonExistentNews] - list of non-existent files.
+/// - [childPage] - child widget to return to.
+/// - [scaffoldController] - Controller for the Solid scaffold.
 
-class NewsDelDialog extends StatefulWidget {
-  final List<SelectedNews> unparseableNews;
-
-  /// Childpage to navigate to after delete dialog
+class RevokeDialog extends StatefulWidget {
+  final List<News> nonExistentNews;
   final Widget childPage;
 
   /// Scaffold controller
   final SolidScaffoldController scaffoldController;
 
-  /// Boolean describing whether note is external
-  final bool isExternal;
-
-  const NewsDelDialog({
+  const RevokeDialog({
     super.key,
-    required this.unparseableNews,
+    required this.nonExistentNews,
     required this.childPage,
     required this.scaffoldController,
-    this.isExternal = false,
   });
 
   @override
-  State<NewsDelDialog> createState() => _NewsDelDialogState();
+  State<RevokeDialog> createState() => _RevokeDialogState();
 }
 
-class _NewsDelDialogState extends State<NewsDelDialog> {
+class _RevokeDialogState extends State<RevokeDialog> {
   /// Scroll controller for single child scroll view
   late final ScrollController _scrollController;
 
@@ -75,7 +70,7 @@ class _NewsDelDialogState extends State<NewsDelDialog> {
   late final SolidScaffoldController _scaffoldController;
 
   /// Aspect ratio (width / height) for gridview
-  /// cards to display note items
+  /// cards to display items
   late double cardAspectRatio = 2.0;
 
   /// Boolean describing whether window is narrow
@@ -106,7 +101,7 @@ class _NewsDelDialogState extends State<NewsDelDialog> {
         return SizedBox(
           child: Column(
             children: [
-              // Title and count of corrupted notes
+              // Title and count of non existent files
               Container(
                 padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
                 child: Column(
@@ -141,16 +136,23 @@ class _NewsDelDialogState extends State<NewsDelDialog> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          NewsListMsg.badFilesFound,
+                          NewsListMsg.nonExistentNewsFound,
                           style: titleStyle,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
                     const SizedBox(height: 10),
+                    const Text(
+                      'Press \'Revoke\' to update log record',
+                      style: adviceStyle,
+                    ),
+                    const SizedBox(height: 30),
                     Text(
-                      widget.unparseableNews.length > 1
-                          ? 'Found ${widget.unparseableNews.length} unparseable notes'
-                          : 'Found ${widget.unparseableNews.length} unparseable note',
+                      widget.nonExistentNews.length > 1
+                          ? 'Found ${widget.nonExistentNews.length} non-existent files'
+                          : 'Found ${widget.nonExistentNews.length} non-existent file',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                       ),
@@ -158,16 +160,20 @@ class _NewsDelDialogState extends State<NewsDelDialog> {
                   ],
                 ),
               ),
-              // List of unparseable notes
+              // List of non existent files
               Expanded(
                 child: Scrollbar(
                   thumbVisibility: true,
                   controller: _scrollController,
-                  child: ListView.builder(
+                  child: GridView.builder(
                     controller: _scrollController,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      // Aspect ratio calculated from LayoutBuilder box constraints
+                      crossAxisCount: 1,
+                      childAspectRatio: cardAspectRatio,
+                    ),
                     padding: const EdgeInsets.all(10),
-                    itemCount: widget.unparseableNews.length,
-                    itemExtent: badListItemHeight,
+                    itemCount: widget.nonExistentNews.length,
                     itemBuilder: (context, index) => Card(
                       child: Container(
                         decoration: const BoxDecoration(
@@ -175,7 +181,14 @@ class _NewsDelDialogState extends State<NewsDelDialog> {
                         ),
                         child: ListTile(
                           title: Text(
-                            'Filename: ${widget.unparseableNews[index].newsFileName}',
+                            'News Url: ${widget.nonExistentNews[index].newsUrl}',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          subtitle: Text(
+                            'Owner: ${getId(widget.nonExistentNews[index].newsOwner)} \nShared by: ${getId(widget.nonExistentNews[index].permissionGranter!)} \nPermissions: ${widget.nonExistentNews[index].permissionList}',
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           // Define width to avoid consuming full width
                         ),
@@ -190,15 +203,14 @@ class _NewsDelDialogState extends State<NewsDelDialog> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   spacing: 5.0,
                   children: [
-                    /// News list delete button
-                    NewsListDelButton(
-                      selectedNews: widget.unparseableNews,
+                    // News list revoke button
+                    ListRevokeButton(
+                      nonExistentNews: widget.nonExistentNews,
                       childPage: widget.childPage,
                       scaffoldController: _scaffoldController,
-                      isExternal: widget.isExternal,
                     ),
                     // Back button
-                    NewsBackButton(
+                    CustomBackButton(
                       childPage: widget.childPage,
                       scaffoldController: _scaffoldController,
                     ),

@@ -1,4 +1,4 @@
-/// The revoke note list button.
+/// The revoke access to file list button.
 ///
 /// Copyright (C) 2023, Software Innovation Institute
 ///
@@ -36,19 +36,19 @@ import 'package:communitypod/models/news.dart';
 import 'package:communitypod/widgets/loading_animation.dart' as loading;
 
 /// A revoke button widget for updating the log record for a list
-/// of notes.
+/// of files to revoke a user's access to those files.
 ///
 /// Arguments:
-/// - [nonExistentNews] - note list of non-existent files.
+/// - [nonExistentNews] - file list of non-existent files.
 /// - [childPage] - child widget to return to.
 /// - [scaffoldController] - Controller for the Solid scaffold.
 
-class NewsListRevokeButton extends StatelessWidget {
+class ListRevokeButton extends StatelessWidget {
   final List<News> nonExistentNews;
   final Widget childPage;
   final SolidScaffoldController scaffoldController;
 
-  const NewsListRevokeButton({
+  const ListRevokeButton({
     super.key,
     required this.nonExistentNews,
     required this.childPage,
@@ -79,7 +79,7 @@ class NewsListRevokeButton extends StatelessWidget {
                 TextButton(
                   onPressed: () async {
                     Navigator.of(context, rootNavigator: true)
-                        .pop(); // Dismiss the deleting note dialog
+                        .pop(); // Dismiss the revoking dialog
 
                     loading.showAnimationDialog(
                       context,
@@ -117,7 +117,7 @@ class NewsListRevokeButton extends StatelessWidget {
                 TextButton(
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true)
-                        .pop(); // Dismiss the revoking note dialog
+                        .pop(); // Dismiss the revoking dialog
                   },
                   child: const Text(ButtonLabel.no),
                 ),

@@ -1,4 +1,4 @@
-/// List notes screen - fetches user's news files
+/// List news screen - fetches all news
 ///
 /// Copyright (C) 2023 Software Innovation Institute, Australian National University
 ///
@@ -34,30 +34,36 @@ import 'package:communitypod/news/list_news.dart';
 import 'package:communitypod/news/new_news_post.dart';
 import 'package:communitypod/widgets/err_card.dart';
 import 'package:communitypod/widgets/msg_card.dart';
-import 'package:communitypod/widgets/note_list_del_dialog.dart';
+import 'package:communitypod/widgets/list_del_dialog.dart';
+import 'package:communitypod/widgets/list_revoke_dialog.dart';
 
-/// A [StatefulWidget] that fetches the user's news files in their app data folder.
+/// A [StatefulWidget] that fetches the all news accessible to the user.
 ///
 /// Parameters:
 ///   [scaffoldController] - Controller for the Solid scaffold.
 
-class ListMyNewsScreen extends StatefulWidget {
+class ListNewsScreen extends StatefulWidget {
   final SolidScaffoldController scaffoldController;
 
-  const ListMyNewsScreen({
+  const ListNewsScreen({
     super.key,
     required this.scaffoldController,
   });
 
   @override
-  State<ListMyNewsScreen> createState() => _ListMyNewsScreenState();
+  State<ListNewsScreen> createState() => _ListNewsScreenState();
 }
 
-class _ListMyNewsScreenState extends State<ListMyNewsScreen> {
+class _ListNewsScreenState extends State<ListNewsScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  /// Future function to retrieve user's news object list
-  static Future? _asyncDataFetch;
+  /// Future function to retrieve user's news list
+  // static Future? _fetchOwnNews;
+  late Future<NewsCallResult> _fetchOwnNews;
+
+  /// Future function to retrieve externally owned news list
+  // static Future? _fetchExternalNews;
+  late Future<NewsCallResult> _fetchExternalNews;
 
   /// Scroll controller for single child scroll view
   late final ScrollController _scrollController;
@@ -69,8 +75,12 @@ class _ListMyNewsScreenState extends State<ListMyNewsScreen> {
   void initState() {
     super.initState();
     _scaffoldController = widget.scaffoldController;
-    _asyncDataFetch = getOwnNewsList();
+
     _scrollController = ScrollController();
+
+    // Set future functions to fetch owner's news and external news
+    _fetchOwnNews = getOwnNewsList();
+    _fetchExternalNews = getExternalNewsList();
   }
 
   @override
@@ -79,38 +89,63 @@ class _ListMyNewsScreenState extends State<ListMyNewsScreen> {
     super.dispose();
   }
 
-  /// Load user's news if news found. If any unparseable news files
+  /// Load all news found. If any unparseable news files
   /// found, first navigate to a dialog to delete unparseable
   /// news files.
   ///
   /// Arguments:
-  ///   [results] - [NewsCallResult] class containing [news] of
-  /// files found in user's app data folder, and [unparseableNews]
-  /// list of any unparseable files.
+  /// - [ownerListResults] - [NewsCallResult] class containing news files owner by the user and unparseable news.
+  /// - [extListResults] - [NewsCallResult] class containing news files shared to user and unparseable news.
+  /// - [unparseableNews] - list of any unparseable files.
 
   Widget _loadedNewsScreen(
-    NewsCallResult results,
+    NewsCallResult ownerListResults,
+    NewsCallResult extListResults,
     SolidScaffoldController scaffoldController,
   ) {
+    // Combine the results
+    NewsCallResult results =
+        ownerListResults.addCallResults(results: extListResults);
     final List<News> news = results.news!;
     final List<SelectedNews> unparseableNews = results.unparseableNews!;
+    final List<News> nonExistentNews = results.nonExistentNews!;
 
     if (unparseableNews.isNotEmpty) {
-      return NewsDelDialog(
+      // Show dialog to optionally delete any unparseable news files if found
+      // These are news files that have been incorrectly written and
+      // are unparseable.
+      return DelDialog(
         unparseableNews: unparseableNews,
         childPage: ListNews(
           news: news,
-          title: '$myNewsTitle ($myNewsExplanation)',
+          title: '$combinedNewsTitle ($combinedNewsExplanation)',
           scaffoldController: scaffoldController,
         ),
         scaffoldController: _scaffoldController,
       );
+    } else if (nonExistentNews.isNotEmpty) {
+      // Show dialog to optionally revoke access to any nonexistent news files if found
+      // These are news files that were shared to the user and then deleted
+      // without revoking access to the user before deleting the news file
+      // as such these news files are still in the user's permission log
+      // without a revoke entry. The dialog provides an option to
+      // revoke the user's access to these now non existent news files.
+      return RevokeDialog(
+        nonExistentNews: nonExistentNews,
+        childPage: ListNews(
+          news: news,
+          title: '$combinedNewsTitle ($combinedNewsExplanation)',
+          scaffoldController: _scaffoldController,
+        ),
+        scaffoldController: _scaffoldController,
+      );
     } else if (news.isEmpty) {
+      // If no news files accessible to user, show create new news post widget
       return _loadNewNewsPost(scaffoldController);
     } else {
       return ListNews(
         news: news,
-        title: '$myNewsTitle ($myNewsExplanation)',
+        title: '$combinedNewsTitle ($combinedNewsExplanation)',
         scaffoldController: scaffoldController,
       );
     }
@@ -128,7 +163,7 @@ class _ListMyNewsScreenState extends State<ListMyNewsScreen> {
         child: Column(
           children: <Widget>[
             // MsgCard style works in light and dark themes
-            // No notes message
+            // No news files message
             buildMsgCard(
               context,
               Icons.info,
@@ -152,8 +187,25 @@ class _ListMyNewsScreenState extends State<ListMyNewsScreen> {
       key: _scaffoldKey,
       body: SafeArea(
         child: FutureBuilder(
-          future: _asyncDataFetch,
+          // future: _asyncFetchOwnNews,
+          future: Future.wait([
+            // Future result of fetching owner's news list
+            _fetchOwnNews,
+            // Future result of fetching externally owned news list
+            _fetchExternalNews,
+          ]),
           builder: (context, snapshot) {
+            // if (!snapshot.hasData) {
+            //   return Scaffold(body: loadingScreen(normalLoadingScreenHeight));
+            // }
+            // final PermissionDetails initCurrentPerm =
+            //     snapshot.data![0] as PermissionDetails;
+            // final List<LogRecord> initPermHistoryList =
+            //     snapshot.data![1] as List<LogRecord>;
+            // return initCurrentPerm.permissionMap.isEmpty
+            //     ? _buildPermPage(context)
+            //     : _buildPermPage(context, initCurrentPerm, initPermHistoryList);
+
             switch (snapshot.connectionState) {
               case (ConnectionState.waiting || ConnectionState.active):
                 return loadingScreen(normalLoadingScreenHeight);
@@ -167,9 +219,13 @@ class _ListMyNewsScreenState extends State<ListMyNewsScreen> {
                     'Error: data loading failed',
                   );
                 } else if (snapshot.hasData && snapshot.data != null) {
+                  final NewsCallResult ownerNewsListResult = snapshot.data![0];
+                  final NewsCallResult extNewsListResult = snapshot.data![1];
                   // Successfully returned NewsCallResult
                   return _loadedNewsScreen(
-                    snapshot.data as NewsCallResult,
+                    ownerNewsListResult,
+                    extNewsListResult,
+                    // snapshot.data as NewsCallResult,
                     _scaffoldController,
                   );
                 } else if (snapshot.data == null ||

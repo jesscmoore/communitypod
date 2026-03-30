@@ -29,7 +29,7 @@ import 'package:flutter/material.dart';
 
 import 'package:solidui/solidui.dart';
 
-import 'package:communitypod/widgets/note_back_button.dart';
+import 'package:communitypod/widgets/custom_back_button.dart';
 
 /// A [StatefulWidget] for sharing a news file.
 ///
@@ -95,7 +95,7 @@ class ShareNewsState extends State<ShareNews> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 10),
-                  NewsBackButton(
+                  CustomBackButton(
                     childPage: widget.backPage,
                     scaffoldController: _scaffoldController,
                   ),

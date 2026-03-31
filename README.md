@@ -11,7 +11,9 @@
 [![GitHub Issues](https://img.shields.io/github/issues/jesscmoore/communitypod)](https://github.com/jesscmoore/communitypod/issues)
 [![Build Installers](https://github.com/jesscmoore/communitypod/actions/workflows/installers.yaml/badge.svg)](https://github.com/jesscmoore/communitypod/actions/workflows/installers.yaml)
 
-[![Get it from the Snap Store](https://snapcraft.io/en/light/install.svg)](https://snapcraft.io/communitypod)
+<!-- markdownlint-disable MD013 -->
+<!-- [![Get it from the Snap Store](https://snapcraft.io/en/light/install.svg)](https://snapcraft.io/communitypod) -->
+<!-- markdownlint-enable MD013 -->
 
 Communitypod is a [solidui](https://github.com/anusii/solidui) based app to
 support the secure and private storage and sharing of personal news posts
@@ -106,14 +108,16 @@ the [Australian Solid Community Pod
 Server](https://pods.solidcommunity.au) or any one of the available
 [Pod Providers](https://solidproject.org/get-a-pod) world wide.
 
-## Online Demo
+<!-- ## Online Demo -->
 
-Once you have your own Pod visit
-[https://communitypod.solidcommunity.au](https://communitypod.solidcommunity.au)
-and login to your Pod. Be sure to update the default Solid Server
-listed on the login page. Write and save a few news posts, edit saved
-news posts, and maybe share some news posts with other users. Access your news posts
-from your desktop or mobile device. That's it! Simple but useful.
+<!-- markdownlint-disable MD013 -->
+<!-- Once you have your own Pod visit -->
+<!-- [https://communitypod.solidcommunity.au](https://communitypod.solidcommunity.au) -->
+<!-- and login to your Pod. Be sure to update the default Solid Server -->
+<!-- listed on the login page. Write and save a few news posts, edit saved -->
+<!-- news posts, and maybe share some news posts with other users. Access your news posts -->
+<!-- from your desktop or mobile device. That's it! Simple but useful. -->
+<!-- markdownlint-enable MD013 -->
 
 ## Install the App Locally
 

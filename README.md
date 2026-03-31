@@ -3,32 +3,34 @@
 [![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/anusii/communitypod)
-[![GitHub License](https://img.shields.io/github/license/anusii/communitypod)](https://github.com/anusii/communitypod?tab=GPL-3.0-1-ov-file)
-[![Flutter Version](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/anusii/communitypod/master/pubspec.yaml&query=$.version&label=version)](https://github.com/anusii/communitypod/blob/dev/CHANGELOG.md)
-[![Last Updated](https://img.shields.io/github/last-commit/anusii/communitypod?label=last%20updated)](https://github.com/anusii/communitypod/commits/dev/)
-[![GitHub commit activity (dev)](https://img.shields.io/github/commit-activity/w/anusii/communitypod/dev)](https://github.com/anusii/communitypod/commits/dev/)
-[![GitHub Issues](https://img.shields.io/github/issues/anusii/communitypod)](https://github.com/anusii/communitypod/issues)
-[![Build Installers](https://github.com/anusii/communitypod/actions/workflows/installers.yaml/badge.svg)](https://github.com/anusii/communitypod/actions/workflows/installers.yaml)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/jesscmoore/communitypod)
+[![GitHub License](https://img.shields.io/github/license/jesscmoore/communitypod)](https://github.com/jesscmoore/communitypod?tab=GPL-3.0-1-ov-file)
+[![Flutter Version](https://img.shields.io/badge/dynamic/yaml?url=https://raw.githubusercontent.com/jesscmoore/communitypod/master/pubspec.yaml&query=$.version&label=version)](https://github.com/jesscmoore/communitypod/blob/dev/CHANGELOG.md)
+[![Last Updated](https://img.shields.io/github/last-commit/jesscmoore/communitypod?label=last%20updated)](https://github.com/jesscmoore/communitypod/commits/dev/)
+[![GitHub commit activity (dev)](https://img.shields.io/github/commit-activity/w/jesscmoore/communitypod/dev)](https://github.com/jesscmoore/communitypod/commits/dev/)
+[![GitHub Issues](https://img.shields.io/github/issues/jesscmoore/communitypod)](https://github.com/jesscmoore/communitypod/issues)
+[![Build Installers](https://github.com/jesscmoore/communitypod/actions/workflows/installers.yaml/badge.svg)](https://github.com/jesscmoore/communitypod/actions/workflows/installers.yaml)
 
 [![Get it from the Snap Store](https://snapcraft.io/en/light/install.svg)](https://snapcraft.io/communitypod)
 
-communitypod is a [solidui](https://github.com/anusii/solidui) based app to
+Communitypod is a [solidui](https://github.com/anusii/solidui) based app to
 support the secure and private storage and sharing of personal news posts
 on your own encrypted personal online datastore (Pod) hosted in your
 Data Vault on a [Solid Server](https://solidproject.org/about). The
 app was developed by the [ANU Software Innovation
-Institute](https://sii.anu.edu.au) and written by [Anushka
-Vidanage](https://github.com/anushkavidanage), [Graham
-Williams](https://github.com/gjwgit), and [Jessica
-Moore](https://github.com/jesscmoore).
+Institute](https://sii.anu.edu.au) as a fork of the [notepod](https://github.com/anusii/notepod) app, written by [Jessica
+Moore](https://github.com/jesscmoore), [Anushka
+Vidanage](https://github.com/anushkavidanage), and [Graham
+Williams](https://github.com/gjwgit).
 
 If you appreciate the app then please show some ❤️ and star the [GitHub
-Repository](https://github.com/anusii/communitypod) to support the
-project.  You can install the app from different repositories
-including [SnapCraft](https://snapcraft.io/communitypod) for Linux.
+Repository](https://github.com/jesscmoore/communitypod) to support the
+project.  
 
-The latest version of the app can be run online at
+<!-- You can install the app from different repositories
+including [SnapCraft](https://snapcraft.io/communitypod) for Linux. -->
+
+<!-- The latest version of the app can be run online at
 [communitypod.solidcommunity.au](https://communitypod.solidcommunity.au) with no
 installation required, or downloaded and installed for your platform
 from the [Solid Community AU](https://solidcommunity.au) repository:
@@ -50,19 +52,19 @@ from the [Solid Community AU](https://solidcommunity.au) repository:
 + **Windows**
   [zip](https://solidcommunity.au/installers/communitypod-windows.zip) or
   [inno](https://solidcommunity.au/installers/communitypod-windows-inno.exe).
-<!-- markdownlint-enable MD013 -->
+markdownlint-enable MD013 --> -->
 
 Contributions are welcome. Visit
-[github](https://github.com/anusii/communitypod) to submit an issue or,
+[github](https://github.com/jesscmoore/communitypod) to submit an issue or,
 even better, fork the repository yourself, update the code, and submit
 a Pull Request. The app is implemented in
 [Flutter](https://flutter.dev) using
 [solidpod](https://pub.dev/packages/solidpod) for Flutter to manage
-the Solid Pod interactions. Thank you.
+the Solid Pod interactions, and [solidui](https://pub.dev/packages/solidui) for Solid specific user interface functions. Thank you.
 
 ## Introduction
 
-communitypod utilises [Solid Pods](https://solidproject.org/about) to read,
+Communitypod utilises [Solid Pods](https://solidproject.org/about) to read,
 write, and share encrypted news stored on your personal online
 datastore (Pod) hosted on a [Solid
 Server](https://solidproject.org/get_a_pod).  You control which server
@@ -80,24 +82,18 @@ later on, capturing shopping lists that can be shared with your family
 and called up the next time anyone of the family is at the shops, and
 much more.
 
-The current communitypod code base includes a lot of low level code that
-is being migrated to the
-[solidpod](https://github.com/anusii/solidpod) package for
-[Flutter](https://pub.dev/packages/solidpod). Once migrated it will be
-even easier to build your first Pods-based Flutter app.
-
-A simple example of a shopping list, available anywhere, anytime.
+A simple example of a news post, available anywhere, anytime.
 
 Desktop version:
 
 <!-- markdownlint-disable MD033 MD045 MD013 -->
 <img
-src="https://raw.githubusercontent.com/anusii/communitypod/dev/assets/screenshots/shopping.png" width=600>
+src="https://raw.githubusercontent.com/jesscmoore/communitypod/dev/assets/screenshots/shopping.png" width=600>
 
 Mobile Phone version:
 
 <img
-src="https://raw.githubusercontent.com/anusii/communitypod/dev/assets/screenshots/shopping_android.png" width=300>
+src="https://raw.githubusercontent.com/jesscmoore/communitypod/dev/assets/screenshots/shopping_android.png" width=300>
 <!-- markdownlint-enable MD033 MD045 MD013 -->
 
 ## Obtaining a Pod
@@ -123,7 +119,7 @@ You can install the app onto your own device from your device's
 software repository or directly by using one of our installers. The
 app will then run locally on your own device rather than hosted on the
 web server. The installers are available for all platforms from
-[github](https://github.com/anusii/communitypod/blob/dev/README.md).
+[github](https://github.com/jesscmoore/communitypod/blob/dev/README.md).
 
 ## App Startup
 
@@ -131,7 +127,7 @@ On starting up the app you will see the login screen where a user's
 WebID is to be entered. The app itself does not know your login
 details. That is handled by a remote Identify Provider of your choice.
 
-![login](https://raw.githubusercontent.com/anusii/communitypod/dev/assets/screenshots/login.png)
+![login](https://raw.githubusercontent.com/jesscmoore/communitypod/dev/assets/screenshots/login.png)
 
 ## Contribute to the communitypod Flutter App
 
@@ -158,7 +154,7 @@ Found 4 connected devices:
 ```
 <!-- markdownlint-enable MD013 -->
 
-You can then `git clone https://github.com/anusii/communitypod` to clone a
+You can then `git clone https://github.com/jesscmoore/communitypod` to clone a
 local copy of the software source code. You can run the communitypod app in
 debug mode on your chosen device by specifying enough of the device
 name to be uniquely identifiable. E.g. for chrome use:

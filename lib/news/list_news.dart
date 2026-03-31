@@ -31,12 +31,7 @@ import 'package:communitypod/constants/ui.dart';
 import 'package:communitypod/models/news.dart';
 import 'package:communitypod/models/selected_news.dart';
 import 'package:communitypod/news/list_news_screen.dart';
-import 'package:communitypod/news/non_readable_news_post.dart';
-import 'package:communitypod/news/view_news.dart';
-import 'package:communitypod/widgets/highlight_image.dart';
-import 'package:communitypod/widgets/item_subtitle.dart';
-import 'package:communitypod/widgets/item_title.dart';
-import 'package:communitypod/widgets/item_trailing_buttons.dart';
+import 'package:communitypod/widgets/item_card.dart';
 import 'package:communitypod/widgets/list_del_button.dart';
 
 /// A [stateful] widget to list news accessible to the
@@ -559,99 +554,14 @@ class _ListNewsState extends State<ListNews> {
                     controller: _scrollController,
                     padding: const EdgeInsets.all(10),
                     itemCount: _foundNews.length,
-                    itemBuilder: (context, index) => Card(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          HighlightImage(
-                            imageUrl: _foundNews[index]
-                                    .permissionList
-                                    .contains('read')
-                                ? _foundNews[index].content?.highlightImageUrl
-                                : null,
-                          ),
-                          Center(
-                            child: Container(
-                              // Show color decoration when selected
-                              decoration: _foundNews[index].isSelected
-                                  ? BoxDecoration(
-                                      color: theme.colorScheme.onInverseSurface,
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(5),
-                                      ),
-                                    )
-                                  : const BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5)),
-                                    ),
-                              child: ListTile(
-                                // Select and count selected news files, including whether
-                                // an externally owned news files are selected
-                                leading: SizedBox(
-                                  width: NewsIconSize.width,
-                                  child: Center(
-                                    child: Ink(
-                                      decoration: buttonShapeList,
-                                      child: IconButton(
-                                        icon: _foundNews[index].isSelected
-                                            ? const Icon(Icons.done)
-                                            : const Icon(Icons.edit_document),
-                                        onPressed: () {
-                                          updateSelectionMode(
-                                            _isSelectionMode,
-                                            index,
-                                          );
-                                          updateSelected(index);
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                // News post info
-                                title: ItemTitle(
-                                  item: _foundNews[index],
-                                  isNarrow: isNarrow,
-                                ),
-                                // News post item subtitle
-                                subtitle: ItemSubtitle(
-                                  item: _foundNews[index],
-                                  isNarrow: isNarrow,
-                                ),
-                                // Define width to avoid consuming full width
-                                trailing: SizedBox(
-                                  height: 60,
-                                  width: 120,
-                                  child: ItemTrailingButtons(
-                                    item: _foundNews[index],
-                                    scaffoldController: _scaffoldController,
-                                  ),
-                                ),
-
-                                onTap: () {
-                                  // Open news file object if read in permissions
-                                  String access =
-                                      _foundNews[index].permissionList;
-                                  if (access.contains('read')) {
-                                    _scaffoldController.navigateToSubpage(
-                                      ViewNews(
-                                        newsPost: _foundNews[index],
-                                        scaffoldController: _scaffoldController,
-                                      ),
-                                    );
-                                  } else {
-                                    _scaffoldController.navigateToSubpage(
-                                      NonReadableNewsPost(
-                                        newsPost: _foundNews[index],
-                                        scaffoldController: _scaffoldController,
-                                      ),
-                                    );
-                                  }
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    itemBuilder: (context, index) => ItemCard(
+                      item: _foundNews[index],
+                      isNarrow: isNarrow,
+                      scaffoldController: _scaffoldController,
+                      onSelectPressed: () {
+                        updateSelectionMode(_isSelectionMode, index);
+                        updateSelected(index);
+                      },
                     ),
                   ),
                 ),

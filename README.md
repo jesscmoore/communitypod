@@ -18,7 +18,8 @@ support the secure and private storage and sharing of personal news posts
 on your own encrypted personal online datastore (Pod) hosted in your
 Data Vault on a [Solid Server](https://solidproject.org/about). The
 app was developed by the [ANU Software Innovation
-Institute](https://sii.anu.edu.au) as a fork of the [notepod](https://github.com/anusii/notepod) app, written by [Jessica
+Institute](https://sii.anu.edu.au) as a fork of the
+[notepod](https://github.com/anusii/notepod) app, written by [Jessica
 Moore](https://github.com/jesscmoore), [Anushka
 Vidanage](https://github.com/anushkavidanage), and [Graham
 Williams](https://github.com/gjwgit).

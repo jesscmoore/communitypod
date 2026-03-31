@@ -45,9 +45,15 @@ class HighlightImage extends StatelessWidget {
   const HighlightImage({
     super.key,
     required String? imageUrl,
-  }) : _imageUrl = imageUrl;
+    Uint8List? imageBytes,
+    void Function(Uint8List)? onBytesLoaded,
+  })  : _imageUrl = imageUrl,
+        _imageBytes = imageBytes,
+        _onBytesLoaded = onBytesLoaded;
 
   final String? _imageUrl;
+  final Uint8List? _imageBytes;
+  final void Function(Uint8List)? _onBytesLoaded;
 
   /// Height of the thumbnail strip in logical pixels.
 
@@ -55,6 +61,25 @@ class HighlightImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Use cached bytes directly if available, skipping any fetch.
+    if (_imageBytes != null) {
+      return ClipRRect(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(5)),
+        child: SizedBox(
+          height: thumbnailHeight,
+          width: double.infinity,
+          child: Image.memory(
+            _imageBytes,
+            height: thumbnailHeight,
+            width: double.infinity,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) =>
+                const SizedBox.shrink(),
+          ),
+        ),
+      );
+    }
+
     final url = _imageUrl;
     if (url == null) return const SizedBox.shrink();
 
@@ -82,6 +107,7 @@ class HighlightImage extends StatelessWidget {
           if (!snapshot.hasData || snapshot.hasError) {
             return const SizedBox.shrink();
           }
+          _onBytesLoaded?.call(snapshot.data!);
           return Image.memory(
             snapshot.data!,
             height: thumbnailHeight,

@@ -73,6 +73,10 @@ class _ItemCardState extends State<ItemCard> {
             imageUrl: widget.item.permissionList.contains('read')
                 ? widget.item.content?.highlightImageUrl
                 : null,
+            imageBytes: widget.item.highlightImageBytes,
+            onBytesLoaded: (bytes) {
+              widget.item.highlightImageBytes = bytes;
+            },
           ),
           Center(
             child: Container(

@@ -135,7 +135,10 @@ class _ViewNewsState extends State<ViewNews> {
                     showPathInfo: true,
                   ),
                   // Display markdown content
-                  displayPostText(_newsPost.content!.newsContent),
+                  displayPostText(
+                    article: _newsPost.content!.newsContent,
+                    imageCache: _newsPost.cachedImages,
+                  ),
                 ],
               ),
             ),

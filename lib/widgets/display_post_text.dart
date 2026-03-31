@@ -29,20 +29,22 @@ import 'package:flutter/material.dart';
 
 import 'package:markdown_widget/markdown_widget.dart';
 
+import 'package:communitypod/models/embedded_image.dart';
 import 'package:communitypod/widgets/read_image.dart';
 
 // Displays news post text content with MarkdownBlock()
-Container displayPostText(
-  String data,
-) {
+Container displayPostText({
+  required String article,
+  List<EmbeddedImage>? imageCache,
+}) {
   return Container(
     alignment: Alignment.topLeft,
     padding: const EdgeInsets.all(10),
     // child: SingleChildScrollView(child: MarkdownBlock(data: data))),
     child: MarkdownBlock(
-      data: data,
+      data: article,
       config: MarkdownConfig(
-        configs: [ImgConfig(builder: readImage())],
+        configs: [ImgConfig(builder: readImage(imageCache))],
       ),
     ),
   );

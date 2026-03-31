@@ -1,5 +1,5 @@
 name: communitypod
-version: 0.0.10
+version: 0.0.11
 summary: Privacy preserving news sharing app using PODs.
 description: |
   communitypod is a news sharing app, storing your news post files within your Solid

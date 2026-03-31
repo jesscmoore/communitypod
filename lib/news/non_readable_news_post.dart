@@ -1,4 +1,4 @@
-/// A stateful widget for unreadable externally owned note.
+/// A stateful widget for unreadable externally owned news file.
 ///
 // Time-stamp: <Wednesday 2025-07-16 10:19:02 +1000 Graham Williams>
 ///
@@ -32,34 +32,34 @@ import 'package:solidui/solidui.dart';
 import 'package:communitypod/constants/app.dart';
 import 'package:communitypod/constants/colours.dart';
 import 'package:communitypod/constants/ui.dart';
-import 'package:communitypod/models/note.dart';
-import 'package:communitypod/notes/list_notes_screen.dart';
-import 'package:communitypod/notes/share_note.dart';
+import 'package:communitypod/models/news.dart';
+import 'package:communitypod/news/list_news_screen.dart';
+import 'package:communitypod/news/share_news.dart';
+import 'package:communitypod/widgets/action_button.dart';
+import 'package:communitypod/widgets/display_metadata.dart';
 import 'package:communitypod/widgets/msg_card.dart';
-import 'package:communitypod/widgets/note_action_button.dart';
-import 'package:communitypod/widgets/note_display_metadata.dart';
 
 /// A [stateful] widget for displaying a message when the user tries to view
-/// an externally owned widget shared to the user.
+/// an externally owned news file.
 ///
 /// Arguments:
-/// - [note] - The externally owned note shared to the user.
+/// - [newsPost] - The externally owned news file object.
 
-class NonReadableNote extends StatefulWidget {
-  final Note note;
+class NonReadableNewsPost extends StatefulWidget {
+  final News newsPost;
   final SolidScaffoldController scaffoldController;
 
-  const NonReadableNote({
+  const NonReadableNewsPost({
     super.key,
-    required this.note,
+    required this.newsPost,
     required this.scaffoldController,
   });
 
   @override
-  State<NonReadableNote> createState() => _NonReadableNoteState();
+  State<NonReadableNewsPost> createState() => _NonReadableNewsPostState();
 }
 
-class _NonReadableNoteState extends State<NonReadableNote> {
+class _NonReadableNewsPostState extends State<NonReadableNewsPost> {
   /// Scroll controller for single child scroll view
   late final ScrollController _scrollController;
 
@@ -69,15 +69,15 @@ class _NonReadableNoteState extends State<NonReadableNote> {
   /// Boolean describing whether window is narrow
   late bool isNarrow;
 
-  /// Note
-  late final Note _note;
+  /// News
+  late final News _newsPost;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
     _scaffoldController = widget.scaffoldController;
-    _note = widget.note;
+    _newsPost = widget.newsPost;
   }
 
   @override
@@ -95,13 +95,13 @@ class _NonReadableNoteState extends State<NonReadableNote> {
         controller: _scrollController,
         child: Column(
           children: <Widget>[
-            // Display note metadata - show sharing and path info but not dates (as requires noteContent)
-            DisplayNoteMetadata(
-              noteOwner: _note.noteOwner,
-              permissionGranter: _note.permissionGranter!,
-              permissionList: _note.permissionList,
-              noteFileName: _note.noteFileName,
-              noteUrl: _note.noteUrl,
+            // Display metadata - show sharing and path info but not dates (as requires newsContent)
+            DisplayMetadata(
+              newsOwner: _newsPost.newsOwner,
+              permissionGranter: _newsPost.permissionGranter!,
+              permissionList: _newsPost.permissionList,
+              newsFileName: _newsPost.newsFileName,
+              newsUrl: _newsPost.newsUrl,
               showFileName: true,
               showSharing: true,
               showPathInfo: true,
@@ -112,7 +112,7 @@ class _NonReadableNoteState extends State<NonReadableNote> {
               Icons.info,
               Colors.amber,
               'Access Permission!',
-              nonReadableNoteMsg,
+              nonReadableNewsMsg,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -125,16 +125,16 @@ class _NonReadableNoteState extends State<NonReadableNote> {
                     spacing: 5.0,
                     children: [
                       // Share button
-                      if (_note.permissionList.contains('control')) ...[
-                        NoteActionButton(
+                      if (_newsPost.permissionList.contains('control')) ...[
+                        ActionButton(
                           label: ButtonLabel.share,
                           icon: const Icon(Icons.share),
                           backgroundColor: ButtonBackgroundColor.share,
-                          childPage: ShareNote(
-                            noteUrl: _note.noteUrl,
-                            noteOwner: _note.noteOwner,
-                            isExternal: _note.isExternalRes,
-                            backPage: ListNotesScreen(
+                          childPage: ShareNews(
+                            newsUrl: _newsPost.newsUrl,
+                            newsOwner: _newsPost.newsOwner,
+                            isExternal: _newsPost.isExternalRes,
+                            backPage: ListNewsScreen(
                               scaffoldController: _scaffoldController,
                             ),
                             scaffoldController: _scaffoldController,
@@ -145,18 +145,18 @@ class _NonReadableNoteState extends State<NonReadableNote> {
                       ],
                       // /// Delete button
                       // /// 20250719 jesscmoore Commented out as also commented out
-                      // /// external note with read-write-control-append access
-                      // if (noteMetaData[permissionListPred].contains('write')) ...[
-                      //   NoteDelButton(noteData: noteMetaData, isExternal: true),
+                      // /// external file with read-write-control-append access
+                      // if (MetaData[permissionListPred].contains('write')) ...[
+                      //   DelButton(data: metaData, isExternal: true),
                       //   const SizedBox(
                       //     width: 5,
                       //   ),
                       // ],
-                      NoteActionButton(
+                      ActionButton(
                         label: ButtonLabel.back,
                         icon: const Icon(Icons.keyboard_backspace),
                         backgroundColor: ButtonBackgroundColor.back,
-                        childPage: ListNotesScreen(
+                        childPage: ListNewsScreen(
                           scaffoldController: _scaffoldController,
                         ),
                         scaffoldController: _scaffoldController,

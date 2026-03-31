@@ -42,16 +42,15 @@ on:
       - installers
 
 env:
-  APP: notepod
+  APP: communitypod
   RELEASE: dev
   LINUX_PKGS: libsecret-1-dev
-  FLUTTER_VERSION: "3.41.4"
+  FLUTTER_VERSION: '3.41.4'
   MACOS_APP_RELEASE_UNSIGNED_PATH: build/macos/Build/Products/Release-unsigned
   MACOS_APP_RELEASE_STAGING_PATH: build/macos/Build/Products/Release-staging
   MACOS_APP_RELEASE_DEV_PATH: build/macos/Build/Products/Release-dev
 
 jobs:
-
   ########################################################################
   # LINUX
   #
@@ -84,7 +83,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Clone Repository
         uses: actions/checkout@v4
 
@@ -203,7 +201,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Clone Repository
         uses: actions/checkout@v4
 
@@ -248,7 +245,7 @@ jobs:
       - name: Zip Bundle
         uses: thedoctor0/zip-release@master
         with:
-          type: "zip"
+          type: 'zip'
           filename: ${{env.APP}}-linux.zip
           directory: build/linux/x64/release/bundle
 
@@ -268,7 +265,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Clone Repository
         uses: actions/checkout@v4
 
@@ -379,7 +375,6 @@ jobs:
           pwd
           ls -lh build/macos/Build/Products/Release
 
-
       # Package as DMG
 
       - name: Create DMG Unsigned
@@ -450,7 +445,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
+          channel: 'stable'
           flutter-version: ${{env.FLUTTER_VERSION}}
 
       - name: Confirm Flutter Version
@@ -517,7 +512,7 @@ jobs:
       - name: Create ZIP
         uses: thedoctor0/zip-release@master
         with:
-          type: "zip"
+          type: 'zip'
           directory: ${{env.MACOS_APP_RELEASE_UNSIGNED_PATH}}
           path: ${{env.APP}}.app
           filename: ${{env.APP}}-macos-unsigned.zip
@@ -534,7 +529,7 @@ jobs:
   ########################################################################
   # MACOS - DISTRIBUTION CERTIFICATE SIGNED FOR UPLOAD AND ACCESS FROM APP STORE/APP STORE TESTFLIGHT
 
-  # The created notepod.pkg can be uploaded to app store manually with
+  # The created communitypod.pkg can be uploaded to app store manually with
   # macos Transporter app, or with codemagic-cli-tools app-store-connect with an app store API key.
   # Uses Mac App Distrtibution cert and associated profile
   # for app store distribution to sign the .app,
@@ -551,7 +546,7 @@ jobs:
   # Install Certificate type: 3rd Party Mac Developer Installer
   # Profile name: NotePod_Mac_Distribution_Mac_Appstore_Connect
   # Profile type: Mac Appstore Connect (distribution profile)
-  # Profile linked apps: com.togaware.notepod
+  # Profile linked apps: com.togaware.communitypod
   # Profile linked certificate: Togaware Pty Ltd
   # Build Certificate creation date: 29/10/2025
   # Install Certificate creation date: 10/12/2025
@@ -559,7 +554,7 @@ jobs:
 
   package-macos-pkg-appstore:
     env:
-      MACOS_INSTALL_CERTIFICATE_NAME: "3rd Party Mac Developer Installer: Togaware Pty Ltd (G7843T3SD3)"
+      MACOS_INSTALL_CERTIFICATE_NAME: '3rd Party Mac Developer Installer: Togaware Pty Ltd (G7843T3SD3)'
     if: |
       contains(github.event.head_commit.message, 'bump version x') ||
       contains(github.event.head_commit.message, 'build installers x') ||
@@ -572,7 +567,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
+          channel: 'stable'
           flutter-version: ${{env.FLUTTER_VERSION}}
 
       - name: Confirm Flutter Version
@@ -758,7 +753,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
+          channel: 'stable'
           flutter-version: ${{env.FLUTTER_VERSION}}
 
       - name: Confirm Flutter Version
@@ -866,7 +861,7 @@ jobs:
       - name: Create ZIP
         uses: thedoctor0/zip-release@master
         with:
-          type: "zip"
+          type: 'zip'
           directory: ${{ env.MACOS_APP_RELEASE_DEV_PATH }}
           path: ${{ env.APP }}.app
           filename: ${{ env.APP }}-macos-dev.zip
@@ -902,7 +897,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
+          channel: 'stable'
           flutter-version: ${{env.FLUTTER_VERSION}}
 
       - name: Confirm Flutter Version
@@ -1051,7 +1046,6 @@ jobs:
       contains(github.event.head_commit.message, 'build installers') ||
       contains(github.event.head_commit.message, 'build windows')
     runs-on: windows-latest # randomly not working (choco fails) with inno 1.2.7
-
     steps:
       - name: Clone Repository
         uses: actions/checkout@v4

@@ -26,17 +26,17 @@ Priority: optional
 Architecture: amd64
 Depends: libgtk-3-0, libblkid1, liblzma5
 Maintainer: Graham Williams <graham.williams@togaware.com>
-Description: Your notes collected privately
- With Notepod your notes are stored, encrypted, in your Pod.
- The app is provided as a template for other SOlid Pods based apps.
+Description: Your news posts collected privately
+ With communitypod your news posts are stored, encrypted, in your Pod.
+ The app is provided as a template for other Solid Pods based apps.
 EOL
 
 # Create desktop entry.
 
 cat > ${APP}_${VER}_amd64/usr/share/applications/com.togaware.${APP}.desktop << EOL
 [Desktop Entry]
-Name=Notepod
-Comment=Note taking with notes stored in Pods
+Name=communitypod
+Comment=News posting with news items stored in Pods
 Exec=/usr/bin/${APP}
 Icon=${APP}
 Terminal=false

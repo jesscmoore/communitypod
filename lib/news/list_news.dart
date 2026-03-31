@@ -1,4 +1,4 @@
-/// A stateful widget to list notes.
+/// A stateful widget to list news.
 ///
 /// Copyright (C) 2023 Software Innovation Institute, Australian National University
 ///
@@ -28,46 +28,46 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/constants/app.dart';
 import 'package:communitypod/constants/ui.dart';
-import 'package:communitypod/models/note.dart';
-import 'package:communitypod/models/selected_note.dart';
-import 'package:communitypod/notes/list_notes_screen.dart';
-import 'package:communitypod/notes/non_readable_note.dart';
-import 'package:communitypod/notes/view_note.dart';
-import 'package:communitypod/widgets/note_highlight_image.dart';
-import 'package:communitypod/widgets/note_item_subtitle.dart';
-import 'package:communitypod/widgets/note_item_trailing_buttons.dart';
-import 'package:communitypod/widgets/note_list_del_button.dart';
+import 'package:communitypod/models/news.dart';
+import 'package:communitypod/models/selected_news.dart';
+import 'package:communitypod/news/list_news_screen.dart';
+import 'package:communitypod/news/non_readable_news_post.dart';
+import 'package:communitypod/news/view_news.dart';
+import 'package:communitypod/widgets/highlight_image.dart';
+import 'package:communitypod/widgets/item_subtitle.dart';
+import 'package:communitypod/widgets/item_trailing_buttons.dart';
+import 'package:communitypod/widgets/list_del_button.dart';
 
-/// A [stateful] widget to list notes accessible to the
+/// A [stateful] widget to list news accessible to the
 /// user.
 ///
 /// Arguments:
-/// - [notes] - The notes accessible to the user.
+/// - [news] - The news files accessible to the user.
 /// - [title] - List title.
 /// - [scaffoldController] - Controller for the Solid scaffold.
 
-class ListNotes extends StatefulWidget {
-  final List<Note> notes;
+class ListNews extends StatefulWidget {
+  final List<News> news;
   final String title;
   final SolidScaffoldController scaffoldController;
 
-  const ListNotes({
+  const ListNews({
     super.key,
-    required this.notes,
+    required this.news,
     required this.title,
     required this.scaffoldController,
   });
 
   @override
-  State<ListNotes> createState() => _ListNotesState();
+  State<ListNews> createState() => _ListNewsState();
 }
 
-class _ListNotesState extends State<ListNotes> {
-  /// Filtered map of notes.
-  List<Note> _foundNotes = [];
+class _ListNewsState extends State<ListNews> {
+  /// Filtered map of news.
+  List<News> _foundNews = [];
 
-  /// Selected notes
-  final List<SelectedNote> selectedNotes = [];
+  /// Selected news files
+  final List<SelectedNews> selectedNews = [];
 
   /// Sort title order
   /// true: ascending (A-Z), false: descending (Z-A)
@@ -75,34 +75,34 @@ class _ListNotesState extends State<ListNotes> {
   bool _sortTitleAscending = true;
 
   /// Sort last modified date order
-  /// true: ascending (oldest modified note), false: descending (last modified note)
+  /// true: ascending (oldest modified), false: descending (last modified)
   /// First button press will change to sort by last modified first
   bool _sortModDateAscending = true;
 
-  /// Initial sort by note filename order.
+  /// Initial sort by filename order.
   bool _sortFilenameAscending = true;
 
-  /// Initial sort by note owner order.
+  /// Initial sort by owner order.
   bool _sortOwnerAscending = true;
 
-  /// Initial sort by note owner order.
+  /// Initial sort by permission order.
   bool _sortPermissionAscending = true;
 
-  /// Note selection mode
-  /// true: when one or more notes have been selected, false by default
+  /// News selection mode
+  /// true: when one or more news posts have been selected, false by default
   bool _isSelectionMode = false;
 
-  /// Count of selected notes
+  /// Count of selected news posts
   int selectedCount = 0;
 
   /// Whether selection includes external files
-  /// true: when one or more external notes have been selected, false by default
+  /// true: when one or more external files have been selected, false by default
   bool _isExtFileSelected = false;
 
-  /// Count of selected external notes
+  /// Count of selected external files
   int extSelectedCount = 0;
 
-  /// Current note sort method
+  /// Current sort method
   /// Initialised to sort by title
   String currSortMethod = '';
 
@@ -127,8 +127,8 @@ class _ListNotesState extends State<ListNotes> {
     _scrollController = ScrollController();
     _scaffoldController = widget.scaffoldController;
 
-    // By default _foundNotes is the full list of notes
-    _foundNotes = widget.notes;
+    // By default _foundNews is the full list
+    _foundNews = widget.news;
 
     // Initial sort by title alphabetically
     _sortByTitle(_sortTitleAscending);
@@ -143,21 +143,21 @@ class _ListNotesState extends State<ListNotes> {
     super.dispose();
   }
 
-  // Sort alphanumerically on note title field, with null values last
+  // Sort alphanumerically on title field, with null values last
   void _sortByTitle(bool ascending) {
     setState(() {
       _sortTitleAscending = ascending;
-      _foundNotes.sort((a, b) {
+      _foundNews.sort((a, b) {
         if (a.content == null && b.content == null) return 0;
         if (a.content == null) return 1;
         if (b.content == null) return -1;
         return _sortTitleAscending
-            ? a.content!.noteTitle
+            ? a.content!.newsTitle
                 .toLowerCase()
-                .compareTo(b.content!.noteTitle.toLowerCase())
-            : b.content!.noteTitle
+                .compareTo(b.content!.newsTitle.toLowerCase())
+            : b.content!.newsTitle
                 .toLowerCase()
-                .compareTo(a.content!.noteTitle.toLowerCase());
+                .compareTo(a.content!.newsTitle.toLowerCase());
       });
 
       // Update current sort method
@@ -165,11 +165,11 @@ class _ListNotesState extends State<ListNotes> {
     });
   }
 
-  // Sort numerically on note modified date field, with null values last
+  // Sort numerically on modified date field, with null values last
   void _sortByModDate(bool ascending) {
     setState(() {
       _sortModDateAscending = ascending;
-      _foundNotes.sort((a, b) {
+      _foundNews.sort((a, b) {
         if (a.content == null && b.content == null) return 0;
         if (a.content == null) return 1;
         if (b.content == null) return -1;
@@ -187,18 +187,18 @@ class _ListNotesState extends State<ListNotes> {
     });
   }
 
-  /// Sort alphanumerically on note filename
+  /// Sort alphanumerically on filename
   void _sortByFilename(bool ascending) {
     setState(() {
       _sortFilenameAscending = ascending;
-      _foundNotes.sort(
+      _foundNews.sort(
         (a, b) => _sortFilenameAscending
-            ? a.noteFileName
+            ? a.newsFileName
                 .toLowerCase()
-                .compareTo(b.noteFileName.toLowerCase())
-            : b.noteFileName
+                .compareTo(b.newsFileName.toLowerCase())
+            : b.newsFileName
                 .toLowerCase()
-                .compareTo(a.noteFileName.toLowerCase()),
+                .compareTo(a.newsFileName.toLowerCase()),
       );
 
       // Update current sort method
@@ -206,15 +206,15 @@ class _ListNotesState extends State<ListNotes> {
     });
   }
 
-  /// Sort alphanumerically on note owner
+  /// Sort alphanumerically on owner
   void _sortByOwner(bool ascending) {
     setState(() {
       _sortOwnerAscending = ascending;
 
-      _foundNotes.sort(
+      _foundNews.sort(
         (a, b) => _sortOwnerAscending
-            ? a.noteOwner.toLowerCase().compareTo(b.noteOwner.toLowerCase())
-            : b.noteOwner.toLowerCase().compareTo(a.noteOwner.toLowerCase()),
+            ? a.newsOwner.toLowerCase().compareTo(b.newsOwner.toLowerCase())
+            : b.newsOwner.toLowerCase().compareTo(a.newsOwner.toLowerCase()),
       );
 
       // Update current sort method
@@ -222,12 +222,12 @@ class _ListNotesState extends State<ListNotes> {
     });
   }
 
-  /// Sort alphanumerically on note permissions
+  /// Sort alphanumerically on file permissions
   void _sortByPermission(bool ascending) {
     setState(() {
       _sortPermissionAscending = ascending;
 
-      _foundNotes.sort(
+      _foundNews.sort(
         (a, b) => _sortPermissionAscending
             ? a.permissionList
                 .toLowerCase()
@@ -242,31 +242,31 @@ class _ListNotesState extends State<ListNotes> {
     });
   }
 
-  /// Search notes
-  void _searchNotes(String enteredKeyword) {
-    List<Note> results = [];
+  /// Search news
+  void _searchNews(String enteredKeyword) {
+    List<News> results = [];
     if (enteredKeyword.isEmpty) {
-      // Display all notes if no search string
-      results = widget.notes;
+      // Display all news files if no search string
+      results = widget.news;
     } else {
       // Search for matches in filename, owner, permission granter or permission list
-      results = widget.notes.where((note) {
-        return (note.content?.noteTitle ?? 'unknown')
+      results = widget.news.where((newsPost) {
+        return (newsPost.content?.newsTitle ?? 'unknown')
                 .toLowerCase()
                 .contains(enteredKeyword.toLowerCase()) ||
-            (note.content?.noteContent ?? 'unknown')
+            (newsPost.content?.newsContent ?? 'unknown')
                 .toLowerCase()
                 .contains(enteredKeyword.toLowerCase()) ||
-            note.noteFileName
+            newsPost.newsFileName
                 .toLowerCase()
                 .contains(enteredKeyword.toLowerCase()) ||
-            note.noteOwner
+            newsPost.newsOwner
                 .toLowerCase()
                 .contains(enteredKeyword.toLowerCase()) ||
-            (note.permissionGranter ?? 'n/a')
+            (newsPost.permissionGranter ?? 'n/a')
                 .toLowerCase()
                 .contains(enteredKeyword.toLowerCase()) ||
-            note.permissionList
+            newsPost.permissionList
                 .toLowerCase()
                 .contains(enteredKeyword.toLowerCase());
       }).toList();
@@ -274,7 +274,7 @@ class _ListNotesState extends State<ListNotes> {
 
     // Refresh the UI
     setState(() {
-      _foundNotes = results;
+      _foundNews = results;
 
       // // Sort results by filename
       // _sortByFilename(_sortFilenameAscending);
@@ -295,68 +295,68 @@ class _ListNotesState extends State<ListNotes> {
     }
   }
 
-  /// Update selected status and count of selected and add/remove note from
-  /// selected notes list
+  /// Update selected status and count of selected and add/remove from
+  /// selected files list
   void updateSelected(int index) {
     setState(() {
-      if (_foundNotes[index].isSelected) {
+      if (_foundNews[index].isSelected) {
         // Decrement selected count
         selectedCount--;
-        if (_foundNotes[index].isExternalRes) {
+        if (_foundNews[index].isExternalRes) {
           extSelectedCount--;
         }
 
-        // Remove note from selected notes list
-        selectedNotes.removeWhere(
-          (item) => item.noteFileName == _foundNotes[index].noteFileName,
+        // Remove file from selected list
+        selectedNews.removeWhere(
+          (item) => item.newsFileName == _foundNews[index].newsFileName,
         );
       } else {
         // Increment count
         selectedCount++;
-        if (_foundNotes[index].isExternalRes) {
+        if (_foundNews[index].isExternalRes) {
           extSelectedCount++;
         }
-        // Add note to selected notes list
-        selectedNotes.add(
-          SelectedNote(
-            noteFileName: _foundNotes[index].noteFileName,
-            noteUrl: _foundNotes[index].noteUrl,
-            noteOwner: _foundNotes[index].noteOwner,
+        // Add file to selected list
+        selectedNews.add(
+          SelectedNews(
+            newsFileName: _foundNews[index].newsFileName,
+            newsUrl: _foundNews[index].newsUrl,
+            newsOwner: _foundNews[index].newsOwner,
           ),
         );
       }
       // Swap selected status of file
-      _foundNotes[index].isSelected = !_foundNotes[index].isSelected;
+      _foundNews[index].isSelected = !_foundNews[index].isSelected;
 
-      debugPrint('Selected notes:');
-      for (final SelectedNote selectedNote in selectedNotes) {
-        debugPrint(selectedNote.noteFileName);
+      debugPrint('Selected news:');
+      for (final SelectedNews selectedNewsPost in selectedNews) {
+        debugPrint(selectedNewsPost.newsFileName);
       }
     });
   }
 
-  /// Update multiple note selection mode
+  /// Update multiple selection mode
   void updateSelectionMode(bool selectionMode, int index) {
     setState(() {
       debugPrint(
-        '_isSelectionMode before: $selectionMode, selectedCount: ${selectedCount.toString()}, extSelectedCount: ${extSelectedCount.toString()} isSelected: ${_foundNotes[index].isSelected}',
+        '_isSelectionMode before: $selectionMode, selectedCount: ${selectedCount.toString()}, extSelectedCount: ${extSelectedCount.toString()} isSelected: ${_foundNews[index].isSelected}',
       );
 
-      // Turn off selection mode if deselected only selected note
+      // Turn off selection mode if deselected only selected news file
       // else turn on selection mode
-      if (_foundNotes[index].isSelected && selectedCount == 1) {
+      if (_foundNews[index].isSelected && selectedCount == 1) {
         _isSelectionMode = false;
       } else {
         _isSelectionMode = true;
       }
 
       // Turn on external file selected
-      if (_foundNotes[index].isSelected &&
-          _foundNotes[index].isExternalRes &&
+      if (_foundNews[index].isSelected &&
+          _foundNews[index].isExternalRes &&
           extSelectedCount == 1) {
         // Turn off if the last selected external file has been deselected
         _isExtFileSelected = false;
-      } else if (_isSelectionMode && _foundNotes[index].isExternalRes) {
+      } else if (_isSelectionMode && _foundNews[index].isExternalRes) {
         // Ensure on if any external file is selected
         _isExtFileSelected = true;
       }
@@ -397,7 +397,7 @@ class _ListNotesState extends State<ListNotes> {
                     ),
                     const SizedBox(height: 10),
                     TextField(
-                      onChanged: (value) => _searchNotes(value),
+                      onChanged: (value) => _searchNews(value),
                       decoration: const InputDecoration(
                         labelText: 'Search news',
                         hintText:
@@ -423,15 +423,15 @@ class _ListNotesState extends State<ListNotes> {
                                   color: theme.colorScheme.primary,
                                 ),
                               )
-                            : _foundNotes.length > 1 || _foundNotes.isEmpty
+                            : _foundNews.length > 1 || _foundNews.isEmpty
                                 ? Text(
-                                    'Found ${_foundNotes.length} news posts',
+                                    'Found ${_foundNews.length} news posts',
                                     style: TextStyle(
                                       color: theme.colorScheme.primary,
                                     ),
                                   )
                                 : Text(
-                                    'Found ${_foundNotes.length} news post',
+                                    'Found ${_foundNews.length} news post',
                                     style: TextStyle(
                                       color: theme.colorScheme.primary,
                                     ),
@@ -440,17 +440,17 @@ class _ListNotesState extends State<ListNotes> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           spacing: (!isNarrow) ? 3.0 : 0,
                           children: [
-                            // Multiple note delete button
-                            // Only display multi note delete
-                            // button when notes are selected causing
+                            // Multiple news files delete button
+                            // Only display multi news files delete
+                            // button when news files are selected causing
                             // isSelectionMode=true
                             // icon shows as inactive if _isExtFileSelect=true
                             if (_isSelectionMode) ...[
-                              // Multi note delete button
-                              NoteListDelButton(
-                                selectedNotes: selectedNotes,
-                                // Reload list after note deletion
-                                childPage: ListNotesScreen(
+                              // Multi delete button
+                              ListDelButton(
+                                selectedNews: selectedNews,
+                                // Reload list after deletion
+                                childPage: ListNewsScreen(
                                   scaffoldController: _scaffoldController,
                                 ),
                                 scaffoldController: _scaffoldController,
@@ -557,22 +557,22 @@ class _ListNotesState extends State<ListNotes> {
                   child: ListView.builder(
                     controller: _scrollController,
                     padding: const EdgeInsets.all(10),
-                    itemCount: _foundNotes.length,
+                    itemCount: _foundNews.length,
                     itemBuilder: (context, index) => Card(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          NoteHighlightImage(
-                            imageUrl: _foundNotes[index]
+                          HighlightImage(
+                            imageUrl: _foundNews[index]
                                     .permissionList
                                     .contains('read')
-                                ? _foundNotes[index].content?.highlightImageUrl
+                                ? _foundNews[index].content?.highlightImageUrl
                                 : null,
                           ),
                           Center(
                             child: Container(
                               // Show color decoration when selected
-                              decoration: _foundNotes[index].isSelected
+                              decoration: _foundNews[index].isSelected
                                   ? BoxDecoration(
                                       color: theme.colorScheme.onInverseSurface,
                                       borderRadius: const BorderRadius.all(
@@ -584,15 +584,15 @@ class _ListNotesState extends State<ListNotes> {
                                           BorderRadius.all(Radius.circular(5)),
                                     ),
                               child: ListTile(
-                                // Select and count selected notes, including whether
-                                // an externally owned note is selected
+                                // Select and count selected news files, including whether
+                                // an externally owned news files are selected
                                 leading: SizedBox(
-                                  width: NoteIconSize.width,
+                                  width: NewsIconSize.width,
                                   child: Center(
                                     child: Ink(
                                       decoration: buttonShapeList,
                                       child: IconButton(
-                                        icon: _foundNotes[index].isSelected
+                                        icon: _foundNews[index].isSelected
                                             ? const Icon(Icons.done)
                                             : const Icon(Icons.edit_document),
                                         onPressed: () {
@@ -606,47 +606,47 @@ class _ListNotesState extends State<ListNotes> {
                                     ),
                                   ),
                                 ),
-                                // Note info
-                                title: (_foundNotes[index]
+                                // News post info
+                                title: (_foundNews[index]
                                         .permissionList
                                         .contains('read'))
                                     ? Text(
-                                        _foundNotes[index].content!.noteTitle,
+                                        _foundNews[index].content!.newsTitle,
                                         maxLines:
                                             (!isNarrow) ? 1 : 3, // Limit lines
                                         overflow: TextOverflow.ellipsis,
                                       )
                                     : const Text(''),
-                                // Note item subtitle
-                                subtitle: NoteItemSubtitle(
-                                  note: _foundNotes[index],
+                                // News post item subtitle
+                                subtitle: ItemSubtitle(
+                                  item: _foundNews[index],
                                   isNarrow: isNarrow,
                                 ),
                                 // Define width to avoid consuming full width
                                 trailing: SizedBox(
                                   height: 60,
                                   width: 120,
-                                  child: NoteItemTrailingButtons(
-                                    note: _foundNotes[index],
+                                  child: ItemTrailingButtons(
+                                    item: _foundNews[index],
                                     scaffoldController: _scaffoldController,
                                   ),
                                 ),
 
                                 onTap: () {
-                                  // Open note if read in permissions
+                                  // Open news file object if read in permissions
                                   String access =
-                                      _foundNotes[index].permissionList;
+                                      _foundNews[index].permissionList;
                                   if (access.contains('read')) {
                                     _scaffoldController.navigateToSubpage(
-                                      ViewNote(
-                                        note: _foundNotes[index],
+                                      ViewNews(
+                                        newsPost: _foundNews[index],
                                         scaffoldController: _scaffoldController,
                                       ),
                                     );
                                   } else {
                                     _scaffoldController.navigateToSubpage(
-                                      NonReadableNote(
-                                        note: _foundNotes[index],
+                                      NonReadableNewsPost(
+                                        newsPost: _foundNews[index],
                                         scaffoldController: _scaffoldController,
                                       ),
                                     );

@@ -1,4 +1,4 @@
-/// Data models for notes
+/// Data models for news
 ///
 /// Copyright (C) 2023-2025, Software Innovation Institute
 ///
@@ -28,12 +28,12 @@ library;
 import 'package:solidpod/solidpod.dart';
 
 import 'package:communitypod/constants/turtle_structures.dart';
-import 'package:communitypod/models/note_content.dart';
-import 'package:communitypod/models/own_note.dart';
+import 'package:communitypod/models/news_content.dart';
+import 'package:communitypod/models/own_news.dart';
 
-/// Data model for any note
+/// Data model for any news object
 
-class Note extends OwnNote {
+class News extends OwnNews {
   final String? sharedTime;
   final String? permissionGranter;
   final String? permissionRecepient;
@@ -42,12 +42,12 @@ class Note extends OwnNote {
   bool isExternalRes;
   bool isSelected;
 
-  Note({
+  News({
     super.content,
     super.authUserList,
-    required super.noteUrl,
-    required super.noteFileName,
-    required super.noteOwner,
+    required super.newsUrl,
+    required super.newsFileName,
+    required super.newsOwner,
     this.sharedTime,
     this.permissionGranter,
     this.permissionRecepient,
@@ -57,31 +57,31 @@ class Note extends OwnNote {
     this.isSelected = false,
   });
 
-  /// Method to create Note object from json data map
+  /// Method to create News object from json data map
 
-  factory Note.fromJson(Map<String, dynamic> json) {
-    return Note(
-      noteUrl: json[noteUrlPred] as String,
-      noteFileName: json[noteFileNamePred] as String,
-      noteOwner: json[noteOwnerPred] as String,
+  factory News.fromJson(Map<String, dynamic> json) {
+    return News(
+      newsUrl: json[newsUrlPred] as String,
+      newsFileName: json[newsFileNamePred] as String,
+      newsOwner: json[newsOwnerPred] as String,
       sharedTime: json[sharedTimePred] as String,
       permissionGranter: json[permissionGranterPred] as String,
       permissionRecepient: json[permissionRecepientPred] as String,
       permissionType: json[permissionTypePred] as String,
       permissionList: json[permissionListPred] as String,
       isSelected: json[isSelectedPred] as bool,
-      content: json[contentPred] as NoteContent,
+      content: json[contentPred] as NewsContent,
       authUserList: json[authUserPred] as Map<dynamic, dynamic>,
     );
   }
 
-  /// Method to export Note object to json data map
+  /// Method to export News object to json data map
 
   @override
   Map<String, dynamic> toJson() => {
-        noteUrlPred: noteUrl,
-        noteFileNamePred: noteFileName,
-        noteOwnerPred: noteOwner,
+        newsUrlPred: newsUrl,
+        newsFileNamePred: newsFileName,
+        newsOwnerPred: newsOwner,
         sharedTimePred: sharedTime,
         permissionGranterPred: permissionGranter,
         permissionRecepientPred: permissionRecepient,
@@ -96,12 +96,12 @@ class Note extends OwnNote {
   /// updated copy of another instance
 
   @override
-  Note copyWith({
-    NoteContent? content,
+  News copyWith({
+    NewsContent? content,
     Map<dynamic, dynamic>? authUserList,
-    String? noteUrl,
-    String? noteFileName,
-    String? noteOwner,
+    String? newsUrl,
+    String? newsFileName,
+    String? newsOwner,
     String? sharedTime,
     String? permissionGranter,
     String? permissionRecepient,
@@ -109,12 +109,12 @@ class Note extends OwnNote {
     String? permissionList,
     bool? isSelected,
   }) {
-    return Note(
+    return News(
       content: content ?? this.content,
       authUserList: authUserList ?? this.authUserList,
-      noteUrl: noteUrl ?? this.noteUrl,
-      noteFileName: noteFileName ?? this.noteFileName,
-      noteOwner: noteOwner ?? this.noteOwner,
+      newsUrl: newsUrl ?? this.newsUrl,
+      newsFileName: newsFileName ?? this.newsFileName,
+      newsOwner: newsOwner ?? this.newsOwner,
       sharedTime: sharedTime ?? this.sharedTime,
       permissionGranter: permissionGranter ?? this.permissionGranter,
       permissionRecepient: permissionRecepient ?? this.permissionRecepient,
@@ -125,26 +125,26 @@ class Note extends OwnNote {
   }
 }
 
-/// Class for operations on list of notes
+/// Class for operations on list of news files
 
-extension ListNoteExtension on List<Note> {
+extension ListNewsExtension on List<News> {
   /// Method to add authorised user list map to each file in
-  /// list of notes
+  /// list of files
   ///
   /// Arguments:
   /// - [permissionMaps] - map of permission maps, with the
   /// filename as key and the permission map obtained by
   /// readPermissions() as value.
 
-  List<Note> addAuthUserLists({required Map permissionMaps}) {
-    List<Note> updatedNotes = [];
+  List<News> addAuthUserLists({required Map permissionMaps}) {
+    List<News> updatedNews = [];
 
-    for (var note in this) {
-      final Note updatedNote = note.copyWith(
-        authUserList: permissionMaps[note.noteFileName][authUserPred],
+    for (var newsPost in this) {
+      final News updatedNewsPost = newsPost.copyWith(
+        authUserList: permissionMaps[newsPost.newsFileName][authUserPred],
       );
-      updatedNotes.add(updatedNote);
+      updatedNews.add(updatedNewsPost);
     }
-    return updatedNotes;
+    return updatedNews;
   }
 }

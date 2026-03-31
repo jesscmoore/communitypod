@@ -1,4 +1,4 @@
-/// A stateful widget for sharing a note owned by the user.
+/// A stateful widget for sharing a news file.
 ///
 // Time-stamp: <Friday 2025-10-24 12:01:03 +1100 Graham Williams>
 ///
@@ -29,38 +29,38 @@ import 'package:flutter/material.dart';
 
 import 'package:solidui/solidui.dart';
 
-import 'package:communitypod/widgets/note_back_button.dart';
+import 'package:communitypod/widgets/custom_back_button.dart';
 
-/// A [StatefulWidget] for sharing a note owned by the user.
+/// A [StatefulWidget] for sharing a news file.
 ///
 /// Arguments:
-/// - [noteUrl] - is the name of the note to be shared.
-/// - [noteOwner] - is the webId of the note owner.
+/// - [newsUrl] - is the name of the news file to be shared.
+/// - [newsOwner] - is the webId of the news file owner.
 /// - [backPage] - The widget used by Back button.
-/// - [isExternalRes] - Whether the note is externally owned.
+/// - [isExternalRes] - Whether the file is externally owned.
 /// - [scaffoldController] - Controller for the Solid scaffold.
 
-class ShareNote extends StatefulWidget {
-  final String noteUrl;
-  final String noteOwner;
+class ShareNews extends StatefulWidget {
+  final String newsUrl;
+  final String newsOwner;
   final Widget backPage;
   final bool isExternal;
   final SolidScaffoldController scaffoldController;
 
-  const ShareNote({
+  const ShareNews({
     super.key,
-    required this.noteUrl,
-    required this.noteOwner,
+    required this.newsUrl,
+    required this.newsOwner,
     required this.backPage,
     required this.scaffoldController,
     this.isExternal = false,
   });
 
   @override
-  ShareNoteState createState() => ShareNoteState();
+  ShareNewsState createState() => ShareNewsState();
 }
 
-class ShareNoteState extends State<ShareNote> {
+class ShareNewsState extends State<ShareNews> {
   /// Scroll controller for single child scroll view
   late final ScrollController _scrollController;
 
@@ -95,7 +95,7 @@ class ShareNoteState extends State<ShareNote> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 10),
-                  NoteBackButton(
+                  CustomBackButton(
                     childPage: widget.backPage,
                     scaffoldController: _scaffoldController,
                   ),
@@ -104,8 +104,8 @@ class ShareNoteState extends State<ShareNote> {
                     height: MediaQuery.of(context).size.height * 0.8,
                     child: GrantPermissionUi(
                       showAppBar: false,
-                      resourceName: widget.noteUrl,
-                      ownerWebId: widget.noteOwner,
+                      resourceName: widget.newsUrl,
+                      ownerWebId: widget.newsOwner,
                       isExternalRes: widget.isExternal,
                     ),
                   ),

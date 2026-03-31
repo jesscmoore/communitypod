@@ -1,4 +1,4 @@
-/// List notes screen - fetches user's notes
+/// List news screen - fetches all news
 ///
 /// Copyright (C) 2023 Software Innovation Institute, Australian National University
 ///
@@ -27,45 +27,43 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/common/rest_api/rest_api.dart';
 import 'package:communitypod/constants/app.dart';
-import 'package:communitypod/models/note.dart';
-import 'package:communitypod/models/notes_call_result.dart';
-import 'package:communitypod/models/selected_note.dart';
-import 'package:communitypod/notes/list_notes.dart';
-import 'package:communitypod/notes/new_note.dart';
+import 'package:communitypod/models/news.dart';
+import 'package:communitypod/models/news_call_result.dart';
+import 'package:communitypod/models/selected_news.dart';
+import 'package:communitypod/news/list_news.dart';
+import 'package:communitypod/news/new_news_post.dart';
 import 'package:communitypod/widgets/err_card.dart';
+import 'package:communitypod/widgets/list_del_dialog.dart';
+import 'package:communitypod/widgets/list_revoke_dialog.dart';
 import 'package:communitypod/widgets/msg_card.dart';
-import 'package:communitypod/widgets/note_list_del_dialog.dart';
-import 'package:communitypod/widgets/note_list_revoke_dialog.dart';
 
-/// A [StatefulWidget] that fetches the user's notes in their app data folder
-/// retrieving the note data map containing data and properties of each note
-/// file name.
+/// A [StatefulWidget] that fetches the all news accessible to the user.
 ///
 /// Parameters:
 ///   [scaffoldController] - Controller for the Solid scaffold.
 
-class ListNotesScreen extends StatefulWidget {
+class ListNewsScreen extends StatefulWidget {
   final SolidScaffoldController scaffoldController;
 
-  const ListNotesScreen({
+  const ListNewsScreen({
     super.key,
     required this.scaffoldController,
   });
 
   @override
-  State<ListNotesScreen> createState() => _ListNotesScreenState();
+  State<ListNewsScreen> createState() => _ListNewsScreenState();
 }
 
-class _ListNotesScreenState extends State<ListNotesScreen> {
+class _ListNewsScreenState extends State<ListNewsScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  /// Future function to retrieve user's notes list
-  // static Future? _fetchOwnNotes;
-  late Future<NotesCallResult> _fetchOwnNotes;
+  /// Future function to retrieve user's news list
+  // static Future? _fetchOwnNews;
+  late Future<NewsCallResult> _fetchOwnNews;
 
-  /// Future function to retrieve externally owned notes list
-  // static Future? _fetchExternalNotes;
-  late Future<NotesCallResult> _fetchExternalNotes;
+  /// Future function to retrieve externally owned news list
+  // static Future? _fetchExternalNews;
+  late Future<NewsCallResult> _fetchExternalNews;
 
   /// Scroll controller for single child scroll view
   late final ScrollController _scrollController;
@@ -80,9 +78,9 @@ class _ListNotesScreenState extends State<ListNotesScreen> {
 
     _scrollController = ScrollController();
 
-    // Set future functions to fetch owner's notes and external notes
-    _fetchOwnNotes = getOwnNoteList();
-    _fetchExternalNotes = getExternalNoteList();
+    // Set future functions to fetch owner's news and external news
+    _fetchOwnNews = getOwnNewsList();
+    _fetchExternalNews = getExternalNewsList();
   }
 
   @override
@@ -91,75 +89,72 @@ class _ListNotesScreenState extends State<ListNotesScreen> {
     super.dispose();
   }
 
-  /// Load user's notes if notes found. If any unparseable notes
+  /// Load all news found. If any unparseable news files
   /// found, first navigate to a dialog to delete unparseable
-  /// notes.
+  /// news files.
   ///
   /// Arguments:
-  ///   [ownerListResults] - [NotesCallResult] class containing [notes] of
-  /// files found in user's app data folder, and [unparseableNotes]
-  /// list of any unparseable files.
-  ///   [extListResults] - [NotesCallResult] class containing [notes] of
-  /// files shared to user, and [unparseableNotes]
-  /// list of any unparseable files.
+  /// - [ownerListResults] - [NewsCallResult] class containing news files owner by the user and unparseable news.
+  /// - [extListResults] - [NewsCallResult] class containing news files shared to user and unparseable news.
+  /// - [unparseableNews] - list of any unparseable files.
 
-  Widget _loadedNotesScreen(
-    NotesCallResult ownerListResults,
-    NotesCallResult extListResults,
+  Widget _loadedNewsScreen(
+    NewsCallResult ownerListResults,
+    NewsCallResult extListResults,
     SolidScaffoldController scaffoldController,
   ) {
     // Combine the results
-    NotesCallResult results =
+    NewsCallResult results =
         ownerListResults.addCallResults(results: extListResults);
-    final List<Note> notes = results.notes!;
-    final List<SelectedNote> unparseableNotes = results.unparseableNotes!;
-    final List<Note> nonExistentNotes = results.nonExistentNotes!;
+    final List<News> news = results.news!;
+    final List<SelectedNews> unparseableNews = results.unparseableNews!;
+    final List<News> nonExistentNews = results.nonExistentNews!;
 
-    if (unparseableNotes.isNotEmpty) {
-      // Show dialog to optionally delete any unparseable notes if found
-      // These are notes that have been incorrectly written and
+    if (unparseableNews.isNotEmpty) {
+      // Show dialog to optionally delete any unparseable news files if found
+      // These are news files that have been incorrectly written and
       // are unparseable.
-      return NotesDelDialog(
-        unparseableNotes: unparseableNotes,
-        childPage: ListNotes(
-          notes: notes,
+      return DelDialog(
+        unparseableNews: unparseableNews,
+        childPage: ListNews(
+          news: news,
           title: '$combinedNewsTitle ($combinedNewsExplanation)',
           scaffoldController: scaffoldController,
         ),
         scaffoldController: _scaffoldController,
       );
-    } else if (nonExistentNotes.isNotEmpty) {
-      // Show dialog to optionally revoke access to any nonexistent notes if found
-      // These are notes that were shared to the user and then deleted
-      // without revoking access to the user before deleting the note
-      // as such these notes are still in the user's permission log
+    } else if (nonExistentNews.isNotEmpty) {
+      // Show dialog to optionally revoke access to any nonexistent news files if found
+      // These are news files that were shared to the user and then deleted
+      // without revoking access to the user before deleting the news file
+      // as such these news files are still in the user's permission log
       // without a revoke entry. The dialog provides an option to
-      // revoke the user's access to these now non existent notes.
-      return NotesRevokeDialog(
-        nonExistentNotes: nonExistentNotes,
-        childPage: ListNotes(
-          notes: notes,
+      // revoke the user's access to these now non existent news files.
+      return RevokeDialog(
+        nonExistentNews: nonExistentNews,
+        childPage: ListNews(
+          news: news,
           title: '$combinedNewsTitle ($combinedNewsExplanation)',
           scaffoldController: _scaffoldController,
         ),
         scaffoldController: _scaffoldController,
       );
-    } else if (notes.isEmpty) {
-      // If no notes accessible to user, show create new note widget
-      return _loadNewNote(scaffoldController);
+    } else if (news.isEmpty) {
+      // If no news files accessible to user, show create new news post widget
+      return _loadNewNewsPost(scaffoldController);
     } else {
-      return ListNotes(
-        notes: notes,
+      return ListNews(
+        news: news,
         title: '$combinedNewsTitle ($combinedNewsExplanation)',
         scaffoldController: scaffoldController,
       );
     }
   }
 
-  /// Advises user to create their first note if no notes found.
+  /// Advises user to create their first news post if no news found.
   ///
   /// Arguments: none.
-  Widget _loadNewNote(SolidScaffoldController scaffoldController) {
+  Widget _loadNewNewsPost(SolidScaffoldController scaffoldController) {
     return Scrollbar(
       thumbVisibility: true,
       controller: _scrollController,
@@ -168,16 +163,16 @@ class _ListNotesScreenState extends State<ListNotesScreen> {
         child: Column(
           children: <Widget>[
             // MsgCard style works in light and dark themes
-            // No notes message
+            // No news files message
             buildMsgCard(
               context,
               Icons.info,
               Colors.amber,
-              NoteListMsg.noNotes,
-              NoteListMsg.writeFirstNote,
+              NewsListMsg.noNews,
+              NewsListMsg.writeFirstNews,
               isSmall: true,
             ),
-            NewNote(
+            NewNewsPost(
               scaffoldController: scaffoldController,
             ),
           ],
@@ -192,12 +187,12 @@ class _ListNotesScreenState extends State<ListNotesScreen> {
       key: _scaffoldKey,
       body: SafeArea(
         child: FutureBuilder(
-          // future: _asyncFetchOwnNotes,
+          // future: _asyncFetchOwnNews,
           future: Future.wait([
-            // Future result of fetching owner's notes list
-            _fetchOwnNotes,
-            // Future result of fetching externally owned notes list
-            _fetchExternalNotes,
+            // Future result of fetching owner's news list
+            _fetchOwnNews,
+            // Future result of fetching externally owned news list
+            _fetchExternalNews,
           ]),
           builder: (context, snapshot) {
             // if (!snapshot.hasData) {
@@ -224,20 +219,19 @@ class _ListNotesScreenState extends State<ListNotesScreen> {
                     'Error: data loading failed',
                   );
                 } else if (snapshot.hasData && snapshot.data != null) {
-                  final NotesCallResult ownerNotesListResult =
-                      snapshot.data![0];
-                  final NotesCallResult extNotesListResult = snapshot.data![1];
-                  // Successfully returned NotesCallResult
-                  return _loadedNotesScreen(
-                    ownerNotesListResult,
-                    extNotesListResult,
-                    // snapshot.data as NotesCallResult,
+                  final NewsCallResult ownerNewsListResult = snapshot.data![0];
+                  final NewsCallResult extNewsListResult = snapshot.data![1];
+                  // Successfully returned NewsCallResult
+                  return _loadedNewsScreen(
+                    ownerNewsListResult,
+                    extNewsListResult,
+                    // snapshot.data as NewsCallResult,
                     _scaffoldController,
                   );
                 } else if (snapshot.data == null ||
                     snapshot.data.toString() == 'null') {
-                  // No notes found
-                  return _loadNewNote(_scaffoldController);
+                  // No files found
+                  return _loadNewNewsPost(_scaffoldController);
                 } else {
                   // Unknown error
                   return errCard(

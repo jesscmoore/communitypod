@@ -1,8 +1,8 @@
-/// NotePod - A note taking app with notes shared through private PODs.
+/// CommunityPod - An app for sharing news between private PODs.
 ///
-// Time-stamp: <Thursday 2026-02-19 09:59:21 +1100 Graham Williams>
+// Time-stamp: <Thursday 2026-02-19 09:59:21 +1100 Jess Moore>
 ///
-/// Copyright (C) 2025-2026, Software Innovation Institute ANU
+/// Copyright (C) 2026, Software Innovation Institute ANU
 ///
 /// Licensed under the GNU General Public License, Version 3 (the "License");
 ///

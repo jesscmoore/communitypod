@@ -1,4 +1,4 @@
-/// Data models for user's notes
+/// Data models for user's news
 ///
 /// Copyright (C) 2023-2025, Software Innovation Institute
 ///
@@ -28,39 +28,39 @@ library;
 import 'package:solidpod/solidpod.dart';
 
 import 'package:communitypod/constants/turtle_structures.dart';
-import 'package:communitypod/models/note_content.dart';
+import 'package:communitypod/models/news_content.dart';
 
-/// Data model for user's note
+/// Data model for user's news file
 
-class OwnNote {
-  final String noteFileName;
-  final String noteUrl;
-  final String noteOwner;
-  NoteContent? content;
+class OwnNews {
+  final String newsFileName;
+  final String newsUrl;
+  final String newsOwner;
+  NewsContent? content;
   final Map<dynamic, dynamic>? authUserList;
 
-  OwnNote({
-    required this.noteFileName,
-    required this.noteUrl,
-    required this.noteOwner,
+  OwnNews({
+    required this.newsFileName,
+    required this.newsUrl,
+    required this.newsOwner,
     this.content,
     this.authUserList,
   });
 
-  factory OwnNote.fromJson(Map<String, dynamic> json) {
-    return OwnNote(
-      noteFileName: json[noteFileNamePred],
-      noteUrl: json[noteUrlPred],
-      noteOwner: json[noteOwnerPred],
+  factory OwnNews.fromJson(Map<String, dynamic> json) {
+    return OwnNews(
+      newsFileName: json[newsFileNamePred],
+      newsUrl: json[newsUrlPred],
+      newsOwner: json[newsOwnerPred],
       content: json[contentPred],
       authUserList: json[authUserPred],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        noteFileNamePred: noteFileName,
-        noteUrlPred: noteUrl,
-        noteOwnerPred: noteOwner,
+        newsFileNamePred: newsFileName,
+        newsUrlPred: newsUrl,
+        newsOwnerPred: newsOwner,
         contentPred: content,
         authUserPred: authUserList,
       };
@@ -68,17 +68,17 @@ class OwnNote {
   /// Copy method for creating a new instance that is an
   /// updated copy of another instance
 
-  OwnNote copyWith({
-    String? noteFileName,
-    String? noteUrl,
-    String? noteOwner,
-    NoteContent? content,
+  OwnNews copyWith({
+    String? newsFileName,
+    String? newsUrl,
+    String? newsOwner,
+    NewsContent? content,
     Map<dynamic, dynamic>? authUserList,
   }) {
-    return OwnNote(
-      noteFileName: noteFileName ?? this.noteFileName,
-      noteUrl: noteUrl ?? this.noteUrl,
-      noteOwner: noteOwner ?? this.noteOwner,
+    return OwnNews(
+      newsFileName: newsFileName ?? this.newsFileName,
+      newsUrl: newsUrl ?? this.newsUrl,
+      newsOwner: newsOwner ?? this.newsOwner,
       content: content ?? this.content,
       authUserList: authUserList ?? this.authUserList,
     );

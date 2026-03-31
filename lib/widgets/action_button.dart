@@ -1,4 +1,4 @@
-/// Action button widget for display on note views or note list items.
+/// Action button widget used for actions on news posts.
 ///
 /// Copyright (C) 2023, Software Innovation Institute
 ///
@@ -33,8 +33,7 @@ import 'package:communitypod/constants/colours.dart';
 import 'package:communitypod/widgets/full_size_action_button.dart';
 import 'package:communitypod/widgets/simple_action_button.dart';
 
-///  Note action button widget for display on note views
-/// or note list items. A simpler version
+///  Action button widget used for action buttons in news lists or within news post views. A simpler version
 /// of the button is displayed with icon only if [showSimple] or
 /// [isNarrow] is true.
 ///
@@ -50,7 +49,7 @@ import 'package:communitypod/widgets/simple_action_button.dart';
 /// - [isNarrow] - Boolean describing whether displaying
 /// in a narrow window.
 
-class NoteActionButton extends StatelessWidget {
+class ActionButton extends StatelessWidget {
   /// Button label
   final String label;
 
@@ -75,7 +74,7 @@ class NoteActionButton extends StatelessWidget {
   /// Boolean describing whether window is narrow
   final bool isNarrow;
 
-  const NoteActionButton({
+  const ActionButton({
     super.key,
     required this.label,
     required this.icon,
@@ -95,7 +94,7 @@ class NoteActionButton extends StatelessWidget {
             childPage: childPage,
             scaffoldController: scaffoldController,
             backgroundColor: backgroundColor,
-            // When SimpleActionButton called from NoteActionButton, default foreground color
+            // When SimpleActionButton called from ActionButton, default foreground color
             // is ButtonForegroundColor.view
             foregroundColor: foregroundColor,
           )

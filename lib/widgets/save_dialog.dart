@@ -32,38 +32,38 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/common/rest_api/file_helper.dart';
 import 'package:communitypod/constants/app.dart';
-import 'package:communitypod/models/note.dart';
+import 'package:communitypod/models/news.dart';
 
-/// A save note options dialog providing the user with the options to
-/// save or don't save the note, or cancel their back action.
+/// A save file dialog providing the user with the options to
+/// save or don't save, or cancel their back action.
 ///
 /// Arguments:
 /// - [childPage] - child widget to navigate to.
-/// - [textController] - text controller holding text of the note body.
+/// - [articleController] - text controller holding text of the article field.
 ///   [scaffoldController] - Controller for the Solid scaffold.
-/// - [formKey] - form key holding text of the note title.
-/// - [prevNote] - Optional existing note data object. Required for saving existing note. (Default: null).
-/// - [isExternal] - Optional boolean denoting whether note is externally
+/// - [formKey] - form key holding text of the file title.
+/// - [prevNews] - Optional existing file data object. Required for saving existing file. (Default: null).
+/// - [isExternal] - Optional boolean denoting whether file is externally
 /// owned. (Default: false).
 
 class SaveDialog extends StatelessWidget {
   final Widget childPage;
-  final TextEditingController textController;
+  final TextEditingController articleController;
   final SolidScaffoldController scaffoldController;
   final GlobalKey<FormBuilderState> formKey;
-  final Note? prevNote;
+  final News? prevNews;
   final bool isExternal;
 
-  /// Only called for existing notes
+  /// Only called for existing files
   final bool isExisting = true;
 
   const SaveDialog({
     super.key,
     required this.childPage,
-    required this.textController,
+    required this.articleController,
     required this.scaffoldController,
     required this.formKey,
-    this.prevNote,
+    this.prevNews,
     this.isExternal = false,
   });
 
@@ -87,13 +87,13 @@ class SaveDialog extends StatelessWidget {
         TextButton(
           child: const Text('Save'),
           onPressed: () async {
-            // Save note
-            await NoteFileHelper().saveNote(
+            // Save file
+            await NewsFileHelper().saveNews(
               context: context,
-              textController: textController,
+              articleController: articleController,
               scaffoldController: scaffoldController,
               formKey: formKey,
-              prevNote: prevNote,
+              prevNews: prevNews,
               isExisting: isExisting,
               isExternal: isExternal,
             );

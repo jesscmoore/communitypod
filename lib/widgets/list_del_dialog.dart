@@ -30,21 +30,21 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/constants/app.dart';
 import 'package:communitypod/constants/ui.dart';
-import 'package:communitypod/models/selected_note.dart';
-import 'package:communitypod/widgets/note_back_button.dart';
-import 'package:communitypod/widgets/note_list_del_button.dart';
+import 'package:communitypod/models/selected_news.dart';
+import 'package:communitypod/widgets/custom_back_button.dart';
+import 'package:communitypod/widgets/list_del_button.dart';
 
-/// A page listing unparseable note files with button to delete
+/// A page listing unparseable files with button to delete
 /// all files in the list.
 ///
 /// Arguments:
-/// - [unparseableNotes] - list of unparseable notes.
+/// - [unparseableNews] - list of unparseable files.
 /// - [childPage] - child widget to navigate to after delete dialog.
 ///   [scaffoldController] - Controller for the Solid scaffold.
 /// - [isExternal] - flag describing whether files are externally owned.
 
-class NotesDelDialog extends StatefulWidget {
-  final List<SelectedNote> unparseableNotes;
+class DelDialog extends StatefulWidget {
+  final List<SelectedNews> unparseableNews;
 
   /// Childpage to navigate to after delete dialog
   final Widget childPage;
@@ -52,22 +52,22 @@ class NotesDelDialog extends StatefulWidget {
   /// Scaffold controller
   final SolidScaffoldController scaffoldController;
 
-  /// Boolean describing whether note is external
+  /// Boolean describing whether file is externally owneed
   final bool isExternal;
 
-  const NotesDelDialog({
+  const DelDialog({
     super.key,
-    required this.unparseableNotes,
+    required this.unparseableNews,
     required this.childPage,
     required this.scaffoldController,
     this.isExternal = false,
   });
 
   @override
-  State<NotesDelDialog> createState() => _NotesDelDialogState();
+  State<DelDialog> createState() => _DelDialogState();
 }
 
-class _NotesDelDialogState extends State<NotesDelDialog> {
+class _DelDialogState extends State<DelDialog> {
   /// Scroll controller for single child scroll view
   late final ScrollController _scrollController;
 
@@ -75,7 +75,7 @@ class _NotesDelDialogState extends State<NotesDelDialog> {
   late final SolidScaffoldController _scaffoldController;
 
   /// Aspect ratio (width / height) for gridview
-  /// cards to display note items
+  /// cards to display list items
   late double cardAspectRatio = 2.0;
 
   /// Boolean describing whether window is narrow
@@ -102,11 +102,11 @@ class _NotesDelDialogState extends State<NotesDelDialog> {
         // Derive whether window is narrow
         isNarrow = WindowSize().isNarrowWindow(constraints);
         // Calculate the aspect radio for grid cards
-        cardAspectRatio = NoteItemSize().calculateCardAspectRatio(constraints);
+        cardAspectRatio = ItemSize().calculateCardAspectRatio(constraints);
         return SizedBox(
           child: Column(
             children: [
-              // Title and count of corrupted notes
+              // Title and count of corrupted files
               Container(
                 padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
                 child: Column(
@@ -141,16 +141,16 @@ class _NotesDelDialogState extends State<NotesDelDialog> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          NoteListMsg.badFilesFound,
+                          NewsListMsg.badFilesFound,
                           style: titleStyle,
                         ),
                       ],
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      widget.unparseableNotes.length > 1
-                          ? 'Found ${widget.unparseableNotes.length} unparseable notes'
-                          : 'Found ${widget.unparseableNotes.length} unparseable note',
+                      widget.unparseableNews.length > 1
+                          ? 'Found ${widget.unparseableNews.length} unparseable files'
+                          : 'Found ${widget.unparseableNews.length} unparseable file',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                       ),
@@ -158,7 +158,7 @@ class _NotesDelDialogState extends State<NotesDelDialog> {
                   ],
                 ),
               ),
-              // List of unparseable notes
+              // List of unparseable files
               Expanded(
                 child: Scrollbar(
                   thumbVisibility: true,
@@ -166,7 +166,7 @@ class _NotesDelDialogState extends State<NotesDelDialog> {
                   child: ListView.builder(
                     controller: _scrollController,
                     padding: const EdgeInsets.all(10),
-                    itemCount: widget.unparseableNotes.length,
+                    itemCount: widget.unparseableNews.length,
                     itemExtent: badListItemHeight,
                     itemBuilder: (context, index) => Card(
                       child: Container(
@@ -175,7 +175,7 @@ class _NotesDelDialogState extends State<NotesDelDialog> {
                         ),
                         child: ListTile(
                           title: Text(
-                            'Filename: ${widget.unparseableNotes[index].noteFileName}',
+                            'Filename: ${widget.unparseableNews[index].newsFileName}',
                           ),
                           // Define width to avoid consuming full width
                         ),
@@ -190,15 +190,15 @@ class _NotesDelDialogState extends State<NotesDelDialog> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   spacing: 5.0,
                   children: [
-                    /// Note list delete button
-                    NoteListDelButton(
-                      selectedNotes: widget.unparseableNotes,
+                    /// News list delete button
+                    ListDelButton(
+                      selectedNews: widget.unparseableNews,
                       childPage: widget.childPage,
                       scaffoldController: _scaffoldController,
                       isExternal: widget.isExternal,
                     ),
                     // Back button
-                    NoteBackButton(
+                    CustomBackButton(
                       childPage: widget.childPage,
                       scaffoldController: _scaffoldController,
                     ),

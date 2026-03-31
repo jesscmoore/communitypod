@@ -44,7 +44,7 @@ enum FileCallStatus {
   /// When file not exists
   fileNotExists('fileNotExists'),
 
-  /// When file parsing to deserialise note fails
+  /// When file parsing to deserialise file fails
   parsingFail('parsingFail');
 
   /// Constructor

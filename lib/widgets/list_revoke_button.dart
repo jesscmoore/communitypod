@@ -1,4 +1,4 @@
-/// The revoke note list button.
+/// The revoke access to file list button.
 ///
 /// Copyright (C) 2023, Software Innovation Institute
 ///
@@ -32,25 +32,25 @@ import 'package:solidui/solidui.dart';
 import 'package:communitypod/constants/app.dart';
 import 'package:communitypod/constants/colours.dart';
 import 'package:communitypod/constants/ui.dart';
-import 'package:communitypod/models/note.dart';
+import 'package:communitypod/models/news.dart';
 import 'package:communitypod/widgets/loading_animation.dart' as loading;
 
 /// A revoke button widget for updating the log record for a list
-/// of notes.
+/// of files to revoke a user's access to those files.
 ///
 /// Arguments:
-/// - [nonExistentNotes] - note list of non-existent files.
+/// - [nonExistentNews] - file list of non-existent files.
 /// - [childPage] - child widget to return to.
 /// - [scaffoldController] - Controller for the Solid scaffold.
 
-class NoteListRevokeButton extends StatelessWidget {
-  final List<Note> nonExistentNotes;
+class ListRevokeButton extends StatelessWidget {
+  final List<News> nonExistentNews;
   final Widget childPage;
   final SolidScaffoldController scaffoldController;
 
-  const NoteListRevokeButton({
+  const ListRevokeButton({
     super.key,
-    required this.nonExistentNotes,
+    required this.nonExistentNews,
     required this.childPage,
     required this.scaffoldController,
   });
@@ -70,7 +70,7 @@ class NoteListRevokeButton extends StatelessWidget {
             return AlertDialog(
               title: const Text(Msg.plsConfirm),
               content: Text(
-                nonExistentNotes.length > 1
+                nonExistentNews.length > 1
                     ? Msg.confirmRevokeMultiple
                     : Msg.confirmRevoke,
               ),
@@ -79,29 +79,29 @@ class NoteListRevokeButton extends StatelessWidget {
                 TextButton(
                   onPressed: () async {
                     Navigator.of(context, rootNavigator: true)
-                        .pop(); // Dismiss the deleting note dialog
+                        .pop(); // Dismiss the revoking dialog
 
                     loading.showAnimationDialog(
                       context,
-                      Msg.revokingNote,
+                      Msg.revokingNews,
                       false,
                     );
 
                     // Update log with revoke record for each file
-                    for (Note note in nonExistentNotes) {
+                    for (News newsPost in nonExistentNews) {
                       // Call Solidpod function to update user
                       // permission log with a revoke record for
                       // this non-existent file
 
                       await revokePermissionToDelFile(
-                        fileName: note.noteUrl,
+                        fileName: newsPost.newsUrl,
                         isFileEncrypted: true,
                         permissionList:
-                            note.permissionList.split(',') as List<dynamic>,
+                            newsPost.permissionList.split(',') as List<dynamic>,
                         recipientWebId:
-                            note.permissionRecepient!, // ie. the user
-                        ownerWebId: note.noteOwner,
-                        granterWebId: note.permissionGranter!,
+                            newsPost.permissionRecepient!, // ie. the user
+                        ownerWebId: newsPost.newsOwner,
+                        granterWebId: newsPost.permissionGranter!,
                         isFileUrl: true,
                       );
                     }
@@ -117,7 +117,7 @@ class NoteListRevokeButton extends StatelessWidget {
                 TextButton(
                   onPressed: () {
                     Navigator.of(context, rootNavigator: true)
-                        .pop(); // Dismiss the revoking note dialog
+                        .pop(); // Dismiss the revoking dialog
                   },
                   child: const Text(ButtonLabel.no),
                 ),

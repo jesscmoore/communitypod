@@ -1,13 +1,10 @@
-name: notepod
-version: 0.0.10
-summary: Privacy preserving note taking app using PODs.
+name: communitypod
+version: 0.0.11
+summary: Privacy preserving news sharing app using PODs.
 description: |
-  Notepod is a note taking app, storing your notes within your Solid
-  Pod. Make notes anywhere, anytime, on any device and review them
-  later on. Great for that bush walk where you've suddenly come up
-  with a great idea you don't want to lose, or sharing the shopping
-  list with the family so whoever is next at the shops has it at their
-  finger tips.
+  communitypod is a news sharing app, storing your news post files within your Solid
+  Pod. Make news posts anywhere, anytime, on any device and review them
+  later on. Great for drafting your news post while out and about, securely sharing it with your collaborators or community manager, and privately releasing it to your audience.
 
 base: core22
 grade: stable
@@ -21,8 +18,8 @@ confinement: strict
 #      - screen-inhibit-control
 
 apps:
-  notepod:
-    command: notepod
+  communitypod:
+    command: communitypod
     extensions: [gnome] # gnome includes the libraries required by flutter
     plugs:
       - desktop
@@ -69,7 +66,7 @@ apps:
 #      - gstreamer1.0-plugins-base
 
 parts:
-  notepod:
+  communitypod:
     source: .
     plugin: flutter
     flutter-target: lib/main.dart

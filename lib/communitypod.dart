@@ -32,7 +32,7 @@ import 'package:solidui/solidui.dart';
 import 'package:communitypod/constants/app.dart';
 import 'package:communitypod/constants/colours.dart';
 import 'package:communitypod/home.dart';
-import 'package:communitypod/notes/list_my_notes_screen.dart';
+import 'package:communitypod/news/list_my_news_screen.dart';
 
 /// The root widget for the [CommunityPod] app.
 ///
@@ -64,11 +64,11 @@ class CommunityPod extends StatelessWidget {
         loginButtonStyle: const LoginButtonStyle(
           background: Colors.lightGreenAccent,
           tooltip: 'You need to connect to your Solid account\n'
-              'to access the markdown note files\n'
+              'to access news post files created with markdown and\n'
               'stored in your POD.',
         ),
         child: AppHomePage(
-          childPage: ListMyNotesScreen(
+          childPage: ListMyNewsScreen(
             scaffoldController: scaffoldController,
           ),
         ),

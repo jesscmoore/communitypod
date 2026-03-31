@@ -35,7 +35,7 @@ import 'package:encrypter_plus/encrypter_plus.dart';
 ///
 /// Takes the arguments plaintext value and the encryption key
 /// and returns a string of the encrypted value.
-/// Note: AES encryption is used in this function. For more
+/// AES encryption is used in this function. For more
 /// details see: https://en.wikipedia.org/wiki/Advanced_Encryption_Standard
 ///
 /// Arguments:

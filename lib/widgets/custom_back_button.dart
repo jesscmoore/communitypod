@@ -32,47 +32,47 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/constants/colours.dart';
 import 'package:communitypod/constants/turtle_structures.dart';
-import 'package:communitypod/models/note.dart';
+import 'package:communitypod/models/news.dart';
 import 'package:communitypod/widgets/save_dialog.dart';
 
-/// A stylised back button widget for notes. On click it checks if edited data exists, if found it asks if the user wants to save or not save or cancel the back action. Then it navigates to the provided child page.
+/// A stylised back button widget for news posts. On click it checks if edited data exists, if found it asks if the user wants to save or not save or cancel the back action. Then it navigates to the provided child page.
 ///
 /// Arguments:
 /// - [childPage] - The child page to navigate back to.
 ///   [scaffoldController] - Controller for the Solid scaffold.
-/// - [textController] - Optional text controller if back is being called from note editor.
-/// - [formKey] - Key of the form to edit note metadata
-/// - [prevNote] - Optional existing user's note data object. Required
-/// for saving existing notes. (Default: null).
-/// - [isExternal] - Optional boolean denoting whether note is externally
+/// - [articleController] - Optional text controller for article field if back is being called from news editor.
+/// - [formKey] - Key of the form to edit news post metadata
+/// - [prevNews] - Optional existing user's news data object. Required
+/// for saving existing news posts. (Default: null).
+/// - [isExternal] - Optional boolean denoting whether news post is externally
 /// owned. (Default: false).
-/// - [isExisting] - Optional boolean denoting whether note already
+/// - [isExisting] - Optional boolean denoting whether news post already
 /// exists. (Default: false).
 
-class NoteBackButton extends StatelessWidget {
-  const NoteBackButton({
+class CustomBackButton extends StatelessWidget {
+  const CustomBackButton({
     super.key,
     required this.childPage,
     required this.scaffoldController,
-    this.textController,
+    this.articleController,
     this.formKey,
-    this.prevNote,
+    this.prevNews,
     this.isExternal = false,
     this.isExisting = false,
   });
 
   final Widget childPage;
   final SolidScaffoldController scaffoldController;
-  final TextEditingController? textController;
+  final TextEditingController? articleController;
   final GlobalKey<FormBuilderState>? formKey;
-  final Note? prevNote;
+  final News? prevNews;
   final bool isExternal;
   final bool isExisting;
 
   @override
   Widget build(BuildContext context) {
-    String? prevNoteTitle;
-    String? prevNoteContent;
+    String? prevNewsTitle;
+    String? prevNewsContent;
     return ElevatedButton.icon(
       // Uses Theme elevatedButtonTheme for all properties
       // except background color
@@ -81,17 +81,17 @@ class NoteBackButton extends StatelessWidget {
       ),
       onPressed: () {
         if (formKey?.currentState?.saveAndValidate() ?? false) {
-          if (textController != null) {
-            String noteText = textController!.text;
+          if (articleController != null) {
+            String newsText = articleController!.text;
             Map formData = formKey?.currentState?.value as Map;
-            String noteTitle = formData[noteTitlePred].replaceAll('\n', '');
+            String newsTitle = formData[newsTitlePred].replaceAll('\n', '');
 
             if (isExisting) {
               // Get previous title and content
-              prevNoteTitle = prevNote!.content!.noteTitle;
-              prevNoteContent = prevNote!.content!.noteContent;
+              prevNewsTitle = prevNews!.content!.newsTitle;
+              prevNewsContent = prevNews!.content!.newsContent;
               // Check if title or content changed
-              if (noteTitle != prevNoteTitle || noteText != prevNoteContent) {
+              if (newsTitle != prevNewsTitle || newsText != prevNewsContent) {
                 showDialog<void>(
                   context: context,
                   barrierDismissible: false, // user must tap button!
@@ -100,9 +100,9 @@ class NoteBackButton extends StatelessWidget {
                     return SaveDialog(
                       childPage: childPage,
                       scaffoldController: scaffoldController,
-                      textController: textController!,
+                      articleController: articleController!,
                       formKey: formKey!,
-                      prevNote: prevNote,
+                      prevNews: prevNews,
                       isExternal: isExternal,
                     );
                   },

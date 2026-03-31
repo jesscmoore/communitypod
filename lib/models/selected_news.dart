@@ -1,4 +1,4 @@
-/// Data models for unparseable notes
+/// Data model for selected news object
 ///
 /// Copyright (C) 2023-2025, Software Innovation Institute
 ///
@@ -25,16 +25,16 @@
 
 library;
 
-/// Data model for unparseable note
+/// Data model for selected unparseable news files
 
-class SelectedNote {
-  final String noteFileName;
-  final String noteUrl;
-  final String noteOwner;
+class SelectedNews {
+  final String newsFileName;
+  final String newsUrl;
+  final String newsOwner;
 
-  const SelectedNote({
-    required this.noteFileName,
-    required this.noteUrl,
-    required this.noteOwner,
+  const SelectedNews({
+    required this.newsFileName,
+    required this.newsUrl,
+    required this.newsOwner,
   });
 }

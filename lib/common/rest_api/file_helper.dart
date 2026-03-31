@@ -36,20 +36,20 @@ import 'package:communitypod/common/rest_api/operations.dart';
 import 'package:communitypod/constants/app.dart';
 import 'package:communitypod/constants/paths.dart';
 import 'package:communitypod/constants/turtle_structures.dart';
-import 'package:communitypod/models/note.dart';
-import 'package:communitypod/models/note_content.dart';
-import 'package:communitypod/notes/list_my_notes_screen.dart';
-import 'package:communitypod/notes/view_note.dart';
+import 'package:communitypod/models/news.dart';
+import 'package:communitypod/models/news_content.dart';
+import 'package:communitypod/news/list_my_news_screen.dart';
+import 'package:communitypod/news/view_news.dart';
 import 'package:communitypod/utils/encryption.dart';
 import 'package:communitypod/widgets/err_dialogs.dart';
 import 'package:communitypod/widgets/loading_animation.dart' as loading;
 
-/// Helper class for note file operations.
+/// Helper class for news file operations.
 
-class NoteFileHelper with PodOperationsMixin {
-  NoteFileHelper();
+class NewsFileHelper with PodOperationsMixin {
+  NewsFileHelper();
 
-  /// Scans the note pod directory for note files.
+  /// Scans the app directory in pod for news files.
   ///
   /// Arguments: none.
   /// Returns: list of pod owner's files.
@@ -60,7 +60,7 @@ class NoteFileHelper with PodOperationsMixin {
       final resources = await getResourcesInContainer(dirUrl);
 
       return resources.files
-          .where((f) => f.startsWith(noteFileNamePrefix) && f.endsWith('.ttl'))
+          .where((f) => f.startsWith(newsFileNamePrefix) && f.endsWith('.ttl'))
           .toList();
     } catch (e) {
       if (!isFileNotFoundError(e) && !isPermissionError(e)) {
@@ -100,34 +100,34 @@ class NoteFileHelper with PodOperationsMixin {
     }
   }
 
-  /// Parses external note file details from latest log map
-  /// entry for note file.
+  /// Parses external file details from latest log map
+  /// entry for news file.
   ///
   /// Arguments:
   /// - [logRecordOfFile] - Log record of the external
-  /// note file shared to user.
+  /// news file shared to user.
   /// - [fileUrl] - URL of external file shared to user.
   ///
-  /// Returns: parsed map of details of external note file.
+  /// Returns: parsed map of details of external news file.
 
-  static Note? extFileDetailsFromLog({
+  static News? extFileDetailsFromLog({
     required Map logRecordOfFile,
     required String fileUrl,
   }) {
     try {
       String? sharedTime;
-      String? noteUrl;
-      String? noteFileName;
-      String? noteOwner;
+      String? newsUrl;
+      String? newsFileName;
+      String? newsOwner;
       String? permissionGranter;
       String? permissionRecepient;
       String? permissionType;
       String? permissionList;
 
-      // Extract external note details information
+      // Extract external news file details information
 
-      noteFileName = fileUrl.split('/').last;
-      // debugPrint('noteFileName: $noteFileName');
+      newsFileName = fileUrl.split('/').last;
+      // debugPrint('newsFileName: $newsFileName');
 
       for (final entry in logRecordOfFile.entries) {
         final predicate = entry.key.toString();
@@ -138,9 +138,9 @@ class NoteFileHelper with PodOperationsMixin {
           sharedTime = value;
         } else if (predicate
             .contains(PermissionLogLiteral.resource.toString())) {
-          noteUrl = value;
+          newsUrl = value;
         } else if (predicate.contains(PermissionLogLiteral.owner.toString())) {
-          noteOwner = value;
+          newsOwner = value;
         } else if (predicate
             .contains(PermissionLogLiteral.granter.toString())) {
           permissionGranter = value;
@@ -155,12 +155,12 @@ class NoteFileHelper with PodOperationsMixin {
         }
       }
 
-      // Create the external note details object
+      // Create the external file details object
 
-      return Note(
-        noteUrl: noteUrl!,
-        noteFileName: noteFileName,
-        noteOwner: noteOwner!,
+      return News(
+        newsUrl: newsUrl!,
+        newsFileName: newsFileName,
+        newsOwner: newsOwner!,
         sharedTime: sharedTime!,
         permissionGranter: permissionGranter!,
         permissionRecepient: permissionRecepient!,
@@ -174,14 +174,14 @@ class NoteFileHelper with PodOperationsMixin {
     }
   }
 
-  /// Safely deletes a note file
+  /// Safely deletes a news file
   ///
   /// Arguments:
   /// - [context] - The build context.
-  /// - [filename] - The note filename. For external notes this should be the note Url.
-  /// - [isExternal] - Boolean describing whether the note is an external note. (Default: false).
+  /// - [filename] - The news filename. For external news this should be the Url.
+  /// - [isExternal] - Boolean describing whether the file is an external file. (Default: false).
 
-  Future<void> deleteNote({
+  Future<void> deleteNews({
     required BuildContext context,
     required String filename,
     required Widget child,
@@ -194,7 +194,7 @@ class NoteFileHelper with PodOperationsMixin {
         await deleteExternalFile(filename);
       } catch (e) {
         // Error deleting external file
-        debugPrint('Error deleting to external note: $e');
+        debugPrint('Error deleting to external file: $e');
         rethrow;
       }
     } else {
@@ -205,181 +205,181 @@ class NoteFileHelper with PodOperationsMixin {
         final fileUrl = await getFileUrl('$basePath/$filename');
         await deleteFile(fileUrl: fileUrl);
       } catch (e) {
-        debugPrint('Error deleting user\'s note: $e');
+        debugPrint('Error deleting user\'s file: $e');
         rethrow;
       }
     }
   }
 
-  /// Function that starts a waiting indicator, calls steps to save note,
+  /// Function that starts a waiting indicator, calls steps to save file,
   /// and then navigates to the appropriate return page.
   ///
   /// Examples:
-  /// - `await saveNote(context: context, textController: textController, formKey: formKey, prevOwnNote: note, isExisting: true)` - to save note
+  /// - `await saveNews(context: context, articleController: articleController, formKey: formKey, prevOwnNews: news, isExisting: true)` - to save news file
   /// owned by the user.
-  /// - `await saveNote(context: context, textController: textController, formKey: formKey, prevExternalNote: note, isExisting: true, isExternal: true)`
-  /// - to save an externally owned note.
+  /// - `await saveNews(context: context, articleController: articleController, formKey: formKey, prevExternalNews: news, isExisting: true, isExternal: true)`
+  /// - to save an externally owned news file.
   ///
   /// - [context] - The build context.
-  /// - [textController] - Text controller of the note text content editor.
-  /// - [formKey] - Key of the form to edit note metadata.
+  /// - [articleController] - Text controller of the news text content editor.
+  /// - [formKey] - Key of the form to edit news metadata.
   ///   [scaffoldController] - Controller for the Solid scaffold.
-  /// - [prevNote] - Optional existing note data object. Required if isExisting is true.
-  /// - [isExternal] - Optional boolean denoting whether note is externally
+  /// - [prevNews] - Optional existing news data object. Required if isExisting is true.
+  /// - [isExternal] - Optional boolean denoting whether news is externally
   /// owned. (Default: false).
-  /// - [isExisting] - Optional boolean denoting whether note already
+  /// - [isExisting] - Optional boolean denoting whether news already
   /// exists. (Default: false).
 
-  Future<void> saveNote({
+  Future<void> saveNews({
     required BuildContext context,
-    required TextEditingController textController,
+    required TextEditingController articleController,
     required GlobalKey<FormBuilderState> formKey,
     required SolidScaffoldController scaffoldController,
-    Note? prevNote,
+    News? prevNews,
     bool isExternal = false,
     bool isExisting = false,
   }) async {
     if (formKey.currentState?.saveAndValidate() ?? false) {
-      // Compares to prevNoteData if previous note data provided
+      // Compares to prevNewsData if previous news data provided
       // Adds sharing metadata if shared==true
 
       Map formData = formKey.currentState?.value as Map;
-      String noteText = textController.text;
-      final String prevNoteTitle;
-      final String prevNoteContent;
-      final Note updatedNote;
-      final NoteContent updatedContent;
+      String newsText = articleController.text;
+      final String prevNewsTitle;
+      final String prevNewsContent;
+      final News updatedNews;
+      final NewsContent updatedContent;
 
-      // Note title need to be spaceless as we are using that name
+      // News title need to be spaceless as we are using that name
       // to create a .acl file. And the acl file url cannot have spaces
-      String noteTitle = formData[noteTitlePred].replaceAll('\n', '');
+      String newsTitle = formData[newsTitlePred].replaceAll('\n', '');
 
       // Get current datetimestamp for mod time and/or creation time
       String modifiedDateTimeStr =
           DateFormat('yyyyMMddTHHmmss').format(DateTime.now()).toString();
 
       if (isExisting) {
-        // Retrieve existing note title and content for comparison
-        prevNoteTitle = prevNote!.content!.noteTitle;
-        prevNoteContent = prevNote.content!.noteContent;
+        // Retrieve existing title and content for comparison
+        prevNewsTitle = prevNews!.content!.newsTitle;
+        prevNewsContent = prevNews.content!.newsContent;
         // Compare updated title and content to existing
         // title and content
-        if (noteTitle == prevNoteTitle && noteText == prevNoteContent) {
+        if (newsTitle == prevNewsTitle && newsText == prevNewsContent) {
           showErrDialog(context, ErrMsg.noChanges);
         } else {
           // Loading animation
           loading.showAnimationDialog(
             context,
-            Msg.savingNote,
+            Msg.savingNews,
             false,
           );
 
-          // Update content of note
+          // Update content
           try {
-            updatedContent = prevNote.content!.copyWith(
+            updatedContent = prevNews.content!.copyWith(
               modifiedDateTime: modifiedDateTimeStr,
-              noteTitle: noteTitle,
-              noteContent: noteText,
+              newsTitle: newsTitle,
+              newsContent: newsText,
             );
-            updatedNote = prevNote.copyWith(content: updatedContent);
+            updatedNews = prevNews.copyWith(content: updatedContent);
           } on Exception catch (e) {
             debugPrint(
-              'Exception (formatting update to existing note):\n $e',
+              'Exception (formatting update to existing news file):\n $e',
             );
             rethrow;
           }
 
           if (isExternal) {
-            // Save external note
+            // Save external
             try {
               if (!context.mounted) return;
 
-              debugPrint('save external note:');
-              debugPrint('noteUrl: ${prevNote.noteUrl}');
-              debugPrint('noteFileName: ${prevNote.noteFileName}');
-              debugPrint('noteOwner: ${prevNote.noteOwner}');
+              debugPrint('save external file:');
+              debugPrint('newsUrl: ${prevNews.newsUrl}');
+              debugPrint('newsFileName: ${prevNews.newsFileName}');
+              debugPrint('newsOwner: ${prevNews.newsOwner}');
 
-              // External note
-              // Encrypt note, create TTL, update file in POD
-              await saveNoteToPod(
+              // External
+              // Encrypt, create TTL, update file in POD
+              await saveNewsToPod(
                 context: context,
                 // Use existing file url
-                noteUrl: prevNote.noteUrl,
-                noteOwner: prevNote.noteOwner,
+                newsUrl: prevNews.newsUrl,
+                newsOwner: prevNews.newsOwner,
                 data: updatedContent,
-                childPage: ViewNote(
-                  note: updatedNote,
+                childPage: ViewNews(
+                  newsPost: updatedNews,
                   scaffoldController: scaffoldController,
                 ),
                 scaffoldController: scaffoldController,
                 isExternal: isExternal,
               );
             } on Exception catch (e) {
-              debugPrint('Exception (saving existing external note):\n $e');
+              debugPrint('Exception (saving existing external file):\n $e');
             }
           } else {
-            // Save own note
+            // Save my news post
             try {
               if (!context.mounted) return;
 
-              // Edited my note
-              // Encrypt note, create TTL, update file in POD
-              await saveNoteToPod(
+              // Edited my file
+              // Encrypt, create TTL, update file in POD
+              await saveNewsToPod(
                 context: context,
                 // Use existing filename
-                noteFileName: prevNote.noteFileName,
+                newsFileName: prevNews.newsFileName,
                 data: updatedContent,
                 overwrite: true,
-                childPage: ViewNote(
-                  note: updatedNote,
+                childPage: ViewNews(
+                  newsPost: updatedNews,
                   scaffoldController: scaffoldController,
                 ),
                 scaffoldController: scaffoldController,
               );
             } on Exception catch (e) {
-              debugPrint('Exception (saving existing my note):\n $e');
+              debugPrint('Exception (saving existing file owned by me):\n $e');
             }
           }
         }
       } else {
-        // Newly created note (not editing previous note)
+        // Newly created (not editing previous file)
 
-        // Check note content is not empty
-        if (noteText.trim() != '') {
+        // Check content is not empty
+        if (newsText.trim() != '') {
           try {
             // Loading animation
             loading.showAnimationDialog(
               context,
-              Msg.savingNote,
+              Msg.savingNews,
               false,
             );
 
-            // Create new note data structure
-            final newContent = NoteContent(
+            // Create new news content data structure
+            final newContent = NewsContent(
               createdDateTime: modifiedDateTimeStr,
               modifiedDateTime: modifiedDateTimeStr,
-              noteTitle: noteTitle,
-              noteContent: noteText,
+              newsTitle: newsTitle,
+              newsContent: newsText,
             );
 
-            // Encrypt note, create TTL and write to file in POD
+            // Encrypt, create TTL and write to file in POD
             if (!context.mounted) return;
 
-            await saveNoteToPod(
+            await saveNewsToPod(
               context: context,
               // Create filename
-              noteFileName: '$noteFileNamePrefix$modifiedDateTimeStr.ttl',
+              newsFileName: '$newsFileNamePrefix$modifiedDateTimeStr.ttl',
               data: newContent,
-              childPage: ListMyNotesScreen(
+              childPage: ListMyNewsScreen(
                 scaffoldController: scaffoldController,
               ),
               scaffoldController: scaffoldController,
             );
           } on Exception catch (e) {
-            debugPrint('Exception (saving new my note):\n $e');
+            debugPrint('Exception (saving new file owned by me):\n $e');
           }
         } else {
-          // No note content message
+          // No content message
           showErrDialog(context, ErrMsg.noContent);
         }
       }
@@ -391,72 +391,72 @@ class NoteFileHelper with PodOperationsMixin {
     }
   }
 
-  /// Write note to Pod and navigate to return page or display error dialog
+  /// Write news to file in Pod and navigate to return page or display error dialog
   /// if write to Pod failed to return a successful SolidCallFunctionStatus.
   ///
   /// Examples:
-  /// - `await saveNoteToPod(context: context, data: updatedContent, noteFileName: noteFileName, childPage: ListMyNotesScreen(), scaffoldController: scaffoldController)` - to
-  /// save a note owned by the user.
-  /// - `await saveNoteToPod(context: context, data: updatedContent,
-  /// childPage: ListMyNotesScreen(), noteUrl: noteUrl, noteOwner: noteOwner,
-  /// isExternal: true, scaffoldController: scaffoldController)` - to save an externally owned note.
+  /// - `await saveNewsToPod(context: context, data: updatedContent, newsFileName: newsFileName, childPage: ListMyNewsScreen(), scaffoldController: scaffoldController)` - to
+  /// save a news file owned by the user.
+  /// - `await saveNewsToPod(context: context, data: updatedContent,
+  /// childPage: ListMyNewsScreen(), newsUrl: newsUrl, newsOwner: newsOwner,
+  /// isExternal: true, scaffoldController: scaffoldController)` - to save an externally owned news file.
   ///
   /// - [context] - The build context.
-  /// - [data] - The note content data to be encrypted and written to Pod.
-  /// - [childPage] - The destination widget to navigate to after note is saved.
+  /// - [data] - The news content data to be encrypted and written to file in Pod.
+  /// - [childPage] - The destination widget to navigate to after news file is saved.
   ///   [scaffoldController] - Controller for the Solid scaffold.
-  /// - [noteFileName] - Optional filename. Required for saving user's own notes.
-  /// - [noteUrl] - Optional note file url. Required for saving notes
+  /// - [newsFileName] - Optional filename. Required for saving user's own news file.
+  /// - [newsUrl] - Optional news file url. Required for saving news files
   /// that are externally owned.
-  /// - [noteOwner] - Optional note owner webId. Required for saving notes
+  /// - [newsOwner] - Optional news owner webId. Required for saving news
   /// that are externally owned.
-  /// - [overwrite] - Optional boolean defining whether updating an existing owner's note.
-  /// - [isExternal] - Optional boolean defining whether writing an external note.
+  /// - [overwrite] - Optional boolean defining whether updating an existing owner's news file.
+  /// - [isExternal] - Optional boolean defining whether writing an external news file.
 
-  Future<void> saveNoteToPod({
+  Future<void> saveNewsToPod({
     required BuildContext context,
-    required NoteContent data,
+    required NewsContent data,
     required Widget childPage,
     required SolidScaffoldController scaffoldController,
-    String noteFileName = '',
-    String noteUrl = '',
-    String noteOwner = '',
+    String newsFileName = '',
+    String newsUrl = '',
+    String newsOwner = '',
     bool overwrite = false,
     bool isExternal = false,
   }) async {
     try {
-      // Encrypt note text using created time as the key
-      // av: 20250519 - We need to encrypt the note text because
+      // Encrypt text using created time as the key
+      // av: 20250519 - We need to encrypt the text because
       // at the moment rdflib cannot parse multiline text with
       // # (hash) values in them.
-      String encNoteText = encryptVal(
-        plainText: data.noteContent,
+      String encNewsText = encryptVal(
+        plainText: data.newsContent,
         encKey: data.createdDateTime,
       );
 
-      // Create TTL body for note
-      final noteTTLStr = genNoteTTLStr(
+      // Create TTL body
+      final newsTTLStr = genNewsTTLStr(
         data.createdDateTime,
         data.modifiedDateTime,
-        data.noteTitle,
-        encNoteText,
+        data.newsTitle,
+        encNewsText,
       );
 
-      if (isExternal && noteUrl != '' && noteOwner != '') {
-        debugPrint('noteUrl: $noteUrl');
-        debugPrint('noteOwner: $noteOwner');
+      if (isExternal && newsUrl != '' && newsOwner != '') {
+        debugPrint('newsUrl: $newsUrl');
+        debugPrint('newsOwner: $newsOwner');
 
-        // createNoteStatus = await writeExternalPod(
+        // createNewsStatus = await writeExternalPod(
         await writeExternalPod(
-          noteUrl,
-          noteTTLStr,
-          noteOwner,
+          newsUrl,
+          newsTTLStr,
+          newsOwner,
         );
       } else {
-        // Write note to POD
+        // Write file to POD
         await writePod(
-          noteFileName,
-          noteTTLStr,
+          newsFileName,
+          newsTTLStr,
           overwrite: overwrite,
         );
       }
@@ -464,7 +464,7 @@ class NoteFileHelper with PodOperationsMixin {
       if (!context.mounted) return;
 
       Navigator.of(context, rootNavigator: true)
-          .pop(); // Dismiss the saving note dialog
+          .pop(); // Dismiss the saving dialog
 
       scaffoldController.navigateToSubpage(childPage);
 
@@ -473,7 +473,7 @@ class NoteFileHelper with PodOperationsMixin {
       }
     } on Exception catch (e) {
       debugPrint(
-        'Exception (encrypting and saving note, and navigating to return page):\n $e',
+        'Exception (encrypting and saving news file, and navigating to return page):\n $e',
       );
     }
   }

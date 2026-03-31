@@ -62,7 +62,7 @@ List<Color> defaultColors = const [
   lightBlue,
 ];
 
-/// Foreground colours of action buttons in note view
+/// Foreground colours of action buttons in file view
 /// pages.
 /// Required for the simple action buttons created with
 /// an icon inside a Ink().
@@ -75,7 +75,7 @@ class ButtonForegroundColor {
   static const Color list = titleAsh;
 }
 
-/// Background colours of action buttons in note view
+/// Background colours of action buttons in file view
 /// pages.
 /// Required for the simple action buttons created with
 /// an icon inside a Ink().

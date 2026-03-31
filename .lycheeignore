@@ -60,3 +60,11 @@ https://api.login.yahoo.com/
 https://graph.facebook.com/
 https://login.microsoftonline.com/
 https://securetoken.google.com/
+
+# 20260331 jesscmoore Ignore urls as examples in image scripts
+
+https://alice.pod/communitypod/data/images/img-x.jpg
+https://user.pod/communitypod/data/images/img-xxx.jpg
+
+
+<!-- markdownlint-disable-file MD012 MD022 MD025 MD026 MD034 MD053 -->

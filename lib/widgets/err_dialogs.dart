@@ -1,4 +1,4 @@
-/// DESCRIPTION
+/// A widget to display an error message in a dialog window.
 ///
 // Time-stamp: <Friday 2025-06-27 13:53:33 +1000 Graham Williams>
 ///
@@ -21,7 +21,7 @@
 // You should have received a copy of the GNU General Public License along with
 // this program.  If not, see <https://opensource.org/license/gpl-3-0>.
 ///
-/// Authors: AUTHORS
+/// Authors: Jess Moore
 
 library;
 

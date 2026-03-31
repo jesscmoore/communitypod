@@ -1,4 +1,4 @@
-/// The delete note list button.
+/// The delete file list button.
 ///
 /// Copyright (C) 2023, Software Innovation Institute
 ///
@@ -33,33 +33,32 @@ import 'package:communitypod/common/rest_api/file_helper.dart';
 import 'package:communitypod/constants/app.dart';
 import 'package:communitypod/constants/colours.dart';
 import 'package:communitypod/constants/ui.dart';
-import 'package:communitypod/models/selected_note.dart';
+import 'package:communitypod/models/selected_news.dart';
 import 'package:communitypod/widgets/err_card.dart';
 import 'package:communitypod/widgets/loading_animation.dart' as loading;
 
-/// A delete button widget for deleting a list of notes.
+/// A delete button widget for deleting a list of files.
 ///
 /// Arguments:
-/// - [selectedNotes] - list of selected notes.
+/// - [selectedNews] - list of selected files.
 /// - [childPage] - child widget to return to.
 /// - [scaffoldController] - Controller for the Solid scaffold.
-/// - [isSelectionMode] - flag denoting whether notes were selected.
-/// - [isExtFileSelected] - flag denoting whether an external note
+/// - [isSelectionMode] - flag denoting whether files were selected.
+/// - [isExtFileSelected] - flag denoting whether an external file
 ///  in selection.
-/// - [isExternal] - flag denoting whether note is an external
-/// note shared to the user.
+/// - [isExternal] - flag denoting whether file is externally owned.
 
-class NoteListDelButton extends StatelessWidget {
-  final List<SelectedNote> selectedNotes;
+class ListDelButton extends StatelessWidget {
+  final List<SelectedNews> selectedNews;
   final Widget childPage;
   final SolidScaffoldController scaffoldController;
   final bool isSelectionMode;
   final bool isExtFileSelected;
   final bool isExternal;
 
-  const NoteListDelButton({
+  const ListDelButton({
     super.key,
-    required this.selectedNotes,
+    required this.selectedNews,
     required this.childPage,
     required this.scaffoldController,
     this.isSelectionMode = false,
@@ -74,7 +73,7 @@ class NoteListDelButton extends StatelessWidget {
         return AlertDialog(
           title: const Text(Msg.plsConfirm),
           content: Text(
-            selectedNotes.length > 1
+            selectedNews.length > 1
                 ? Msg.confirmDeleteMultiple
                 : Msg.confirmDelete,
           ),
@@ -83,23 +82,23 @@ class NoteListDelButton extends StatelessWidget {
             TextButton(
               onPressed: () async {
                 Navigator.of(context, rootNavigator: true)
-                    .pop(); // Dismiss the deleting note dialog
+                    .pop(); // Dismiss the deleting files dialog
 
                 loading.showAnimationDialog(
                   context,
-                  Msg.deletingNote,
+                  Msg.deletingNews,
                   false,
                 );
 
                 // Delete file
-                for (final SelectedNote note in selectedNotes) {
-                  debugPrint('Deleting ${note.noteUrl}...');
+                for (final SelectedNews item in selectedNews) {
+                  debugPrint('Deleting ${item.newsUrl}...');
 
                   // Call solid delete file function
                   // Delete file
-                  await NoteFileHelper().deleteNote(
+                  await NewsFileHelper().deleteNews(
                     context: context,
-                    filename: note.noteFileName,
+                    filename: item.newsFileName,
                     isExternal: isExternal,
                     child: childPage,
                   );
@@ -117,7 +116,7 @@ class NoteListDelButton extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.of(context, rootNavigator: true)
-                    .pop(); // Dismiss the deleting note dialog
+                    .pop(); // Dismiss the deleting files dialog
               },
               child: const Text(ButtonLabel.no),
             ),
@@ -133,8 +132,8 @@ class NoteListDelButton extends StatelessWidget {
         ? (isSelectionMode)
             ? MarkdownTooltip(
                 message: isExtFileSelected
-                    ? 'You cannot delete notes owned by someone else. Please remove it from the selection'
-                    : 'Delete selected notes',
+                    ? 'You cannot delete files owned by someone else. Please remove it from the selection'
+                    : 'Delete selected files',
                 child: TextButton.icon(
                   icon: const Icon(
                     Icons.delete,

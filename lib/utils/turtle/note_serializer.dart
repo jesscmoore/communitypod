@@ -28,28 +28,28 @@ library;
 import 'package:rdflib/rdflib.dart';
 
 import 'package:communitypod/constants/turtle_structures.dart';
-import 'package:communitypod/models/note_content.dart';
+import 'package:communitypod/models/news_content.dart';
 import 'package:communitypod/utils/encryption.dart';
 import 'package:communitypod/utils/turtle/parsing_utils.dart';
 
-/// Handle Notepod to/from Turtle serialization operations.
+/// Handle communitypod to/from Turtle serialization operations.
 
 class TurtleSerializer {
-  /// Parses a note from Turtle content.
+  /// Parses a news object from Turtle content.
 
-  static NoteContent? noteFromTurtle(String ttlContent) {
+  static NewsContent? newsFromTurtle(String ttlContent) {
     try {
       // safeParseTtl parses TTL to map
 
       final triples = TurtleParsingUtils.safeParseTtlToTriple(ttlContent);
       if (triples == null) return null;
 
-      String? noteTitle;
+      String? newsTitle;
       String? createdDateTime;
       String? modifiedDateTime;
-      String? noteContent;
+      String? newsContent;
 
-      // Find note resource and extract information.
+      // Find news resource and extract information.
 
       for (final subject in triples.keys) {
         final predicates = triples[subject]!;
@@ -57,25 +57,25 @@ class TurtleSerializer {
         for (final predicate in predicates.keys) {
           final value = predicates[predicate]!;
 
-          if (predicate.contains(noteTitlePred)) {
-            noteTitle = value;
+          if (predicate.contains(newsTitlePred)) {
+            newsTitle = value;
           } else if (predicate.contains(createdDateTimePred)) {
             createdDateTime = value;
           } else if (predicate.contains(modifiedDateTimePred)) {
             modifiedDateTime = value;
-          } else if (predicate.contains(noteContentPred)) {
-            noteContent = decryptVal(value, createdDateTime!);
+          } else if (predicate.contains(newsContentPred)) {
+            newsContent = decryptVal(value, createdDateTime!);
           }
         }
       }
 
-      // Create the note object
+      // Create the news object
 
-      return NoteContent(
-        noteTitle: noteTitle!,
+      return NewsContent(
+        newsTitle: newsTitle!,
         createdDateTime: createdDateTime!,
         modifiedDateTime: modifiedDateTime!,
-        noteContent: noteContent!,
+        newsContent: newsContent!,
       );
     } catch (e) {
       return null;

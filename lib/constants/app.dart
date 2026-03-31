@@ -40,10 +40,10 @@ const String appOwner = '''© 2026 Software Innovation Institute''';
 const String aboutText =
     '''The communitypod app is an example of a Solid Pods app written in Flutter to read, write, and share encrypted news stories stored on your personal online data store (Pod) hosted on a Solid Server.''';
 
-const String appDir = 'notepod';
+const String appDir = 'communitypod';
 
 // const AssetImage backgroundImg =
-//     AssetImage('assets/images/notepod-background.jpg');
+//     AssetImage('assets/images/communitypod-background.jpg');
 const AssetImage backgroundImg =
     AssetImage('assets/images/Hands-AdobeStock_435501233.jpeg');
 const AssetImage logoImg = AssetImage('assets/images/app_icon.png');
@@ -56,10 +56,10 @@ const double badListItemHeight = 68.0;
 double screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 //double screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
-const nonReadableNoteMsg =
-    'You do not have read access to this note and therefore cannot view that. However, you can delete it or share it with others.';
+const nonReadableNewsMsg =
+    'You do not have read access to this news file and therefore cannot view the file. However, you can delete it or share it with others.';
 
-//const noNotesMsg = 'You do not have any notes yet!';
+//const noNewsMsg = 'You do not have any news files yet!';
 
 // SizedBox standardHeight() {
 //   return const SizedBox(
@@ -99,81 +99,81 @@ const String combinedNewsTitle = 'News';
 const String combinedNewsExplanation = 'accessible to me';
 const String combinedNewsToolTip = 'Go to news accessible to me';
 
-/// Note list messages
-class NoteListMsg {
+/// News list messages
+class NewsListMsg {
   /// Message displayed when corrupt files found
-  static const String badFilesFound = 'Corrupt note files present';
+  static const String badFilesFound = 'Corrupt news files present';
 
   /// Message displayed when non existent files found
-  static const String nonExistentNotesFound =
-      'Non-existent note files present without \'revoke\' entry in log';
+  static const String nonExistentNewsFound =
+      'Non-existent news files found in the log without a \'revoke\' entry in the log';
 
-  /// Message displayed when no notes found in user's Pod
-  static const String noNotes = 'No notes yet!';
+  /// Message displayed when no news file found in user's Pod
+  static const String noNews = 'No news yet!';
 
-  /// Advises user to write their first note
-  static const String writeFirstNote = 'Write your first note';
+  /// Advises user to write their first news post
+  static const String writeFirstNews = 'Write your first news file';
 }
 
-/// Note action messages
+/// News action messages
 class Msg {
-  /// Note saving message
-  static const String savingNote = 'Saving the note!';
+  /// News saving message
+  static const String savingNews = 'Saving the news file!';
 
-  /// Note deleting message
-  static const String deletingNote = 'Deleting the note!';
+  /// News deleting message
+  static const String deletingNews = 'Deleting the news file!';
 
-  /// Confirm delete note message
+  /// Confirm delete message
   static const String confirmDelete =
-      'Are you sure you want to delete this note?';
+      'Are you sure you want to delete this news file?';
 
-  /// Confirm delete multiple notes message
+  /// Confirm delete multiple news files message
   static const String confirmDeleteMultiple =
-      'Are you sure you want to delete these notes?';
+      'Are you sure you want to delete these news files?';
 
-  /// Note deleting message
-  static const String revokingNote = 'Revoking access!';
+  /// News deleting message
+  static const String revokingNews = 'Revoking access!';
 
-  /// Confirm revoke access to note message
+  /// Confirm message to revoke access to news file
   static const String confirmRevoke =
-      'Are you sure you want to revoke access to this note?';
+      'Are you sure you want to revoke access to this news file?';
 
-  /// Confirm revoke access to multiple notes message
+  /// Confirm revoke access to multiple news files message
   static const String confirmRevokeMultiple =
-      'Are you sure you want to revoke access to these notes?';
+      'Are you sure you want to revoke access to these new files?';
 
   /// Please confirm message
   static const String plsConfirm = 'Please Confirm';
 }
 
-/// Error messages for errors occuring on note actions
+/// Error messages for errors occuring on news post actions
 class ErrMsg {
-  /// No changes to note error.
+  /// No changes to news post error.
   static const String noChanges = 'You have no new changes!';
 
-  /// No note content.
-  static const String noContent = 'Please enter some note content.';
+  /// No news post content.
+  static const String noContent = 'Please enter some news post content.';
 
-  /// Invalid note name.
+  /// Invalid news name.
   static const String invalidName =
-      'Note name validation failed! Try using a different name.';
+      'News name validation failed! Try using a different name.';
 
-  /// Error message when fails to save note file to POD
+  /// Error message when fails to save news file to POD
   static const String saveFailed =
-      'Failed to store the note file in your POD. Try again!';
+      'Failed to store the news file in your POD. Try again!';
 
   /// Unsaved changes found
   static const String unsavedChanges = 'Unsaved changed found!';
 }
 
-class NoteIconSize {
+class NewsIconSize {
   static const double width = 50;
   static const double height = 50;
   static const double twoIconWidth = (width * 2) + gap;
   static const double gap = 15;
 }
 
-// EdgeInsets for metadata block on view notes
+// EdgeInsets for metadata block
 const EdgeInsets metadataPadding = EdgeInsets.fromLTRB(15, 5, 10, 0);
 
 /// Button shape decoration for list pages

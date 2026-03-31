@@ -1,4 +1,4 @@
-/// A stateful widget to edit notes owned by the user.
+/// A stateful widget to edit news owned by the user.
 ///
 // Time-stamp: <Wednesday 2025-07-16 14:37:09 +1000 Graham Williams>
 ///
@@ -31,35 +31,35 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:solidui/solidui.dart';
 
-import 'package:communitypod/models/note.dart';
-import 'package:communitypod/notes/view_note.dart';
-import 'package:communitypod/widgets/note_edit_scroll_view.dart';
+import 'package:communitypod/models/news.dart';
+import 'package:communitypod/news/view_news.dart';
+import 'package:communitypod/widgets/edit_scroll_view.dart';
 
-/// A [StatefulWidget] to edit notes owned by the user.
+/// A [StatefulWidget] to edit news owned by the user.
 ///
 /// Arguments:
-///   [note] - is the data of that note.
+///   [newsPost] - is the data of that news object.
 ///   [scaffoldController] - Controller for the Solid scaffold.
 
-class EditNote extends StatefulWidget {
-  /// Data object for the selected note.
-  final Note note;
+class EditNews extends StatefulWidget {
+  /// Data object for the selected news post.
+  final News newsPost;
   final SolidScaffoldController scaffoldController;
 
-  const EditNote({
+  const EditNews({
     super.key,
-    required this.note,
+    required this.newsPost,
     required this.scaffoldController,
   });
 
   @override
-  EditNoteState createState() => EditNoteState();
+  EditNewsState createState() => EditNewsState();
 }
 
-class EditNoteState extends State<EditNote> {
+class EditNewsState extends State<EditNews> {
   final formKey = GlobalKey<FormBuilderState>();
 
-  TextEditingController? _textController;
+  TextEditingController? _articleController;
 
   /// Scroll controller for single child scroll view.
   late final ScrollController _scrollController;
@@ -67,31 +67,31 @@ class EditNoteState extends State<EditNote> {
   /// Scaffold controller
   late final SolidScaffoldController _scaffoldController;
 
-  /// Focus node for note title text field.
+  /// Focus node for news title text field.
   late final FocusNode _focusTitle;
 
-  /// Focus node for note content text field.
+  /// Focus node for news content text field.
   late final FocusNode _focusContent;
 
-  /// Note
-  late final Note _note;
+  /// News
+  late final News _newsPost;
 
-  /// Note text content
+  /// News text content
   String data = '';
 
   @override
   void initState() {
     super.initState();
-    _note = widget.note;
+    _newsPost = widget.newsPost;
     _scaffoldController = widget.scaffoldController;
-    // Initialise note content field
-    _textController = TextEditingController();
-    _textController!.text = _note.content!.noteContent;
+    // Initialise news content field
+    _articleController = TextEditingController();
+    _articleController!.text = _newsPost.content!.newsContent;
     // Start listening to changes.
-    _textController!.addListener(_renderMarkdown);
+    _articleController!.addListener(_renderMarkdown);
     _scrollController = ScrollController();
     // Focus node for the title text field
-    // If 'TAB' key press, move to note content text field
+    // If 'TAB' key press, move to news content text field
     _focusTitle = FocusNode(
       onKeyEvent: (FocusNode node, KeyEvent evt) {
         if (evt.logicalKey == LogicalKeyboardKey.tab) {
@@ -105,9 +105,9 @@ class EditNoteState extends State<EditNote> {
         }
       },
     );
-    // Focus node for the note content markdown editor
+    // Focus node for the news content markdown editor
     _focusContent = FocusNode();
-    // To enable the ENTER => SAVE functionality within a note, replace the
+    // To enable the ENTER => SAVE functionality within a news, replace the
     // above line with the following. For now we will stay with current
     // behaviour. (20250714 gjw).
     //
@@ -116,8 +116,8 @@ class EditNoteState extends State<EditNote> {
     //     if (!HardwareKeyboard.instance.isShiftPressed &&
     //         evt.logicalKey.keyLabel == 'Enter') {
     //       if (evt is KeyDownEvent) {
-    //         // Save note when enter (not shift-enter) pressed
-    //         NoteFileHelper().saveNote(context, _textController!, formKey, widget.note);
+    //         // Save news when enter (not shift-enter) pressed
+    //         NewsFileHelper().saveNews(context, _articleController!, formKey, widget.newsPost);
     //       }
     //       return KeyEventResult.handled;
     //     } else {
@@ -129,7 +129,7 @@ class EditNoteState extends State<EditNote> {
 
   @override
   void dispose() {
-    _textController!.dispose(); // Dispose the TextEditingController
+    _articleController!.dispose(); // Dispose the TextEditingController
     _scrollController.dispose(); // Dispose the ScrollController
     _focusTitle.dispose(); // Dispose the title focus node
     _focusContent.dispose(); // Dispose the content focus node
@@ -138,28 +138,28 @@ class EditNoteState extends State<EditNote> {
 
   void _renderMarkdown() {
     setState(() {
-      data = _textController!.text;
+      data = _articleController!.text;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return NoteEditScrollView(
+    return EditScrollView(
       formKey: formKey,
-      textController: _textController,
+      articleController: _articleController,
       scrollController: _scrollController,
       scaffoldController: _scaffoldController,
       focusTitle: _focusTitle,
       focusContent: _focusContent,
-      childPage: ViewNote(
-        note: _note,
+      childPage: ViewNews(
+        newsPost: _newsPost,
         scaffoldController: _scaffoldController,
       ),
       data: data,
-      prevNote: _note,
-      noteTitle: _note.content!.noteTitle,
+      prevNews: _newsPost,
+      newsTitle: _newsPost.content!.newsTitle,
       isExisting: true,
-      isExternal: _note.isExternalRes,
+      isExternal: _newsPost.isExternalRes,
     );
   }
 }

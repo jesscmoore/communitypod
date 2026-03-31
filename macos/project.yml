@@ -142,7 +142,7 @@ targets:
     settings:
       base:
         # TODO: set app bundle ID
-        PRODUCT_BUNDLE_IDENTIFIER: com.togaware.notepod # App Bundle ID from Apple Developer account
+        PRODUCT_BUNDLE_IDENTIFIER: com.togaware.communitypod # App Bundle ID from Apple Developer account
 
         ALWAYS_SEARCH_USER_PATHS: 'NO'
         ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: 'YES'

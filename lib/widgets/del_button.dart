@@ -1,4 +1,4 @@
-/// The delete note button.
+/// The delete news post button.
 ///
 /// Copyright (C) 2023, Software Innovation Institute
 ///
@@ -34,20 +34,20 @@ import 'package:communitypod/constants/colours.dart';
 import 'package:communitypod/constants/ui.dart';
 import 'package:communitypod/widgets/loading_animation.dart' as loading;
 
-/// A stylised delete button widget for notes. A simpler version
+/// A stylised delete button widget for news. A simpler version
 /// of the button is displayed with icon only if [simple] or
 /// [isNarrow] is true.
 ///
 /// Arguments:
-/// - [filename] - Filename of note.
+/// - [filename] - Filename of news post.
 /// - [childPage] - The child widget to navigate to.
-/// - [isExternal] - Boolean describing whether an external note.
+/// - [isExternal] - Boolean describing whether an external file.
 /// - [showSimple] - Boolean describing whether to show
 /// simple version of button without text label.
 /// - [isNarrow] - Boolean describing whether displaying
 /// in a narrow window.
 
-class NoteDelButton extends StatelessWidget {
+class DelButton extends StatelessWidget {
   final String filename;
 
   /// Childpage
@@ -56,7 +56,7 @@ class NoteDelButton extends StatelessWidget {
   /// Solid scaffold controller
   final SolidScaffoldController scaffoldController;
 
-  /// Boolean describing whether an external note
+  /// Boolean describing whether an external file
   final bool isExternal;
 
   /// Show simple button without label
@@ -65,7 +65,7 @@ class NoteDelButton extends StatelessWidget {
   /// Boolean describing whether window is narrow
   final bool isNarrow;
 
-  const NoteDelButton({
+  const DelButton({
     super.key,
     required this.filename,
     required this.childPage,
@@ -75,8 +75,8 @@ class NoteDelButton extends StatelessWidget {
     this.isNarrow = false,
   });
 
-  /// Delete note dialog
-  void noteDelDialog(BuildContext context) {
+  /// Delete dialog
+  void delDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext ctx) {
@@ -90,17 +90,17 @@ class NoteDelButton extends StatelessWidget {
             TextButton(
               onPressed: () async {
                 Navigator.of(context, rootNavigator: true)
-                    .pop(); // Dismiss the deleting note dialog
+                    .pop(); // Dismiss the deleting dialog
 
                 loading.showAnimationDialog(
                   context,
-                  Msg.deletingNote,
+                  Msg.deletingNews,
                   false,
                 );
 
                 try {
                   // Delete file
-                  await NoteFileHelper().deleteNote(
+                  await NewsFileHelper().deleteNews(
                     context: context,
                     filename: filename,
                     isExternal: isExternal,
@@ -119,7 +119,7 @@ class NoteDelButton extends StatelessWidget {
                   if (context.mounted) {
                     Navigator.of(context, rootNavigator: true).pop();
                   }
-                  debugPrint('Delete note failed: $e');
+                  debugPrint('Delete file failed: $e');
                 }
               },
               child: const Text(ButtonLabel.yes),
@@ -128,7 +128,7 @@ class NoteDelButton extends StatelessWidget {
               onPressed: () {
                 if (context.mounted) {
                   Navigator.of(context, rootNavigator: true).pop();
-                } // Dismiss the deleting note dialog
+                } // Dismiss the deleting dialog
               },
               child: const Text(ButtonLabel.no),
             ),
@@ -153,8 +153,8 @@ class NoteDelButton extends StatelessWidget {
             Icons.delete,
           ),
           onPressed: () {
-            // Display note confirm delete dialog
-            noteDelDialog(context);
+            // Display confirm delete dialog
+            delDialog(context);
           },
         ),
       ),
@@ -171,8 +171,8 @@ class NoteDelButton extends StatelessWidget {
         Icons.delete,
       ),
       onPressed: () {
-        // Display note confirm delete dialog
-        noteDelDialog(context);
+        // Display confirm delete dialog
+        delDialog(context);
       },
       style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
             backgroundColor:

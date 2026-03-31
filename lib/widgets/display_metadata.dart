@@ -1,4 +1,4 @@
-/// A widget to display note metadata.
+/// A widget to display news post metadata.
 ///
 // Time-stamp: <Friday 2025-10-14 14:59:05 +1000 Graham Williams>
 ///
@@ -31,38 +31,38 @@ import 'package:communitypod/widgets/show_date_metadata.dart';
 import 'package:communitypod/widgets/show_filename_metadata.dart';
 import 'package:communitypod/widgets/show_path_metadata.dart';
 
-/// Display the metadata of an externally owned note.
+/// Display the metadata of a news post.
 /// showDates requires created and modified date time.
-/// showSharing requires note owner, premission granter and
+/// showSharing requires owner, premission granter and
 /// permission list.
-/// showPathInfo requires note file name and note url.
+/// showPathInfo requires file name and url.
 ///
 /// Arguments:
-/// - [createdDateTime] - note created date time.
-/// - [modifiedDateTime] - note last modified data time.
-/// - [noteOwner] - webId of note owner.
-/// - [permissionGranter] - webId of entity that shared the note
+/// - [createdDateTime] - post created date time.
+/// - [modifiedDateTime] - post last modified data time.
+/// - [newsOwner] - webId of news post owner.
+/// - [permissionGranter] - webId of entity that shared the news post
 /// to the user.
 /// - [permissionList] - list of permissions granted to the user.
-/// - [noteFileName] - note file name.
-/// - [noteUrl] - url of note.
+/// - [newsFileName] - news post file name.
+/// - [newsUrl] - url of news post.
 /// - [showDates] - flag describing whether to show data metadata of
-/// note.
+/// news post.
 /// - [showFileName] - flag describing whether to show filename of
-/// note.
+/// news post.
 /// - [showSharing] - flag describing whether to show sharing
-/// metadata of note.
+/// metadata of news post.
 /// - [showPathInfo] - flag describing whether to show url path of
-/// note.
+/// news post.
 
-class DisplayNoteMetadata extends StatelessWidget {
+class DisplayMetadata extends StatelessWidget {
   final String createdDateTime;
   final String modifiedDateTime;
-  final String noteOwner;
+  final String newsOwner;
   final String? permissionGranter;
   final String? permissionList;
-  final String noteFileName;
-  final String noteUrl;
+  final String newsFileName;
+  final String newsUrl;
 
   final bool isExternal;
   final bool showDates;
@@ -70,15 +70,15 @@ class DisplayNoteMetadata extends StatelessWidget {
   final bool showSharing;
   final bool showPathInfo;
 
-  const DisplayNoteMetadata({
+  const DisplayMetadata({
     super.key,
     this.createdDateTime = '',
     this.modifiedDateTime = '',
-    this.noteOwner = '',
+    this.newsOwner = '',
     this.permissionGranter,
     this.permissionList,
-    this.noteFileName = '',
-    this.noteUrl = '',
+    this.newsFileName = '',
+    this.newsUrl = '',
     this.isExternal = false,
     this.showDates = false,
     this.showFileName = false,
@@ -95,8 +95,8 @@ class DisplayNoteMetadata extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           // ShowFileName
-          if (showFileName && noteFileName.isNotEmpty)
-            ShowFilenameMetadata(filename: noteFileName),
+          if (showFileName && newsFileName.isNotEmpty)
+            ShowFilenameMetadata(filename: newsFileName),
           // ShowDates (created and modified)
           if (showDates &&
               createdDateTime.isNotEmpty &&
@@ -108,12 +108,12 @@ class DisplayNoteMetadata extends StatelessWidget {
           // Show sharing info (owner, provider, access list)
           if (showSharing)
             ShowAccessMetadata(
-              noteOwner: noteOwner,
+              newsOwner: newsOwner,
               permissionGranter: permissionGranter!,
               permissionList: permissionList!,
             ),
           // Show path info (filename and path)
-          if (showPathInfo && noteUrl != '') ShowPathMetadata(fileUrl: noteUrl),
+          if (showPathInfo && newsUrl != '') ShowPathMetadata(fileUrl: newsUrl),
           const SizedBox(height: 10),
         ],
       ),

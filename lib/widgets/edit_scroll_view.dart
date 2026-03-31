@@ -1,4 +1,4 @@
-/// A widget for creating and editing notes in a SingleChildScrollView()
+/// A widget for creating and editing news posts in a SingleChildScrollView()
 ///
 // Time-stamp: <Wednesday 2025-07-18 16:17:37 +1000 Jess Moore>
 ///
@@ -34,38 +34,50 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/constants/app.dart';
 import 'package:communitypod/constants/turtle_structures.dart';
-import 'package:communitypod/models/note.dart';
+import 'package:communitypod/models/news.dart';
+import 'package:communitypod/widgets/custom_back_button.dart';
 import 'package:communitypod/widgets/markdown_editor.dart';
-import 'package:communitypod/widgets/note_back_button.dart';
-import 'package:communitypod/widgets/note_save_button.dart';
+import 'package:communitypod/widgets/save_button.dart';
 
 /// A [StatelessWidget] widget setup for calling the
-/// SingleChildScrollView() to edit a note, whether a
-/// new note or a pre-existing note, and whether owned
-/// by the user or shared to the user.
-class NoteEditScrollView extends StatelessWidget {
-  const NoteEditScrollView({
+/// SingleChildScrollView() to edit a news post.
+///
+/// Arguments:
+/// - [formKey] - key identifier for news post form.
+/// - [articleController] - text controller for article field of form.
+/// - [scrollController] - controller for scroll widget.
+/// - [scaffoldController] - controller for scaffold widget.
+/// - [focusTitle] - [FocusNode] for title form field.
+/// - [focusContent] - [FocusNode] for text content form field.
+/// - [childPage] - page to navigate to on back button press.
+/// - [data] - data from text controller.
+/// - [prevNews] - content of earlier news post version if post not new.
+/// - [isExternal] - flag describing whether file externally owned.
+/// - [isExisting] - flag describing whether earlier version of file exists.
+/// - [newsTitle] - the title of earlier news post version if post not new.
+class EditScrollView extends StatelessWidget {
+  const EditScrollView({
     super.key,
     required this.formKey,
-    required TextEditingController? textController,
+    required TextEditingController? articleController,
     required ScrollController scrollController,
     required SolidScaffoldController scaffoldController,
     required FocusNode focusTitle,
     required FocusNode focusContent,
     required this.childPage,
     required this.data,
-    this.prevNote,
+    this.prevNews,
     this.isExternal = false,
     this.isExisting = false,
-    this.noteTitle,
-  })  : _textController = textController,
+    this.newsTitle,
+  })  : _articleController = articleController,
         _scrollController = scrollController,
         _scaffoldController = scaffoldController,
         _focusTitle = focusTitle,
         _focusContent = focusContent;
 
   final GlobalKey<FormBuilderState> formKey;
-  final TextEditingController? _textController;
+  final TextEditingController? _articleController;
 
   /// Scroll controller for single child scroll view
   final ScrollController _scrollController;
@@ -73,72 +85,72 @@ class NoteEditScrollView extends StatelessWidget {
   /// Scaffold controller
   final SolidScaffoldController _scaffoldController;
 
-  /// Focus node for note title field
+  /// Focus node for title field
   final FocusNode _focusTitle;
 
-  /// Focus node for note contents text field
+  /// Focus node for contents text field
   final FocusNode _focusContent;
 
   /// Childpage used by back button
   final Widget childPage;
 
+  /// Text field data
   final String data;
 
-  /// Existing note data is note already exists
-  final Note? prevNote;
+  /// Existing data if file already exists
+  final News? prevNews;
 
-  /// Boolean describing whether note is shared to pod owner from an
-  /// external source.
+  /// Boolean describing whether file is externally owned.
   final bool isExternal;
 
-  /// Boolean describing whether note already exists.
+  /// Boolean describing whether file already exists.
   final bool isExisting;
 
-  /// Title of note where note already exists
-  final String? noteTitle;
+  /// Data title field if file already exists
+  final String? newsTitle;
 
   @override
   Widget build(BuildContext context) {
     String currDateStr = '';
 
     if (!isExisting) {
-      // New note: fetch current date for heading
+      // New file: fetch current date for heading
       currDateStr =
           DateFormat('dd MMMM yyyy').format(DateTime.now()).toString();
     }
 
-    Row noteEditActionBar() {
+    Row editActionBar() {
       return Row(
         mainAxisAlignment: MainAxisAlignment.end,
         spacing: 5.0,
         children: (!isExisting)
-            // New Note: save button only
+            // New News: save button only
             ? [
-                NoteSaveButton(
-                  textController: _textController!,
+                NewsSaveButton(
+                  articleController: _articleController!,
                   formKey: formKey,
                   scaffoldController: _scaffoldController,
                 ),
               ]
             : [
-                // Edit Note: save and back buttons
+                // Edit News: save and back buttons
                 // Save button
-                NoteSaveButton(
-                  textController: _textController!,
+                NewsSaveButton(
+                  articleController: _articleController!,
                   formKey: formKey,
                   scaffoldController: _scaffoldController,
-                  prevNote: prevNote,
+                  prevNews: prevNews,
                   isExisting: true,
                   isExternal: isExternal,
                 ),
                 // Back button
-                // Nav to view note or view isExternal note
-                NoteBackButton(
+                // Nav to child page
+                CustomBackButton(
                   childPage: childPage,
-                  textController: _textController,
+                  articleController: _articleController,
                   formKey: formKey,
                   scaffoldController: _scaffoldController,
-                  prevNote: prevNote,
+                  prevNews: prevNews,
                   isExisting: isExisting,
                   isExternal: isExternal,
                 ),
@@ -175,7 +187,7 @@ class NoteEditScrollView extends StatelessWidget {
                       child: Column(
                         spacing: 10.0,
                         children: [
-                          // New note: show current date
+                          // New file: show current date
                           if (!isExisting) ...[
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,16 +199,16 @@ class NoteEditScrollView extends StatelessWidget {
                               ],
                             ),
                           ],
-                          // Edit existing note: populated text field with
-                          // previous note data
+                          // Edit existing file: populated text field with
+                          // previous data
                           FormBuilderTextField(
-                            name: noteTitlePred,
-                            initialValue: (isExisting) ? noteTitle : null,
+                            name: newsTitlePred,
+                            initialValue: (isExisting) ? newsTitle : null,
                             // Initial focus in title field
                             autofocus: true,
                             focusNode: _focusTitle,
                             decoration: const InputDecoration(
-                              labelText: 'Note Title',
+                              labelText: 'News Title',
                               labelStyle: TextStyle(
                                 letterSpacing: 1.5,
                                 fontSize: 13.0,
@@ -214,7 +226,7 @@ class NoteEditScrollView extends StatelessWidget {
                   ),
                   markdownEditor(
                     context,
-                    _textController!,
+                    _articleController!,
                     _focusContent,
                     data,
                     isExternal: isExternal,
@@ -233,7 +245,7 @@ class NoteEditScrollView extends StatelessWidget {
           children: <Widget>[
             Container(
               padding: const EdgeInsets.only(left: 20, right: 20),
-              child: noteEditActionBar(),
+              child: editActionBar(),
             ),
             // Add space
             const SizedBox(

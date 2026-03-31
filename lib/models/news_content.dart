@@ -1,4 +1,4 @@
-/// Data models for notes
+/// Data models for news post content
 ///
 /// Copyright (C) 2023-2025, Software Innovation Institute
 ///
@@ -29,76 +29,76 @@ import 'package:solidpod/solidpod.dart';
 
 import 'package:communitypod/constants/turtle_structures.dart';
 
-/// Base data model for the nested note within a note object
+/// Base data model for the text content object within a news object
 
-class NoteContent {
-  final String noteTitle;
+class NewsContent {
+  final String newsTitle;
   final String createdDateTime;
   final String modifiedDateTime;
-  final String noteContent;
+  final String newsContent;
   final List<String> authUsers;
 
-  const NoteContent({
-    required this.noteTitle,
+  const NewsContent({
+    required this.newsTitle,
     required this.createdDateTime,
     required this.modifiedDateTime,
-    required this.noteContent,
+    required this.newsContent,
     this.authUsers = const [],
   });
 
-  /// Method to create NoteContent object from json data map
+  /// Method to create NewsContent object from json data map
 
-  factory NoteContent.fromJson(Map<String, dynamic> json) {
-    return NoteContent(
-      noteTitle: json[noteTitlePred] as String,
+  factory NewsContent.fromJson(Map<String, dynamic> json) {
+    return NewsContent(
+      newsTitle: json[newsTitlePred] as String,
       createdDateTime: json[createdDateTimePred] as String,
       modifiedDateTime: json[modifiedDateTimePred] as String,
-      noteContent: json[noteContentPred] as String,
+      newsContent: json[newsContentPred] as String,
       authUsers: (json[authUserPred] as Map).keys.toList().cast<String>(),
     );
   }
 
-  /// Method to export NoteContent object to json data map
+  /// Method to export NewsContent object to json data map
 
   Map<String, dynamic> toJson() => {
-        noteTitlePred: noteTitle,
+        newsTitlePred: newsTitle,
         createdDateTimePred: createdDateTime,
         modifiedDateTimePred: modifiedDateTime,
-        noteContentPred: noteContent,
+        newsContentPred: newsContent,
         authUserPred: authUsers,
       };
 
   /// Copy method for creating a new instance that is an
   /// updated copy of another instance
 
-  NoteContent copyWith({
-    String? noteTitle,
+  NewsContent copyWith({
+    String? newsTitle,
     String? createdDateTime,
     String? modifiedDateTime,
-    String? noteContent,
+    String? newsContent,
     List<String>? authUsers,
   }) {
-    return NoteContent(
-      noteTitle: noteTitle ?? this.noteTitle,
+    return NewsContent(
+      newsTitle: newsTitle ?? this.newsTitle,
       createdDateTime: createdDateTime ?? this.createdDateTime,
       modifiedDateTime: modifiedDateTime ?? this.modifiedDateTime,
-      noteContent: noteContent ?? this.noteContent,
+      newsContent: newsContent ?? this.newsContent,
       authUsers: authUsers ?? this.authUsers,
     );
   }
 
-  /// Returns the URL of the first markdown image in [noteContent], or null
-  /// if the note contains no images.
+  /// Returns the URL of the first markdown image in [newsContent], or null
+  /// if the file contains no images.
 
   String? get highlightImageUrl {
-    final match = RegExp(r'!\[.*?\]\((.*?)\)').firstMatch(noteContent);
+    final match = RegExp(r'!\[.*?\]\((.*?)\)').firstMatch(newsContent);
     return match?.group(1);
   }
 
-  /// Returns [noteContent] with all markdown image tags removed,
+  /// Returns [newsContent] with all markdown image tags removed,
   /// surrounding whitespace trimmed, and empty lines removed.
 
-  String get contentWithoutImages => noteContent
+  String get contentWithoutImages => newsContent
       .split('\n')
       .map((line) => line.replaceAll(RegExp(r'!\[.*?\]\(.*?\)'), '').trim())
       .where((line) => line.isNotEmpty)

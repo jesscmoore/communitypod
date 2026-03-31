@@ -1,4 +1,4 @@
-/// A stateless widget to show trailing buttons in a note list item.
+/// A stateless widget to show trailing buttons in a list item.
 ///
 /// Copyright (C) 2026 Software Innovation Institute, Australian National University
 ///
@@ -26,32 +26,31 @@ import 'package:flutter/material.dart';
 
 import 'package:solidui/solidui.dart';
 
-import 'package:communitypod/models/note.dart';
-import 'package:communitypod/notes/list_notes_screen.dart';
-import 'package:communitypod/notes/share_note.dart';
+import 'package:communitypod/models/news.dart';
+import 'package:communitypod/news/list_news_screen.dart';
+import 'package:communitypod/news/share_news.dart';
 import 'package:communitypod/widgets/simple_action_button.dart';
 
-/// A [stateless] widget to show trailing buttons in a note
-/// list item.
+/// A [stateless] widget to show trailing buttons in a list item.
 ///
 /// Arguments:
-/// - [note] - A note.
+/// - [item] - A list item.
 /// - [scaffoldController] - Controller for the Solid scaffold.
 ///
-class NoteItemTrailingButtons extends StatelessWidget {
-  const NoteItemTrailingButtons({
+class ItemTrailingButtons extends StatelessWidget {
+  const ItemTrailingButtons({
     super.key,
-    required Note note,
+    required News item,
     required SolidScaffoldController scaffoldController,
-  })  : _note = note,
+  })  : _item = item,
         _scaffoldController = scaffoldController;
 
-  final Note _note;
+  final News _item;
   final SolidScaffoldController _scaffoldController;
 
   @override
   Widget build(BuildContext context) {
-    List accessList = _note.permissionList.split(',');
+    List accessList = _item.permissionList.split(',');
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -61,11 +60,11 @@ class NoteItemTrailingButtons extends StatelessWidget {
         if (accessList.contains('control')) ...[
           SimpleActionButton(
             icon: const Icon(Icons.share),
-            childPage: ShareNote(
-              noteUrl: _note.noteUrl,
-              noteOwner: _note.noteOwner,
-              isExternal: _note.isExternalRes,
-              backPage: ListNotesScreen(
+            childPage: ShareNews(
+              newsUrl: _item.newsUrl,
+              newsOwner: _item.newsOwner,
+              isExternal: _item.isExternalRes,
+              backPage: ListNewsScreen(
                 scaffoldController: _scaffoldController,
               ),
               scaffoldController: _scaffoldController,
@@ -73,8 +72,7 @@ class NoteItemTrailingButtons extends StatelessWidget {
             scaffoldController: _scaffoldController,
           ),
         ],
-        // Open note icon
-        // Launch icon to denote expanding to full size
+        // Launch icon to denote viewing full post
         // Alternative open_in_full_rounded
         const Icon(Icons.launch_rounded),
       ],

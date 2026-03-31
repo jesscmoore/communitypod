@@ -32,6 +32,7 @@ import 'package:flutter/material.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 import 'package:solidpod/solidpod.dart';
 
+import 'package:communitypod/models/embedded_image.dart';
 import 'package:communitypod/utils/image_helper.dart';
 
 /// Returns an [ImgBuilder] for use with [ImgConfig] in a [MarkdownBlock].
@@ -39,13 +40,34 @@ import 'package:communitypod/utils/image_helper.dart';
 /// Pod images (URLs under basePath) are fetched and decrypted via
 /// [readLargeFileAsBytes] and rendered with [Image.memory]. All other URLs
 /// are rendered with [Image.network].
-ImgBuilder readImage() {
+///
+/// If [cache] is provided, bytes are read from it on first access and stored
+/// in it after fetching, avoiding repeated network/file reads.
+ImgBuilder readImage([List<EmbeddedImage>? cache]) {
   return (String url, Map<String, String> attributes) {
     final remotePath = extractPodImagePath(url);
     if (remotePath == null) {
       return Center(
         child: Image.network(
           url,
+          errorBuilder: (context, error, stackTrace) =>
+              const Icon(Icons.broken_image_outlined, size: 48),
+        ),
+      );
+    }
+    Uint8List? cachedData;
+    if (cache != null) {
+      for (final img in cache) {
+        if (img.imageUrl == url) {
+          cachedData = img.imageData;
+          break;
+        }
+      }
+    }
+    if (cachedData != null) {
+      return Center(
+        child: Image.memory(
+          cachedData,
           errorBuilder: (context, error, stackTrace) =>
               const Icon(Icons.broken_image_outlined, size: 48),
         ),
@@ -64,6 +86,7 @@ ImgBuilder readImage() {
         if (!snapshot.hasData || snapshot.hasError) {
           return const Icon(Icons.broken_image_outlined, size: 48);
         }
+        cache?.add(EmbeddedImage(imageUrl: url, imageData: snapshot.data!));
         return Center(
           child: Image.memory(
             snapshot.data!,

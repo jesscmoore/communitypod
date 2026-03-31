@@ -4,9 +4,9 @@
 ///
 /// Copyright (C) 2023-2025, Software Innovation Institute, ANU
 ///
-/// Licensed under the GNU General Public License, Version 3 (the "License");
+/// License: GNU General Public License, Version 3 (the "License")
 ///
-/// License: https://opensource.org/license/gpl-3-0
+/// https://opensource.org/license/gpl-3-0
 //
 // This program is free software: you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free Software
@@ -29,7 +29,10 @@ import 'package:flutter/material.dart';
 
 import 'package:solidui/solidui.dart';
 
+import 'package:communitypod/constants/app.dart';
+import 'package:communitypod/models/news_content.dart';
 import 'package:communitypod/widgets/custom_back_button.dart';
+import 'package:communitypod/widgets/err_dialogs.dart';
 
 /// A [StatefulWidget] for sharing a news file.
 ///
@@ -38,6 +41,8 @@ import 'package:communitypod/widgets/custom_back_button.dart';
 /// - [newsOwner] - is the webId of the news file owner.
 /// - [backPage] - The widget used by Back button.
 /// - [isExternalRes] - Whether the file is externally owned.
+/// - [newsContent] - The content of the news post, used to detect embedded
+/// images.
 /// - [scaffoldController] - Controller for the Solid scaffold.
 
 class ShareNews extends StatefulWidget {
@@ -46,6 +51,7 @@ class ShareNews extends StatefulWidget {
   final Widget backPage;
   final bool isExternal;
   final SolidScaffoldController scaffoldController;
+  final NewsContent? newsContent;
 
   const ShareNews({
     super.key,
@@ -54,6 +60,7 @@ class ShareNews extends StatefulWidget {
     required this.backPage,
     required this.scaffoldController,
     this.isExternal = false,
+    this.newsContent,
   });
 
   @override
@@ -72,6 +79,19 @@ class ShareNewsState extends State<ShareNews> {
     super.initState();
     _scrollController = ScrollController();
     _scaffoldController = widget.scaffoldController;
+
+    // 20260331 jesscmoore preventing sharing if embedded
+    // images found, as GrantPermissionUi() does not yet
+    // support sharing of files with embedded images.
+    if (widget.newsContent?.highlightImageUrl != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!mounted) return;
+        await showErrDialog(context, ErrMsg.embeddedImages);
+        if (mounted) {
+          _scaffoldController.navigateToSubpage(widget.backPage);
+        }
+      });
+    }
   }
 
   @override

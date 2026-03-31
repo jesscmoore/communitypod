@@ -25,9 +25,12 @@
 
 library;
 
+import 'dart:typed_data';
+
 import 'package:solidpod/solidpod.dart';
 
 import 'package:communitypod/constants/turtle_structures.dart';
+import 'package:communitypod/models/embedded_image.dart';
 import 'package:communitypod/models/news_content.dart';
 import 'package:communitypod/models/own_news.dart';
 
@@ -42,6 +45,12 @@ class News extends OwnNews {
   bool isExternalRes;
   bool isSelected;
 
+  /// Cached bytes for the highlight (thumbnail) image, populated on first load.
+  Uint8List? highlightImageBytes;
+
+  /// Cached images embedded in the article body.
+  final List<EmbeddedImage> cachedImages;
+
   News({
     super.content,
     super.authUserList,
@@ -55,12 +64,13 @@ class News extends OwnNews {
     required this.permissionList,
     this.isExternalRes = false,
     this.isSelected = false,
-  });
+    List<EmbeddedImage>? cachedImages,
+  }) : cachedImages = cachedImages ?? [];
 
   /// Method to create News object from json data map
 
   factory News.fromJson(Map<String, dynamic> json) {
-    return News(
+    final news = News(
       newsUrl: json[newsUrlPred] as String,
       newsFileName: json[newsFileNamePred] as String,
       newsOwner: json[newsOwnerPred] as String,
@@ -72,7 +82,10 @@ class News extends OwnNews {
       isSelected: json[isSelectedPred] as bool,
       content: json[contentPred] as NewsContent,
       authUserList: json[authUserPred] as Map<dynamic, dynamic>,
+      cachedImages: json['cachedImages'] as List<EmbeddedImage>? ?? [],
     );
+    news.highlightImageBytes = json['highlightImageBytes'] as Uint8List?;
+    return news;
   }
 
   /// Method to export News object to json data map
@@ -90,6 +103,8 @@ class News extends OwnNews {
         isSelectedPred: isSelected,
         contentPred: content,
         authUserPred: authUserList,
+        'highlightImageBytes': highlightImageBytes,
+        'cachedImages': cachedImages,
       };
 
   /// Copy method for creating a new instance that is an
@@ -109,7 +124,7 @@ class News extends OwnNews {
     String? permissionList,
     bool? isSelected,
   }) {
-    return News(
+    final copy = News(
       content: content ?? this.content,
       authUserList: authUserList ?? this.authUserList,
       newsUrl: newsUrl ?? this.newsUrl,
@@ -121,7 +136,10 @@ class News extends OwnNews {
       permissionType: permissionType ?? this.permissionType,
       permissionList: permissionList ?? this.permissionList,
       isSelected: isSelected ?? this.isSelected,
+      cachedImages: cachedImages,
     );
+    copy.highlightImageBytes = highlightImageBytes;
+    return copy;
   }
 }
 

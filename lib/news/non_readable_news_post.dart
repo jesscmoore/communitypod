@@ -134,6 +134,7 @@ class _NonReadableNewsPostState extends State<NonReadableNewsPost> {
                             newsUrl: _newsPost.newsUrl,
                             newsOwner: _newsPost.newsOwner,
                             isExternal: _newsPost.isExternalRes,
+                            newsContent: _newsPost.content,
                             backPage: ListNewsScreen(
                               scaffoldController: _scaffoldController,
                             ),

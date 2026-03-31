@@ -64,6 +64,7 @@ class ItemTrailingButtons extends StatelessWidget {
               newsUrl: _item.newsUrl,
               newsOwner: _item.newsOwner,
               isExternal: _item.isExternalRes,
+              newsContent: _item.content,
               backPage: ListNewsScreen(
                 scaffoldController: _scaffoldController,
               ),

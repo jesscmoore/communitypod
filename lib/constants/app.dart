@@ -164,6 +164,10 @@ class ErrMsg {
 
   /// Unsaved changes found
   static const String unsavedChanges = 'Unsaved changed found!';
+
+  /// Sharing not supported for articles with embedded images
+  static const String embeddedImages =
+      'Sharing of news articles with embedded images is not yet supported.';
 }
 
 class NewsIconSize {

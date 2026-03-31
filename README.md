@@ -82,7 +82,7 @@ later on, capturing shopping lists that can be shared with your family
 and called up the next time anyone of the family is at the shops, and
 much more.
 
-A simple example of a news post, available anywhere, anytime.
+<!-- A simple example of a news post, available anywhere, anytime.
 
 Desktop version:
 
@@ -94,7 +94,7 @@ Mobile Phone version:
 
 <img
 src="https://raw.githubusercontent.com/jesscmoore/communitypod/dev/assets/screenshots/shopping_android.png" width=300>
-<!-- markdownlint-enable MD033 MD045 MD013 -->
+<!-- markdownlint-enable MD033 MD045 MD013 --> -->
 
 ## Obtaining a Pod
 
@@ -162,10 +162,6 @@ name to be uniquely identifiable. E.g. for chrome use:
 ```shell
 flutter run -d chrome
 ```
-
-When you have completed the setup of your platform, you are ready for
-the [communitypod Getting Started](exercises/README.md) exercises where
-you can create a Pod, make and share news post files.
 
 ### Extra setup for MacOS/iOS
 

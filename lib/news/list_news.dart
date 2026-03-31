@@ -35,6 +35,7 @@ import 'package:communitypod/news/non_readable_news_post.dart';
 import 'package:communitypod/news/view_news.dart';
 import 'package:communitypod/widgets/highlight_image.dart';
 import 'package:communitypod/widgets/item_subtitle.dart';
+import 'package:communitypod/widgets/item_title.dart';
 import 'package:communitypod/widgets/item_trailing_buttons.dart';
 import 'package:communitypod/widgets/list_del_button.dart';
 
@@ -607,16 +608,10 @@ class _ListNewsState extends State<ListNews> {
                                   ),
                                 ),
                                 // News post info
-                                title: (_foundNews[index]
-                                        .permissionList
-                                        .contains('read'))
-                                    ? Text(
-                                        _foundNews[index].content!.newsTitle,
-                                        maxLines:
-                                            (!isNarrow) ? 1 : 3, // Limit lines
-                                        overflow: TextOverflow.ellipsis,
-                                      )
-                                    : const Text(''),
+                                title: ItemTitle(
+                                  item: _foundNews[index],
+                                  isNarrow: isNarrow,
+                                ),
                                 // News post item subtitle
                                 subtitle: ItemSubtitle(
                                   item: _foundNews[index],

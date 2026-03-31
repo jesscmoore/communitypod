@@ -167,6 +167,7 @@ class _ViewNewsState extends State<ViewNews> {
                             newsUrl: _newsPost.newsUrl,
                             newsOwner: _newsPost.newsOwner,
                             isExternal: _newsPost.isExternalRes,
+                            newsContent: _newsPost.content,
                             backPage: ViewNews(
                               newsPost: _newsPost,
                               scaffoldController: _scaffoldController,

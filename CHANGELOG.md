@@ -31,6 +31,7 @@ a Pull Request. Thanks.
 
 ## 0.1 Initial release
 
++ Fixed excess lines of code in ListNews widget [0.0.13 30360331 jesscmoore]
 + Centre embeded images [0.0.12 20260331 jesscmoore]
 + Finished migration from notes to news [0.0.11 20260331 jesscmoore]
 + Shows first image thumbnail in news list [0.0.10 20260328 jesscmoore]

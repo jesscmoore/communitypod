@@ -34,26 +34,26 @@ including [SnapCraft](https://snapcraft.io/communitypod) for Linux. -->
 <!-- The latest version of the app can be run online at
 [communitypod.solidcommunity.au](https://communitypod.solidcommunity.au) with no
 installation required, or downloaded and installed for your platform
-from the [Solid Community AU](https://solidcommunity.au) repository:
+from the [Solid Community AU](https://solidcommunity.au) repository: -->
 
 <!-- markdownlint-disable MD013 -->
-+ **Web**
-  [solidcommunity](https://communitypod.solidcommunity.au/);
-+ **Android**
-  [apk](https://solidcommunity.au/installers/communitypod.apk);
-+ **GNU/Linux**
-  [snap](https://solidcommunity.au/installers/communitypod_amd64.snap) or
-  [deb](https://solidcommunity.au/installers/communitypod_amd64.deb) or
-  [zip](https://solidcommunity.au/installers/communitypod-linux.zip);
-+ **macOS**
-  [dmg dev](https://solidcommunity.au/installers/communitypod-macos-dev.dmg) or
-  [dmg staging](https://solidcommunity.au/installers/communitypod-macos-staging.dmg) or
-  [dmg unsigned](https://solidcommunity.au/installers/communitypod-macos-unsigned.dmg) or
-  [zip unsigned](https://solidcommunity.au/installers/communitypod-macos-unsigned.zip);
-+ **Windows**
-  [zip](https://solidcommunity.au/installers/communitypod-windows.zip) or
-  [inno](https://solidcommunity.au/installers/communitypod-windows-inno.exe).
-markdownlint-enable MD013 --> -->
+<!-- + **Web** -->
+  <!-- [solidcommunity](https://communitypod.solidcommunity.au/); -->
+<!-- + **Android** -->
+  <!-- [apk](https://solidcommunity.au/installers/communitypod.apk); -->
+<!-- + **GNU/Linux** -->
+  <!-- [snap](https://solidcommunity.au/installers/communitypod_amd64.snap) or -->
+  <!-- [deb](https://solidcommunity.au/installers/communitypod_amd64.deb) or -->
+  <!-- [zip](https://solidcommunity.au/installers/communitypod-linux.zip); -->
+<!-- + **macOS** -->
+  <!-- [dmg dev](https://solidcommunity.au/installers/communitypod-macos-dev.dmg) or -->
+  <!-- [dmg staging](https://solidcommunity.au/installers/communitypod-macos-staging.dmg) or -->
+  <!-- [dmg unsigned](https://solidcommunity.au/installers/communitypod-macos-unsigned.dmg) or -->
+  <!-- [zip unsigned](https://solidcommunity.au/installers/communitypod-macos-unsigned.zip); -->
+<!-- + **Windows** -->
+  <!-- [zip](https://solidcommunity.au/installers/communitypod-windows.zip) or -->
+  <!-- [inno](https://solidcommunity.au/installers/communitypod-windows-inno.exe). -->
+<!-- markdownlint-enable MD013 -->
 
 Contributions are welcome. Visit
 [github](https://github.com/jesscmoore/communitypod) to submit an issue or,
@@ -61,7 +61,8 @@ even better, fork the repository yourself, update the code, and submit
 a Pull Request. The app is implemented in
 [Flutter](https://flutter.dev) using
 [solidpod](https://pub.dev/packages/solidpod) for Flutter to manage
-the Solid Pod interactions, and [solidui](https://pub.dev/packages/solidui) for Solid specific user interface functions. Thank you.
+the Solid Pod interactions, and [solidui](https://pub.dev/packages/solidui)
+for Solid specific user interface functions. Thank you.
 
 ## Introduction
 

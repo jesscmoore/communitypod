@@ -75,14 +75,14 @@ class DisplayConstants {
 }
 
 /// Approximate size for grid items used for
-/// displaying text of user's notes.
+/// displaying lists of files.
 
 class ItemSize {
   /// Approximate height of compressed item
-  /// in user's own notes list
+  /// in owner's file list
   /// when list item text is line wrapped
   /// in a narrow mobile phone size window.
-  /// (Where each of note title, created date time,
+  /// (Where each of title, created date time,
   /// modified date time are line wrapped to
   /// two lines.)
 
@@ -90,17 +90,17 @@ class ItemSize {
       260; // (4 row subtitle) 190; (3 row subtitle)
 
   /// Approximate height of uncompressed item
-  /// in user's own notes list
+  /// in owner's file list
   /// when list item text is not line wrapped.
 
   static const double uncompressedOwnItemHeight =
       138; // (4 row subtitle) 108; (3 row subtitle)
 
   /// Approximate height of compressed item
-  /// in user's external notes list
+  /// of listed external files
   /// when list item text is line wrapped
   /// in a narrow mobile phone size window.
-  /// (Where each of note title, created date time,
+  /// (Where each of title, created date time,
   /// modified date time are line wrapped to
   /// two lines.)
 
@@ -108,7 +108,7 @@ class ItemSize {
   static const double compressedExtItemHeight = 390; // (6 row subtitle)
 
   /// Approximate height of uncompressed item
-  /// in user's external notes list
+  /// of listed external files
   /// when list item text is not line wrapped.
 
   static const double uncompressedExtItemHeight = 207; // (6 row subtitle)
@@ -122,7 +122,7 @@ class ItemSize {
   /// where LayoutBuilder() called.
   double calculateCardAspectRatio(BoxConstraints constraints) {
     /// Aspect ratio (width / height) for gridview
-    /// cards to display note items
+    /// cards for list items
     final double cardAspectRatio;
 
     /// Compressed item height

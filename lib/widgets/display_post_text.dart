@@ -48,7 +48,7 @@ Container displayPostText(
   );
   // 20250717 jm Alt method retained for reference
   // MarkdownParse(
-  //   data: noteData[newsContentPred],
+  //   data: data[newsContentPred],
   //   // onTapHastag: (String name, String match) {
   //   //   // name => hashtag
   //   //   // match => #hashtag

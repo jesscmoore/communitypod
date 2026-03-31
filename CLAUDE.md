@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-CommunityPod is a Flutter app (forked from NotePod) for privacy-preserving news/notes sharing using [Solid Pods](https://solidproject.org/about) — decentralized personal data vaults. News are stored as encrypted RDF/Turtle files on the user's own Solid Pod server.
+CommunityPod is a Flutter app (forked from NotePod) for privacy-preserving news sharing using [Solid Pods](https://solidproject.org/about) — decentralized personal data vaults. News are stored as encrypted RDF/Turtle files on the user's own Solid Pod server.
 
 ## Common Commands
 
@@ -71,13 +71,13 @@ Solid Pod (encrypted Turtle files on remote server)
 No external state container (no Provider/Riverpod/BLoC). The app uses:
 - **`FutureBuilder`** for async data fetching (primary pattern)
 - **`StatefulWidget`** for local form/UI state
-- **`flutter_form_builder`** for note edit forms (`GlobalKey<FormBuilderState>`)
+- **`flutter_form_builder`** for edit forms (`GlobalKey<FormBuilderState>`)
 
 ### Key directories
 
 - `lib/common/rest_api/` — Pod API layer (`rest_api.dart`, `file_helper.dart`, `operations.dart`)
-- `lib/models/` — Data models (`Note`, `OwnNews`, `NewsContent`, `NewsCallResult`)
-- `lib/notes/` — Feature screens (list, view, edit, new, share note)
+- `lib/models/` — Data models (`News`, `OwnNews`, `NewsContent`, `NewsCallResult`)
+- `lib/news/` — Feature screens (list, view, edit, new, share news)
 - `lib/utils/turtle/` — RDF Turtle serialization (`note_serializer.dart`, `parsing_utils.dart`)
 - `lib/utils/encryption.dart` — On-device encrypt/decrypt (server never sees plaintext)
 - `lib/utils/upload_image.dart` — Upload images to Pod with encryption

@@ -95,7 +95,7 @@ class _NonReadableNewsPostState extends State<NonReadableNewsPost> {
         controller: _scrollController,
         child: Column(
           children: <Widget>[
-            // Display note metadata - show sharing and path info but not dates (as requires newsContent)
+            // Display metadata - show sharing and path info but not dates (as requires newsContent)
             DisplayMetadata(
               newsOwner: _newsPost.newsOwner,
               permissionGranter: _newsPost.permissionGranter!,
@@ -145,9 +145,9 @@ class _NonReadableNewsPostState extends State<NonReadableNewsPost> {
                       ],
                       // /// Delete button
                       // /// 20250719 jesscmoore Commented out as also commented out
-                      // /// external note with read-write-control-append access
-                      // if (noteMetaData[permissionListPred].contains('write')) ...[
-                      //   DelButton(noteData: noteMetaData, isExternal: true),
+                      // /// external file with read-write-control-append access
+                      // if (MetaData[permissionListPred].contains('write')) ...[
+                      //   DelButton(data: metaData, isExternal: true),
                       //   const SizedBox(
                       //     width: 5,
                       //   ),

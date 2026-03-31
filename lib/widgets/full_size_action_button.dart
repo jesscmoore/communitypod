@@ -31,7 +31,7 @@ import 'package:solidui/solidui.dart';
 
 import 'package:communitypod/constants/colours.dart';
 
-/// Elevated button widget with text label for using in note views.
+/// Elevated button widget with text label for using in file views.
 ///
 /// Arguments:
 /// - [label] - text label to show on button.

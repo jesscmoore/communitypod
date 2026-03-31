@@ -1,4 +1,4 @@
-/// Widget for display of date metadata for a note
+/// Widget for display of date metadata for a file.
 ///
 // Time-stamp: <Friday 2025-10-14 14:59:05 +1000 Graham Williams>
 ///
@@ -29,14 +29,13 @@ import 'package:flutter/material.dart';
 import 'package:communitypod/constants/app.dart';
 import 'package:communitypod/utils/misc.dart';
 
-/// Show date metadata of a note ie. the creation date time
+/// Show date metadata of a file ie. the creation date time
 /// and the modified date time.
 ///
 /// Arguments:
-/// - [createdDateTime] - The created date time stamp of the note
-/// file.
+/// - [createdDateTime] - The created date time stamp of the file.
 /// - [modifiedDateTime] - The last modified date time stamp of the
-/// note file.
+/// file.
 
 class ShowDateMetadata extends StatelessWidget {
   final String createdDateTime;

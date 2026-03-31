@@ -14,7 +14,7 @@
 [![Get it from the Snap Store](https://snapcraft.io/en/light/install.svg)](https://snapcraft.io/communitypod)
 
 communitypod is a [solidui](https://github.com/anusii/solidui) based app to
-support the secure and private storage and sharing of personal notes
+support the secure and private storage and sharing of personal news posts
 on your own encrypted personal online datastore (Pod) hosted in your
 Data Vault on a [Solid Server](https://solidproject.org/about). The
 app was developed by the [ANU Software Innovation
@@ -63,19 +63,19 @@ the Solid Pod interactions. Thank you.
 ## Introduction
 
 communitypod utilises [Solid Pods](https://solidproject.org/about) to read,
-write, and share encrypted notes stored on your personal online
+write, and share encrypted news stored on your personal online
 datastore (Pod) hosted on a [Solid
 Server](https://solidproject.org/get_a_pod).  You control which server
-your notes (in standard Markdown) are stored and the app ensures they
+your news (in standard Markdown) are stored and the app ensures they
 are encrypted on that server so the server host can not access your
-actual notes. Because the data storage conforms to the Solid protocol
-other apps can also interact with your notes, under your control. You
+actual news. Because the data storage conforms to the Solid protocol
+other apps can also interact with your news, under your control. You
 maintain full control over **your** data, not the app developer
 collecting and hoarding **your** data, nor the host where you store
 **your** data.
 
 This first beta release (version 0.1.0) is functional and usable. Use
-cases include writing quick notes while on the move to come back to
+cases include writing quick news posts while on the move to come back to
 later on, capturing shopping lists that can be shared with your family
 and called up the next time anyone of the family is at the shops, and
 much more.
@@ -113,8 +113,8 @@ Server](https://pods.solidcommunity.au) or any one of the available
 Once you have your own Pod visit
 [https://communitypod.solidcommunity.au](https://communitypod.solidcommunity.au)
 and login to your Pod. Be sure to update the default Solid Server
-listed on the login page. Write and save a few notes, edit saved
-notes, and maybe share some notes with other users. Access your notes
+listed on the login page. Write and save a few news posts, edit saved
+news posts, and maybe share some news posts with other users. Access your news posts
 from your desktop or mobile device. That's it! Simple but useful.
 
 ## Install the App Locally
@@ -169,7 +169,7 @@ flutter run -d chrome
 
 When you have completed the setup of your platform, you are ready for
 the [communitypod Getting Started](exercises/README.md) exercises where
-you can create a Pod, make and share notes.
+you can create a Pod, make and share news post files.
 
 ### Extra setup for MacOS/iOS
 
@@ -216,10 +216,6 @@ of Pods-based apps with flutter
   for working with RDF. Features include find and create triple
   instances, create a graph to store triples, export graph to ttl,
   etc.
-
-## Related Apps
-
-[https://communitypod.vincenttunru.com/](https://communitypod.vincenttunru.com/)
 
 <!-- markdownlint-disable MD036 -->
 *Time-stamp: <Friday 2026-01-02 15:59:33 +1100 Graham Williams>*

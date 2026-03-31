@@ -44,7 +44,7 @@ import 'package:communitypod/utils/encryption.dart';
 import 'package:communitypod/widgets/err_dialogs.dart';
 import 'package:communitypod/widgets/loading_animation.dart' as loading;
 
-/// Helper class for note file operations.
+/// Helper class for news file operations.
 
 class NewsFileHelper with PodOperationsMixin {
   NewsFileHelper();
@@ -155,7 +155,7 @@ class NewsFileHelper with PodOperationsMixin {
         }
       }
 
-      // Create the external note details object
+      // Create the external file details object
 
       return News(
         newsUrl: newsUrl!,
@@ -215,13 +215,13 @@ class NewsFileHelper with PodOperationsMixin {
   /// and then navigates to the appropriate return page.
   ///
   /// Examples:
-  /// - `await saveNews(context: context, textController: textController, formKey: formKey, prevOwnNews: news, isExisting: true)` - to save news file
+  /// - `await saveNews(context: context, articleController: articleController, formKey: formKey, prevOwnNews: news, isExisting: true)` - to save news file
   /// owned by the user.
-  /// - `await saveNews(context: context, textController: textController, formKey: formKey, prevExternalNews: news, isExisting: true, isExternal: true)`
+  /// - `await saveNews(context: context, articleController: articleController, formKey: formKey, prevExternalNews: news, isExisting: true, isExternal: true)`
   /// - to save an externally owned news file.
   ///
   /// - [context] - The build context.
-  /// - [textController] - Text controller of the news text content editor.
+  /// - [articleController] - Text controller of the news text content editor.
   /// - [formKey] - Key of the form to edit news metadata.
   ///   [scaffoldController] - Controller for the Solid scaffold.
   /// - [prevNews] - Optional existing news data object. Required if isExisting is true.
@@ -232,7 +232,7 @@ class NewsFileHelper with PodOperationsMixin {
 
   Future<void> saveNews({
     required BuildContext context,
-    required TextEditingController textController,
+    required TextEditingController articleController,
     required GlobalKey<FormBuilderState> formKey,
     required SolidScaffoldController scaffoldController,
     News? prevNews,
@@ -244,7 +244,7 @@ class NewsFileHelper with PodOperationsMixin {
       // Adds sharing metadata if shared==true
 
       Map formData = formKey.currentState?.value as Map;
-      String newsText = textController.text;
+      String newsText = articleController.text;
       final String prevNewsTitle;
       final String prevNewsContent;
       final News updatedNews;
@@ -284,7 +284,7 @@ class NewsFileHelper with PodOperationsMixin {
             updatedNews = prevNews.copyWith(content: updatedContent);
           } on Exception catch (e) {
             debugPrint(
-              'Exception (formatting update to existing note):\n $e',
+              'Exception (formatting update to existing news file):\n $e',
             );
             rethrow;
           }
@@ -294,7 +294,7 @@ class NewsFileHelper with PodOperationsMixin {
             try {
               if (!context.mounted) return;
 
-              debugPrint('save external note:');
+              debugPrint('save external file:');
               debugPrint('newsUrl: ${prevNews.newsUrl}');
               debugPrint('newsFileName: ${prevNews.newsFileName}');
               debugPrint('newsOwner: ${prevNews.newsOwner}');
@@ -315,10 +315,10 @@ class NewsFileHelper with PodOperationsMixin {
                 isExternal: isExternal,
               );
             } on Exception catch (e) {
-              debugPrint('Exception (saving existing external note):\n $e');
+              debugPrint('Exception (saving existing external file):\n $e');
             }
           } else {
-            // Save own note
+            // Save my news post
             try {
               if (!context.mounted) return;
 
@@ -337,7 +337,7 @@ class NewsFileHelper with PodOperationsMixin {
                 scaffoldController: scaffoldController,
               );
             } on Exception catch (e) {
-              debugPrint('Exception (saving existing my note):\n $e');
+              debugPrint('Exception (saving existing file owned by me):\n $e');
             }
           }
         }
@@ -376,7 +376,7 @@ class NewsFileHelper with PodOperationsMixin {
               scaffoldController: scaffoldController,
             );
           } on Exception catch (e) {
-            debugPrint('Exception (saving new my note):\n $e');
+            debugPrint('Exception (saving new file owned by me):\n $e');
           }
         } else {
           // No content message
@@ -434,8 +434,8 @@ class NewsFileHelper with PodOperationsMixin {
         encKey: data.createdDateTime,
       );
 
-      // Create TTL body for note
-      final noteTTLStr = genNewsTTLStr(
+      // Create TTL body
+      final newsTTLStr = genNewsTTLStr(
         data.createdDateTime,
         data.modifiedDateTime,
         data.newsTitle,
@@ -449,14 +449,14 @@ class NewsFileHelper with PodOperationsMixin {
         // createNewsStatus = await writeExternalPod(
         await writeExternalPod(
           newsUrl,
-          noteTTLStr,
+          newsTTLStr,
           newsOwner,
         );
       } else {
-        // Write note to POD
+        // Write file to POD
         await writePod(
           newsFileName,
-          noteTTLStr,
+          newsTTLStr,
           overwrite: overwrite,
         );
       }

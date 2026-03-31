@@ -1,4 +1,4 @@
-/// Widget for display of access metadata for a note
+/// Widget for display of access metadata for a file.
 ///
 // Time-stamp: <Friday 2025-10-14 14:59:05 +1000 Graham Williams>
 ///
@@ -28,13 +28,13 @@ import 'package:flutter/material.dart';
 
 import 'package:communitypod/constants/app.dart';
 
-/// Display sharing metadata of a note, ie. comprising
-/// owner, webId that shared the note to the user, and
+/// Display sharing metadata of a file, ie. comprising
+/// owner, webId that shared the file to the user, and
 /// the permissions granted to the user.
 ///
 /// Arguments:
-/// - [newsOwner] - Owner of the note.
-/// - [permissionGranter] - Other user that shared the note to
+/// - [newsOwner] - File owner.
+/// - [permissionGranter] - User that shared the file to
 /// the user.
 /// - [permissionList] - List of permissions granted to the user.
 

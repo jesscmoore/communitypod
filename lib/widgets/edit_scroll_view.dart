@@ -44,7 +44,7 @@ import 'package:communitypod/widgets/save_button.dart';
 ///
 /// Arguments:
 /// - [formKey] - key identifier for news post form.
-/// - [textController] - text in form.
+/// - [articleController] - text controller for article field of form.
 /// - [scrollController] - controller for scroll widget.
 /// - [scaffoldController] - controller for scaffold widget.
 /// - [focusTitle] - [FocusNode] for title form field.
@@ -59,7 +59,7 @@ class EditScrollView extends StatelessWidget {
   const EditScrollView({
     super.key,
     required this.formKey,
-    required TextEditingController? textController,
+    required TextEditingController? articleController,
     required ScrollController scrollController,
     required SolidScaffoldController scaffoldController,
     required FocusNode focusTitle,
@@ -70,14 +70,14 @@ class EditScrollView extends StatelessWidget {
     this.isExternal = false,
     this.isExisting = false,
     this.newsTitle,
-  })  : _textController = textController,
+  })  : _articleController = articleController,
         _scrollController = scrollController,
         _scaffoldController = scaffoldController,
         _focusTitle = focusTitle,
         _focusContent = focusContent;
 
   final GlobalKey<FormBuilderState> formKey;
-  final TextEditingController? _textController;
+  final TextEditingController? _articleController;
 
   /// Scroll controller for single child scroll view
   final ScrollController _scrollController;
@@ -119,7 +119,7 @@ class EditScrollView extends StatelessWidget {
           DateFormat('dd MMMM yyyy').format(DateTime.now()).toString();
     }
 
-    Row noteEditActionBar() {
+    Row editActionBar() {
       return Row(
         mainAxisAlignment: MainAxisAlignment.end,
         spacing: 5.0,
@@ -127,7 +127,7 @@ class EditScrollView extends StatelessWidget {
             // New News: save button only
             ? [
                 NewsSaveButton(
-                  textController: _textController!,
+                  articleController: _articleController!,
                   formKey: formKey,
                   scaffoldController: _scaffoldController,
                 ),
@@ -136,7 +136,7 @@ class EditScrollView extends StatelessWidget {
                 // Edit News: save and back buttons
                 // Save button
                 NewsSaveButton(
-                  textController: _textController!,
+                  articleController: _articleController!,
                   formKey: formKey,
                   scaffoldController: _scaffoldController,
                   prevNews: prevNews,
@@ -147,7 +147,7 @@ class EditScrollView extends StatelessWidget {
                 // Nav to child page
                 CustomBackButton(
                   childPage: childPage,
-                  textController: _textController,
+                  articleController: _articleController,
                   formKey: formKey,
                   scaffoldController: _scaffoldController,
                   prevNews: prevNews,
@@ -226,7 +226,7 @@ class EditScrollView extends StatelessWidget {
                   ),
                   markdownEditor(
                     context,
-                    _textController!,
+                    _articleController!,
                     _focusContent,
                     data,
                     isExternal: isExternal,
@@ -245,7 +245,7 @@ class EditScrollView extends StatelessWidget {
           children: <Widget>[
             Container(
               padding: const EdgeInsets.only(left: 20, right: 20),
-              child: noteEditActionBar(),
+              child: editActionBar(),
             ),
             // Add space
             const SizedBox(

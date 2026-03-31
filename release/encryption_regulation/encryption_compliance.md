@@ -44,7 +44,7 @@ Note: all components are open source code.
 
 Question 1: App Purpose
 
-communitypod is an app built with the Solid (Social Linked Data) specification. Using communitypod you can read, write, and share encrypted notes stored on your personal data vault (also called a Personal Online Datastore or Pod) hosted on a Solid Server.
+communitypod is an app built with the Solid (Social Linked Data) specification. Using communitypod you can read, write, and share encrypted news post files stored on your personal data vault (also called a Personal Online Datastore or Pod) hosted on a Solid Server.
 
 Question 2: Type of Encryption
 

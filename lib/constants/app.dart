@@ -123,7 +123,7 @@ class Msg {
   /// News deleting message
   static const String deletingNews = 'Deleting the news file!';
 
-  /// Confirm delete note message
+  /// Confirm delete message
   static const String confirmDelete =
       'Are you sure you want to delete this news file?';
 

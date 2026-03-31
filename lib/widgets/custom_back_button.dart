@@ -40,7 +40,7 @@ import 'package:communitypod/widgets/save_dialog.dart';
 /// Arguments:
 /// - [childPage] - The child page to navigate back to.
 ///   [scaffoldController] - Controller for the Solid scaffold.
-/// - [textController] - Optional text controller if back is being called from news editor.
+/// - [articleController] - Optional text controller for article field if back is being called from news editor.
 /// - [formKey] - Key of the form to edit news post metadata
 /// - [prevNews] - Optional existing user's news data object. Required
 /// for saving existing news posts. (Default: null).
@@ -54,7 +54,7 @@ class CustomBackButton extends StatelessWidget {
     super.key,
     required this.childPage,
     required this.scaffoldController,
-    this.textController,
+    this.articleController,
     this.formKey,
     this.prevNews,
     this.isExternal = false,
@@ -63,7 +63,7 @@ class CustomBackButton extends StatelessWidget {
 
   final Widget childPage;
   final SolidScaffoldController scaffoldController;
-  final TextEditingController? textController;
+  final TextEditingController? articleController;
   final GlobalKey<FormBuilderState>? formKey;
   final News? prevNews;
   final bool isExternal;
@@ -81,8 +81,8 @@ class CustomBackButton extends StatelessWidget {
       ),
       onPressed: () {
         if (formKey?.currentState?.saveAndValidate() ?? false) {
-          if (textController != null) {
-            String newsText = textController!.text;
+          if (articleController != null) {
+            String newsText = articleController!.text;
             Map formData = formKey?.currentState?.value as Map;
             String newsTitle = formData[newsTitlePred].replaceAll('\n', '');
 
@@ -100,7 +100,7 @@ class CustomBackButton extends StatelessWidget {
                     return SaveDialog(
                       childPage: childPage,
                       scaffoldController: scaffoldController,
-                      textController: textController!,
+                      articleController: articleController!,
                       formKey: formKey!,
                       prevNews: prevNews,
                       isExternal: isExternal,

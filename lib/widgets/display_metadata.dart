@@ -33,9 +33,9 @@ import 'package:communitypod/widgets/show_path_metadata.dart';
 
 /// Display the metadata of a news post.
 /// showDates requires created and modified date time.
-/// showSharing requires note owner, premission granter and
+/// showSharing requires owner, premission granter and
 /// permission list.
-/// showPathInfo requires note file name and note url.
+/// showPathInfo requires file name and url.
 ///
 /// Arguments:
 /// - [createdDateTime] - post created date time.

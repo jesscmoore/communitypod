@@ -38,7 +38,7 @@ import 'package:communitypod/widgets/edit_scroll_view.dart';
 /// A [StatefulWidget] to edit news owned by the user.
 ///
 /// Arguments:
-///   [note] - is the data of that news object.
+///   [newsPost] - is the data of that news object.
 ///   [scaffoldController] - Controller for the Solid scaffold.
 
 class EditNews extends StatefulWidget {
@@ -59,7 +59,7 @@ class EditNews extends StatefulWidget {
 class EditNewsState extends State<EditNews> {
   final formKey = GlobalKey<FormBuilderState>();
 
-  TextEditingController? _textController;
+  TextEditingController? _articleController;
 
   /// Scroll controller for single child scroll view.
   late final ScrollController _scrollController;
@@ -85,10 +85,10 @@ class EditNewsState extends State<EditNews> {
     _newsPost = widget.newsPost;
     _scaffoldController = widget.scaffoldController;
     // Initialise news content field
-    _textController = TextEditingController();
-    _textController!.text = _newsPost.content!.newsContent;
+    _articleController = TextEditingController();
+    _articleController!.text = _newsPost.content!.newsContent;
     // Start listening to changes.
-    _textController!.addListener(_renderMarkdown);
+    _articleController!.addListener(_renderMarkdown);
     _scrollController = ScrollController();
     // Focus node for the title text field
     // If 'TAB' key press, move to news content text field
@@ -117,7 +117,7 @@ class EditNewsState extends State<EditNews> {
     //         evt.logicalKey.keyLabel == 'Enter') {
     //       if (evt is KeyDownEvent) {
     //         // Save news when enter (not shift-enter) pressed
-    //         NewsFileHelper().saveNews(context, _textController!, formKey, widget.note);
+    //         NewsFileHelper().saveNews(context, _articleController!, formKey, widget.newsPost);
     //       }
     //       return KeyEventResult.handled;
     //     } else {
@@ -129,7 +129,7 @@ class EditNewsState extends State<EditNews> {
 
   @override
   void dispose() {
-    _textController!.dispose(); // Dispose the TextEditingController
+    _articleController!.dispose(); // Dispose the TextEditingController
     _scrollController.dispose(); // Dispose the ScrollController
     _focusTitle.dispose(); // Dispose the title focus node
     _focusContent.dispose(); // Dispose the content focus node
@@ -138,7 +138,7 @@ class EditNewsState extends State<EditNews> {
 
   void _renderMarkdown() {
     setState(() {
-      data = _textController!.text;
+      data = _articleController!.text;
     });
   }
 
@@ -146,7 +146,7 @@ class EditNewsState extends State<EditNews> {
   Widget build(BuildContext context) {
     return EditScrollView(
       formKey: formKey,
-      textController: _textController,
+      articleController: _articleController,
       scrollController: _scrollController,
       scaffoldController: _scaffoldController,
       focusTitle: _focusTitle,

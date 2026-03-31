@@ -128,7 +128,7 @@ class _ListMyNewsScreenState extends State<ListMyNewsScreen> {
         child: Column(
           children: <Widget>[
             // MsgCard style works in light and dark themes
-            // No notes message
+            // No files message
             buildMsgCard(
               context,
               Icons.info,
@@ -174,7 +174,7 @@ class _ListMyNewsScreenState extends State<ListMyNewsScreen> {
                   );
                 } else if (snapshot.data == null ||
                     snapshot.data.toString() == 'null') {
-                  // No notes found
+                  // No files found
                   return _loadNewNewsPost(_scaffoldController);
                 } else {
                   // Unknown error

@@ -1,4 +1,4 @@
-/// Action button widget for display on note views or note list items.
+/// Action button widget used for actions on news posts.
 ///
 /// Copyright (C) 2023, Software Innovation Institute
 ///
@@ -33,8 +33,7 @@ import 'package:communitypod/constants/colours.dart';
 import 'package:communitypod/widgets/full_size_action_button.dart';
 import 'package:communitypod/widgets/simple_action_button.dart';
 
-///  Note action button widget for display on note views
-/// or note list items. A simpler version
+///  Action button widget used for action buttons in news lists or within news post views. A simpler version
 /// of the button is displayed with icon only if [showSimple] or
 /// [isNarrow] is true.
 ///

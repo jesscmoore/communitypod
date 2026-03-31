@@ -119,7 +119,7 @@ class DelButton extends StatelessWidget {
                   if (context.mounted) {
                     Navigator.of(context, rootNavigator: true).pop();
                   }
-                  debugPrint('Delete note failed: $e');
+                  debugPrint('Delete file failed: $e');
                 }
               },
               child: const Text(ButtonLabel.yes),

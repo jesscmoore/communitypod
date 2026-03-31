@@ -120,7 +120,7 @@ class _ViewNewsState extends State<ViewNews> {
                       ),
                     ],
                   ),
-                  // Display note metadata - show dates and sharing info, but not path info (as only shown on non readable note page)
+                  // Display metadata - show dates and sharing info, but not path info (as only shown on non readable file page)
                   DisplayMetadata(
                     createdDateTime: _newsPost.content!.createdDateTime,
                     modifiedDateTime: _newsPost.content!.modifiedDateTime,
@@ -134,7 +134,7 @@ class _ViewNewsState extends State<ViewNews> {
                     showSharing: true,
                     showPathInfo: true,
                   ),
-                  // Display markdown note content
+                  // Display markdown content
                   displayPostText(_newsPost.content!.newsContent),
                 ],
               ),

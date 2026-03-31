@@ -1,4 +1,4 @@
-/// Widget for display of path metadata for a note
+/// Widget for display of path metadata for a file.
 ///
 // Time-stamp: <Friday 2025-10-14 14:59:05 +1000 Graham Williams>
 ///
@@ -28,10 +28,10 @@ import 'package:flutter/material.dart';
 
 import 'package:communitypod/constants/app.dart';
 
-/// Display path metadata of a note ie. the filename and path.
+/// Display path metadata of a file ie. the filename and path.
 ///
 /// Arguments:
-/// - [fileUrl] - Url of the note.
+/// - [fileUrl] - Url of the file.
 
 class ShowPathMetadata extends StatelessWidget {
   final String fileUrl;

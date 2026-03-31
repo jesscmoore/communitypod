@@ -1,4 +1,4 @@
-/// Data models for notes
+/// Data models for news post content
 ///
 /// Copyright (C) 2023-2025, Software Innovation Institute
 ///
@@ -88,7 +88,7 @@ class NewsContent {
   }
 
   /// Returns the URL of the first markdown image in [newsContent], or null
-  /// if the note contains no images.
+  /// if the file contains no images.
 
   String? get highlightImageUrl {
     final match = RegExp(r'!\[.*?\]\((.*?)\)').firstMatch(newsContent);

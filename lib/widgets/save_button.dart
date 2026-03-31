@@ -40,7 +40,7 @@ import 'package:communitypod/models/news.dart';
 ///
 /// Arguments:
 ///
-/// - [textController] - Text controller of the text content editor.
+/// - [articleController] - Text controller of the article text content editor.
 /// - [formKey] - Key of the form to edit the metadata.
 ///   [scaffoldController] - Controller for the Solid scaffold.
 /// - [prevNews] - Optional existing file data object. Required for saving existing file. (Default: null).
@@ -50,7 +50,7 @@ import 'package:communitypod/models/news.dart';
 /// exists. (Default: false).
 
 class NewsSaveButton extends StatelessWidget {
-  final TextEditingController textController;
+  final TextEditingController articleController;
   final GlobalKey<FormBuilderState> formKey;
   final SolidScaffoldController scaffoldController;
   final News? prevNews;
@@ -59,7 +59,7 @@ class NewsSaveButton extends StatelessWidget {
 
   const NewsSaveButton({
     super.key,
-    required this.textController,
+    required this.articleController,
     required this.formKey,
     required this.scaffoldController,
     this.prevNews,
@@ -79,7 +79,7 @@ class NewsSaveButton extends StatelessWidget {
         // Save file and redirect to view file page
         await NewsFileHelper().saveNews(
           context: context,
-          textController: textController,
+          articleController: articleController,
           formKey: formKey,
           scaffoldController: scaffoldController,
           prevNews: prevNews,

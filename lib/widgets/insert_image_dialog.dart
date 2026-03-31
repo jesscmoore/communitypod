@@ -33,21 +33,21 @@ import 'package:universal_io/io.dart';
 
 import 'package:communitypod/utils/upload_image.dart';
 
-/// A dialog that allows inserting an image into the markdown note either by
+/// A dialog that allows inserting an image into the markdown file content either by
 /// entering a URL (URL tab) or by picking a file from the device and uploading
 /// it encrypted to the user's Pod (From Device tab).
 ///
-/// The resulting markdown `![alt](url)` is inserted into [noteController] at
+/// The resulting markdown `![alt](url)` is inserted into [articleController] at
 /// the current cursor position.
 
 class InsertImageDialog extends StatefulWidget {
   const InsertImageDialog({
     super.key,
-    required this.noteController,
+    required this.articleController,
     this.isExternal = false,
   });
 
-  final TextEditingController noteController;
+  final TextEditingController articleController;
   final bool isExternal;
 
   @override
@@ -87,14 +87,14 @@ class _InsertImageDialogState extends State<InsertImageDialog>
   }
 
   // ---------------------------------------------------------------------------
-  // Shared: insert markdown snippet into the note at the cursor position.
+  // Shared: insert markdown snippet into the article at the cursor position.
   // ---------------------------------------------------------------------------
 
   void _insertSnippet(String url) {
     final alt = _altController.text.trim();
     final snippet = '![${alt.isEmpty ? 'image' : alt}]($url)';
 
-    final controller = widget.noteController;
+    final controller = widget.articleController;
     final text = controller.text;
     final sel = controller.selection;
     final insertPos = sel.isValid ? sel.baseOffset : text.length;
@@ -259,7 +259,7 @@ class _InsertImageDialogState extends State<InsertImageDialog>
         padding: EdgeInsets.symmetric(vertical: 8),
         child: Text(
           'Images can only be saved to your own Pod.\n'
-          'This note is externally owned — use the URL tab instead.',
+          'This file is externally owned — use the URL tab instead.',
         ),
       );
     }

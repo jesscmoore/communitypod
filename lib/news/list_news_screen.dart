@@ -230,7 +230,7 @@ class _ListNewsScreenState extends State<ListNewsScreen> {
                   );
                 } else if (snapshot.data == null ||
                     snapshot.data.toString() == 'null') {
-                  // No notes found
+                  // No files found
                   return _loadNewNewsPost(_scaffoldController);
                 } else {
                   // Unknown error

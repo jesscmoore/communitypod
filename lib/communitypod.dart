@@ -64,7 +64,7 @@ class CommunityPod extends StatelessWidget {
         loginButtonStyle: const LoginButtonStyle(
           background: Colors.lightGreenAccent,
           tooltip: 'You need to connect to your Solid account\n'
-              'to access the markdown note files\n'
+              'to access news post files created with markdown and\n'
               'stored in your POD.',
         ),
         child: AppHomePage(

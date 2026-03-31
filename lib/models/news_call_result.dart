@@ -51,7 +51,7 @@ extension NewsCallResultExtension on NewsCallResult {
   /// - [results] - Second news call results object to add to the first news call results object.
 
   NewsCallResult addCallResults({required NewsCallResult results}) {
-    // Initialise combined results object as this first note call results object.
+    // Initialise combined results object.
     NewsCallResult combinedResults = NewsCallResult(
       news: news,
       unparseableNews: unparseableNews,

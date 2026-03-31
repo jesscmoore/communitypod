@@ -1,4 +1,4 @@
-/// A stateful widget for creating a new note.
+/// A stateful widget for creating a new file.
 ///
 // Time-stamp: <Wednesday 2025-07-16 14:43:37 +1000 Graham Williams>
 ///
@@ -34,7 +34,7 @@ import 'package:solidui/solidui.dart';
 import 'package:communitypod/news/list_my_news_screen.dart';
 import 'package:communitypod/widgets/edit_scroll_view.dart';
 
-/// A [Stateful] widget for creating a new note.
+/// A [Stateful] widget for creating a new news post file.
 ///
 /// Parameters:
 ///   [scaffoldController] - Controller for the Solid scaffold.
@@ -52,9 +52,11 @@ class NewNewsPost extends StatefulWidget {
 }
 
 class NewNewsPostState extends State<NewNewsPost> {
+  /// Key for form builder used for title text field
   final formKey = GlobalKey<FormBuilderState>();
 
-  TextEditingController? _textController;
+  /// Text controller for article text field
+  TextEditingController? _articleController;
 
   /// Scroll controller for single child scroll view.
   late final ScrollController _scrollController;
@@ -62,26 +64,26 @@ class NewNewsPostState extends State<NewNewsPost> {
   /// Scaffold controller
   late final SolidScaffoldController _scaffoldController;
 
-  /// Focus node for note title text field.
+  /// Focus node for title text field.
   late final FocusNode _focusTitle;
 
-  /// Focus node for note content text field.
+  /// Focus node for content text field.
   late final FocusNode _focusContent;
 
-  /// Initialise note content text string.
+  /// Initialise content text string.
   String data = '';
 
   @override
   void initState() {
     super.initState();
-    _textController = TextEditingController();
+    _articleController = TextEditingController();
     _scrollController = ScrollController();
     _scaffoldController = widget.scaffoldController;
 
     // Start listening to changes.
-    _textController!.addListener(_renderMarkdown);
+    _articleController!.addListener(_renderMarkdown);
     // Focus node for the title text field
-    // If 'TAB' key press, move to note content text field
+    // If 'TAB' key press, move to content text field
     _focusTitle = FocusNode(
       onKeyEvent: (FocusNode node, KeyEvent evt) {
         if (evt.logicalKey == LogicalKeyboardKey.tab) {
@@ -95,9 +97,9 @@ class NewNewsPostState extends State<NewNewsPost> {
         }
       },
     );
-    // Focus node for the note content markdown editor
+    // Focus node for the content markdown editor
     _focusContent = FocusNode();
-    // To enable the ENTER => SAVE functionality within a note replace the above
+    // To enable the ENTER => SAVE functionality within a file, replace the above
     // line with the following. For now we will stay with current
     // behaviour. (20250714 gjw).
     //
@@ -106,8 +108,8 @@ class NewNewsPostState extends State<NewNewsPost> {
     //     if (!HardwareKeyboard.instance.isShiftPressed &&
     //         evt.logicalKey.keyLabel == 'Enter') {
     //       if (evt is KeyDownEvent) {
-    //         // Save note when enter (not shift-enter) pressed
-    //         NewsFileHelper().saveNews(context, _textController!, formKey);
+    //         // Save when enter (not shift-enter) pressed
+    //         NewsFileHelper().saveNews(context, _articleController!, formKey);
     //       }
     //       return KeyEventResult.handled;
     //     } else {
@@ -119,7 +121,7 @@ class NewNewsPostState extends State<NewNewsPost> {
 
   @override
   void dispose() {
-    _textController!.dispose(); // Dispose the TextEditingController
+    _articleController!.dispose(); // Dispose the TextEditingController
     _scrollController.dispose(); // Dispose the ScrollController
     _focusTitle.dispose(); // Dispose the title focus node
     _focusContent.dispose(); // Dispose the content focus node
@@ -128,7 +130,7 @@ class NewNewsPostState extends State<NewNewsPost> {
 
   void _renderMarkdown() {
     setState(() {
-      data = _textController!.text;
+      data = _articleController!.text;
     });
   }
 
@@ -136,7 +138,7 @@ class NewNewsPostState extends State<NewNewsPost> {
   Widget build(BuildContext context) {
     return EditScrollView(
       formKey: formKey,
-      textController: _textController,
+      articleController: _articleController,
       scrollController: _scrollController,
       scaffoldController: _scaffoldController,
       focusTitle: _focusTitle,

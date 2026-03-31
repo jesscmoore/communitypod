@@ -1,4 +1,4 @@
-// Misc functions.
+// Miscellaneous functions.
 ///
 // Time-stamp: <Monday 2025-07-14 10:36:05 +1000 Graham Williams>
 ///

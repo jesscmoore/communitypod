@@ -1,4 +1,4 @@
-/// Widget for display of filename metadata for a note
+/// Widget for display of filename metadata for a file.
 ///
 // Time-stamp: <Friday 2025-10-30 16:36:05 +1100 Graham Williams>
 ///
@@ -28,10 +28,10 @@ import 'package:flutter/material.dart';
 
 import 'package:communitypod/constants/app.dart';
 
-/// Display filename metadata of a note ie. the filename.
+/// Display filename metadata of a file ie. the filename.
 ///
 /// Arguments:
-/// - [filename] - Filename of the note.
+/// - [filename] - Filename of the file.
 
 class ShowFilenameMetadata extends StatelessWidget {
   final String filename;

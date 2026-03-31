@@ -35,7 +35,7 @@ import 'package:communitypod/widgets/read_image.dart';
 
 Container markdownEditor(
   BuildContext context,
-  TextEditingController textController,
+  TextEditingController articleController,
   FocusNode focusContent,
   String markdownData, {
   bool isExternal = false,
@@ -53,7 +53,7 @@ Container markdownEditor(
             children: [
               TextField(
                 // autofocus: true,
-                controller: textController,
+                controller: articleController,
                 focusNode: focusContent,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
@@ -65,7 +65,7 @@ Container markdownEditor(
               MarkdownToolbar(
                 useIncludedTextField:
                     false, // Because we want to use our own, set useIncludedTextField to false
-                controller: textController, // Add the _controller
+                controller: articleController, // Add the _controller
                 focusNode: focusContent, // Add the _focusContent
               ),
               Align(
@@ -78,7 +78,7 @@ Container markdownEditor(
                       context: context,
                       barrierDismissible: false,
                       builder: (_) => InsertImageDialog(
-                        noteController: textController,
+                        articleController: articleController,
                         isExternal: isExternal,
                       ),
                     );
@@ -106,18 +106,18 @@ Container markdownEditor(
   // return Container(
   //   padding: const EdgeInsets.all(10),
   //   child: MarkdownAutoPreview(
-  //     controller: _textController,
+  //     controller: _articleController,
   //     decoration: InputDecoration(
   //       hintText: 'Input markdown text',
   //     ),
   //     emojiConvert: true,
-  //     hintText: 'Tap here to start writing a note!',
+  //     hintText: 'Tap here to start writing a file!',
   //     // maxLines: 10,
   //     // minLines: 1,
   //     // expands: true,
   //   ),
   //   // SplittedMarkdownFormField(
-  //   //   controller: _textController,
+  //   //   controller: _articleController,
   //   //   markdownSyntax: '## Headline',
   //   //   decoration: const InputDecoration(
   //   //     hintText: 'Editable text',

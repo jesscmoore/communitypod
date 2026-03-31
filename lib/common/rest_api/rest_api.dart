@@ -32,8 +32,8 @@ import 'package:solidpod/solidpod.dart';
 import 'package:communitypod/common/rest_api/file_helper.dart';
 import 'package:communitypod/models/call_status.dart';
 import 'package:communitypod/models/news.dart';
-import 'package:communitypod/models/news_content.dart';
 import 'package:communitypod/models/news_call_result.dart';
+import 'package:communitypod/models/news_content.dart';
 import 'package:communitypod/models/selected_news.dart';
 import 'package:communitypod/utils/turtle/note_serializer.dart';
 

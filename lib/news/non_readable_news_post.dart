@@ -35,9 +35,9 @@ import 'package:communitypod/constants/ui.dart';
 import 'package:communitypod/models/news.dart';
 import 'package:communitypod/news/list_news_screen.dart';
 import 'package:communitypod/news/share_news.dart';
-import 'package:communitypod/widgets/msg_card.dart';
 import 'package:communitypod/widgets/action_button.dart';
 import 'package:communitypod/widgets/display_metadata.dart';
+import 'package:communitypod/widgets/msg_card.dart';
 
 /// A [stateful] widget for displaying a message when the user tries to view
 /// an externally owned news file.

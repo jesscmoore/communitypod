@@ -37,8 +37,8 @@ import 'package:communitypod/news/list_news_screen.dart';
 import 'package:communitypod/news/share_news.dart';
 import 'package:communitypod/widgets/action_button.dart';
 import 'package:communitypod/widgets/del_button.dart';
-import 'package:communitypod/widgets/display_post_text.dart';
 import 'package:communitypod/widgets/display_metadata.dart';
+import 'package:communitypod/widgets/display_post_text.dart';
 
 /// A [stateful] widget for viewing a news object.
 ///

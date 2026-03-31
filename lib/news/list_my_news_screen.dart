@@ -33,8 +33,8 @@ import 'package:communitypod/models/selected_news.dart';
 import 'package:communitypod/news/list_news.dart';
 import 'package:communitypod/news/new_news_post.dart';
 import 'package:communitypod/widgets/err_card.dart';
-import 'package:communitypod/widgets/msg_card.dart';
 import 'package:communitypod/widgets/list_del_dialog.dart';
+import 'package:communitypod/widgets/msg_card.dart';
 
 /// A [StatefulWidget] that fetches the user's news files in their app data folder.
 ///

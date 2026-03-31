@@ -43,10 +43,12 @@ ImgBuilder readImage() {
   return (String url, Map<String, String> attributes) {
     final remotePath = extractPodImagePath(url);
     if (remotePath == null) {
-      return Image.network(
-        url,
-        errorBuilder: (context, error, stackTrace) =>
-            const Icon(Icons.broken_image_outlined, size: 48),
+      return Center(
+        child: Image.network(
+          url,
+          errorBuilder: (context, error, stackTrace) =>
+              const Icon(Icons.broken_image_outlined, size: 48),
+        ),
       );
     }
     return FutureBuilder<Uint8List>(
@@ -62,10 +64,12 @@ ImgBuilder readImage() {
         if (!snapshot.hasData || snapshot.hasError) {
           return const Icon(Icons.broken_image_outlined, size: 48);
         }
-        return Image.memory(
-          snapshot.data!,
-          errorBuilder: (context, error, stackTrace) =>
-              const Icon(Icons.broken_image_outlined, size: 48),
+        return Center(
+          child: Image.memory(
+            snapshot.data!,
+            errorBuilder: (context, error, stackTrace) =>
+                const Icon(Icons.broken_image_outlined, size: 48),
+          ),
         );
       },
     );

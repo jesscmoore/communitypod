@@ -31,6 +31,7 @@ a Pull Request. Thanks.
 
 ## 0.1 Initial release
 
++ Centre embeded images [0.0.12 20260331 jesscmoore]
 + Finished migration from notes to news [0.0.11 20260331 jesscmoore]
 + Shows first image thumbnail in news list [0.0.10 20260328 jesscmoore]
 + Update logo icon after colour fixes [0.0.9 20260323 jesscmoore]

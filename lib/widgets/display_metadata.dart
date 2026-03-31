@@ -88,35 +88,39 @@ class DisplayMetadata extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).colorScheme.onInverseSurface,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          // ShowFileName
-          if (showFileName && newsFileName.isNotEmpty)
-            ShowFilenameMetadata(filename: newsFileName),
-          // ShowDates (created and modified)
-          if (showDates &&
-              createdDateTime.isNotEmpty &&
-              modifiedDateTime.isNotEmpty)
-            ShowDateMetadata(
-              createdDateTime: createdDateTime,
-              modifiedDateTime: modifiedDateTime,
-            ),
-          // Show sharing info (owner, provider, access list)
-          if (showSharing)
-            ShowAccessMetadata(
-              newsOwner: newsOwner,
-              permissionGranter: permissionGranter!,
-              permissionList: permissionList!,
-            ),
-          // Show path info (filename and path)
-          if (showPathInfo && newsUrl != '') ShowPathMetadata(fileUrl: newsUrl),
-          const SizedBox(height: 10),
-        ],
-      ),
+    return ExpansionTile(
+      title: const Text('File Details'),
+      backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            // ShowFileName
+            if (showFileName && newsFileName.isNotEmpty)
+              ShowFilenameMetadata(filename: newsFileName),
+            // ShowDates (created and modified)
+            if (showDates &&
+                createdDateTime.isNotEmpty &&
+                modifiedDateTime.isNotEmpty)
+              ShowDateMetadata(
+                createdDateTime: createdDateTime,
+                modifiedDateTime: modifiedDateTime,
+              ),
+            // Show sharing info (owner, provider, access list)
+            if (showSharing)
+              ShowAccessMetadata(
+                newsOwner: newsOwner,
+                permissionGranter: permissionGranter!,
+                permissionList: permissionList!,
+              ),
+            // Show path info (filename and path)
+            if (showPathInfo && newsUrl != '')
+              ShowPathMetadata(fileUrl: newsUrl),
+            const SizedBox(height: 10),
+          ],
+        ),
+      ],
     );
   }
 }

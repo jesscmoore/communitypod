@@ -37,7 +37,7 @@ import 'package:communitypod/news/list_news_screen.dart';
 import 'package:communitypod/news/share_news.dart';
 import 'package:communitypod/widgets/action_button.dart';
 import 'package:communitypod/widgets/del_button.dart';
-import 'package:communitypod/utils/get_id.dart';
+import 'package:communitypod/widgets/author_by_line.dart';
 import 'package:communitypod/widgets/display_metadata.dart';
 import 'package:communitypod/widgets/display_post_text.dart';
 
@@ -94,6 +94,7 @@ class _ViewNewsState extends State<ViewNews> {
 
   @override
   Widget build(BuildContext context) {
+    final narrowScreen = MediaQuery.of(context).size.width < 600;
     return Column(
       children: [
         Expanded(
@@ -122,20 +123,11 @@ class _ViewNewsState extends State<ViewNews> {
                     ],
                   ),
                   // Author byline
-                  Row(
-                    children: [
-                      Flexible(
-                        child: Container(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 10, 5),
-                          child: Text(
-                            'By ${getId(_newsPost.newsOwner)}',
-                            style: const TextStyle(
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                  AuthorByLine(
+                    newsOwner: _newsPost.newsOwner,
+                    modifiedDateTime: _newsPost.content!.modifiedDateTime,
+                    createdDateTime: _newsPost.content!.createdDateTime,
+                    isNarrow: narrowScreen,
                   ),
                   // Display metadata - show dates and sharing info, but not path info (as only shown on non readable file page)
                   DisplayMetadata(

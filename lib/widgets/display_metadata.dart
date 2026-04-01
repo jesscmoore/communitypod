@@ -26,6 +26,7 @@ library;
 
 import 'package:flutter/material.dart';
 
+import 'package:communitypod/widgets/author_by_line.dart';
 import 'package:communitypod/widgets/show_access_metadata.dart';
 import 'package:communitypod/widgets/show_date_metadata.dart';
 import 'package:communitypod/widgets/show_filename_metadata.dart';
@@ -65,6 +66,7 @@ class DisplayMetadata extends StatelessWidget {
   final String newsUrl;
 
   final bool isExternal;
+  final bool isNarrow;
   final bool showDates;
   final bool showFileName;
   final bool showSharing;
@@ -80,6 +82,7 @@ class DisplayMetadata extends StatelessWidget {
     this.newsFileName = '',
     this.newsUrl = '',
     this.isExternal = false,
+    this.isNarrow = false,
     this.showDates = false,
     this.showFileName = false,
     this.showSharing = false,
@@ -88,9 +91,20 @@ class DisplayMetadata extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasAuthorInfo =
+        createdDateTime.isNotEmpty && modifiedDateTime.isNotEmpty;
     return ExpansionTile(
-      title: const Text('File Details'),
+      title: hasAuthorInfo
+          ? AuthorByLine(
+              newsOwner: newsOwner,
+              modifiedDateTime: modifiedDateTime,
+              createdDateTime: createdDateTime,
+              isNarrow: isNarrow,
+            )
+          : const Text('File Details'),
+      tilePadding: const EdgeInsets.only(right: 16),
       backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
+      collapsedBackgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       children: [
         Column(
           mainAxisAlignment: MainAxisAlignment.center,

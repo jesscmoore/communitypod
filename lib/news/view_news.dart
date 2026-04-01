@@ -37,7 +37,6 @@ import 'package:communitypod/news/list_news_screen.dart';
 import 'package:communitypod/news/share_news.dart';
 import 'package:communitypod/widgets/action_button.dart';
 import 'package:communitypod/widgets/del_button.dart';
-import 'package:communitypod/widgets/author_by_line.dart';
 import 'package:communitypod/widgets/display_metadata.dart';
 import 'package:communitypod/widgets/display_post_text.dart';
 
@@ -122,14 +121,7 @@ class _ViewNewsState extends State<ViewNews> {
                       ),
                     ],
                   ),
-                  // Author byline
-                  AuthorByLine(
-                    newsOwner: _newsPost.newsOwner,
-                    modifiedDateTime: _newsPost.content!.modifiedDateTime,
-                    createdDateTime: _newsPost.content!.createdDateTime,
-                    isNarrow: narrowScreen,
-                  ),
-                  // Display metadata - show dates and sharing info, but not path info (as only shown on non readable file page)
+                  // Display author byline with metadata in expansion tile
                   DisplayMetadata(
                     createdDateTime: _newsPost.content!.createdDateTime,
                     modifiedDateTime: _newsPost.content!.modifiedDateTime,
@@ -138,6 +130,7 @@ class _ViewNewsState extends State<ViewNews> {
                     permissionList: _newsPost.permissionList,
                     newsFileName: _newsPost.newsFileName,
                     newsUrl: _newsPost.newsUrl,
+                    isNarrow: narrowScreen,
                     showDates: true,
                     showFileName: true,
                     showSharing: true,

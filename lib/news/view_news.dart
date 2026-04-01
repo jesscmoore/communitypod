@@ -93,6 +93,7 @@ class _ViewNewsState extends State<ViewNews> {
 
   @override
   Widget build(BuildContext context) {
+    final narrowScreen = MediaQuery.of(context).size.width < 600;
     return Column(
       children: [
         Expanded(
@@ -120,7 +121,7 @@ class _ViewNewsState extends State<ViewNews> {
                       ),
                     ],
                   ),
-                  // Display metadata - show dates and sharing info, but not path info (as only shown on non readable file page)
+                  // Display author byline with metadata in expansion tile
                   DisplayMetadata(
                     createdDateTime: _newsPost.content!.createdDateTime,
                     modifiedDateTime: _newsPost.content!.modifiedDateTime,
@@ -129,6 +130,7 @@ class _ViewNewsState extends State<ViewNews> {
                     permissionList: _newsPost.permissionList,
                     newsFileName: _newsPost.newsFileName,
                     newsUrl: _newsPost.newsUrl,
+                    isNarrow: narrowScreen,
                     showDates: true,
                     showFileName: true,
                     showSharing: true,

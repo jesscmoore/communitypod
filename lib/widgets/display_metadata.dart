@@ -26,6 +26,7 @@ library;
 
 import 'package:flutter/material.dart';
 
+import 'package:communitypod/widgets/author_by_line.dart';
 import 'package:communitypod/widgets/show_access_metadata.dart';
 import 'package:communitypod/widgets/show_date_metadata.dart';
 import 'package:communitypod/widgets/show_filename_metadata.dart';
@@ -65,6 +66,7 @@ class DisplayMetadata extends StatelessWidget {
   final String newsUrl;
 
   final bool isExternal;
+  final bool isNarrow;
   final bool showDates;
   final bool showFileName;
   final bool showSharing;
@@ -80,6 +82,7 @@ class DisplayMetadata extends StatelessWidget {
     this.newsFileName = '',
     this.newsUrl = '',
     this.isExternal = false,
+    this.isNarrow = false,
     this.showDates = false,
     this.showFileName = false,
     this.showSharing = false,
@@ -88,35 +91,50 @@ class DisplayMetadata extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).colorScheme.onInverseSurface,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          // ShowFileName
-          if (showFileName && newsFileName.isNotEmpty)
-            ShowFilenameMetadata(filename: newsFileName),
-          // ShowDates (created and modified)
-          if (showDates &&
-              createdDateTime.isNotEmpty &&
-              modifiedDateTime.isNotEmpty)
-            ShowDateMetadata(
-              createdDateTime: createdDateTime,
-              modifiedDateTime: modifiedDateTime,
-            ),
-          // Show sharing info (owner, provider, access list)
-          if (showSharing)
-            ShowAccessMetadata(
+    final hasAuthorInfo =
+        createdDateTime.isNotEmpty && modifiedDateTime.isNotEmpty;
+    return ExpansionTile(
+      title: hasAuthorInfo
+          ? AuthorByLine(
               newsOwner: newsOwner,
-              permissionGranter: permissionGranter!,
-              permissionList: permissionList!,
-            ),
-          // Show path info (filename and path)
-          if (showPathInfo && newsUrl != '') ShowPathMetadata(fileUrl: newsUrl),
-          const SizedBox(height: 10),
-        ],
-      ),
+              modifiedDateTime: modifiedDateTime,
+              createdDateTime: createdDateTime,
+              isNarrow: isNarrow,
+            )
+          : const Text('File Details'),
+      tilePadding: const EdgeInsets.only(right: 16),
+      backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
+      collapsedBackgroundColor: Theme.of(context).colorScheme.onInverseSurface,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            // ShowFileName
+            if (showFileName && newsFileName.isNotEmpty)
+              ShowFilenameMetadata(filename: newsFileName),
+            // ShowDates (created and modified)
+            if (showDates &&
+                createdDateTime.isNotEmpty &&
+                modifiedDateTime.isNotEmpty)
+              ShowDateMetadata(
+                createdDateTime: createdDateTime,
+                modifiedDateTime: modifiedDateTime,
+              ),
+            // Show sharing info (owner, provider, access list)
+            if (showSharing)
+              ShowAccessMetadata(
+                newsOwner: newsOwner,
+                permissionGranter: permissionGranter!,
+                permissionList: permissionList!,
+              ),
+            // Show path info (filename and path)
+            if (showPathInfo && newsUrl != '')
+              ShowPathMetadata(fileUrl: newsUrl),
+            const SizedBox(height: 10),
+          ],
+        ),
+      ],
     );
   }
 }

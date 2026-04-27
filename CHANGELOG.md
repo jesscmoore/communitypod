@@ -31,6 +31,7 @@ a Pull Request. Thanks.
 
 ## 0.1 Initial release
 
++ Updated solidpod, solidui and filepicker [0.0.16 20260427 jesscmoore]
 + Moved metadata into new author byline [0.0.15 20260401 jesscmoore]
 + Prevent unsupported sharing of files with images [0.0.14 20260331 jesscmoore]
 + Fixed excess lines of code in ListNews widget [0.0.13 20260331 jesscmoore]

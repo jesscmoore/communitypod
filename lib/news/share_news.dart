@@ -124,8 +124,7 @@ class ShareNewsState extends State<ShareNews> {
                     height: MediaQuery.of(context).size.height * 0.8,
                     child: GrantPermissionUi(
                       showAppBar: false,
-                      resourceName: widget.newsUrl,
-                      ownerWebId: widget.newsOwner,
+                      resourceNames: [widget.newsUrl],
                       isExternalRes: widget.isExternal,
                     ),
                   ),

@@ -219,7 +219,7 @@ class _InsertImageDialogState extends State<InsertImageDialog>
   // ---------------------------------------------------------------------------
 
   Future<void> _pickFile() async {
-    final result = await FilePicker.platform.pickFiles(type: FileType.image);
+    final result = await FilePicker.pickFiles(type: FileType.image);
     if (result == null || result.files.isEmpty) return;
     final file = result.files.single;
     setState(() {
